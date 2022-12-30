@@ -1,0 +1,12 @@
+.avatar{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+.textBox{
+    width: 80%;
+    border-radius: 25px;
+    border: 1px solid rgba(0,0,0,0.3); 
+    display: flex;
+    justify-content: flex-start;
+}
