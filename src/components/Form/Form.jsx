@@ -1,67 +1,85 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect } from 'react';
 import { Avatar, Box, Button, Paper, TextField, Typography} from '@mui/material';
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import FileBase from 'react-file-base64'
 import {MuiChipsInput} from 'mui-chips-input';
-import {createPost} from '../../action/posts'
+import {createPost, updatePost} from '../../action/posts'
 
 import './formStyles.css'
-const Form = () => {
+
+const Form = ({currentId, setCurrentId}) => {
+
 const dispatch = useDispatch();
 const [postData, setPostData] = useState({
     content:"",
-    tags: [],
+    tags:[],
     selectedFile:""
-})
+});
+const post = useSelector((state) => (currentId ? state.posts.find((post) => post._id === currentId): null));
 const [open, setOpen] = useState(false);
-// const [image, setImage] = useState("");
-// const imageRef = useRef(null);
+const [showImage, setShowImage] = useState(false)
 
-// function useDisplayImage() {
-//   const [result, setResult] = useState("");
+useEffect(() =>{
+  setShowImage(true)
+},[postData.selectedFile])
 
-//   function uploader(e) {
-//     const imageFile = e.target.files[0];
 
-//     const reader = new FileReader();
-//     reader.addEventListener("load", (e) => {
-//       setResult(e.target.result);
-//     });
-
-//     reader.readAsDataURL(imageFile);
-//   }
-
-//   return { result, uploader };
-// }
-
-const handleSubmit = (e) =>{
-    e.preventDefault()
-    dispatch(createPost(postData))
+useEffect(()=>{
+ if(post){
+  setPostData(post);
 }
+},[post])
+
+useEffect(() =>{
+  if(currentId){
+    setOpen(true)
+  }
+},[currentId])
+
+
+// console.log(postData)
+
+const handleSubmit = async (e) =>{
+    e.preventDefault()
+    if(currentId === 0) {
+      dispatch(createPost(postData));
+      console.log('create')
+    } else{
+     dispatch(updatePost(currentId, postData));
+     console.log('update')
+    }
+}
+
+
 
 const handleAddChip = (tag) => {
     setPostData({ ...postData, tags: [...postData.tags, tag] });
   };
 
-  const handleDeleteChip = (chipToDelete) => {
+const handleDeleteChip = (chipToDelete) => {
     setPostData({ ...postData, tags: postData.tags.filter((tag) => tag !== chipToDelete) });
-  };
-
-
-
-// const { result, uploader } = useDisplayImage();
+};
 
 const handleClickOpen = () => {
+  setCurrentId(0);
+    setPostData({
+    content:"",
+    tags: [],
+    selectedFile:""
+})
   setOpen(true);
 };
 
 const handleClose = () => {
   setOpen(false);
+  setCurrentId(0);
 };
+
+
   return (
    <>
     <Paper>
@@ -75,7 +93,7 @@ const handleClose = () => {
         </Button>
        </Box>
    
-       <Dialog open={open} onClose={handleClose} fullWidth>
+       <Dialog open={open} fullWidth>
         <DialogTitle>Create a Post</DialogTitle>
         <form autoComplete='off' noValidate onSubmit={handleSubmit}>
         <DialogContent>
@@ -100,7 +118,7 @@ const handleClose = () => {
             rows={6}
             onChange={(e)=>{ setPostData({ ...postData, content: e.target.value })}}
           />
-           {/* {result && <img ref={imageRef} src={result} alt="" />} */}
+            {showImage ?( <img width="100%" src={postData.selectedFile} alt=''/>) :null }
           <MuiChipsInput 
               name="tags"
             label="Tags"
@@ -110,12 +128,13 @@ const handleClose = () => {
             onAddChip={(chip) => handleAddChip(chip)}
             onDeleteChip={(chip) => handleDeleteChip(chip)}
           />
-            <FileBase type='file' mutiple ={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })} />
-           
+         
+            <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })}/>
+     
         </DialogContent>
         <DialogActions>
-          <Button  onClick={handleClose}>Cancel</Button>
-          <Button type='submit' variant='contained' onClick={handleClose}>Post</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type='submit' variant='contained' onClick={() => setOpen(false)}>Post</Button>
         </DialogActions>
         </form>
       </Dialog>

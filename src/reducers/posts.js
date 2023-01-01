@@ -1,4 +1,4 @@
-import { FETCH_ALL,CREATE } from "../constants/actionTypes";
+import { FETCH_ALL,CREATE, UPDATE } from "../constants/actionTypes";
 
  const posts = (posts= [], action) =>{
     switch(action.type){
@@ -6,6 +6,8 @@ import { FETCH_ALL,CREATE } from "../constants/actionTypes";
             return action.payload
         case CREATE:
             return [...posts, action.payload];
+        case UPDATE:
+            return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
         default:
             return posts
     }

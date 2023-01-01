@@ -10,3 +10,12 @@
     display: flex;
     justify-content: flex-start;
 }
+.fileInput{
+        width:97%;
+        margin: 10px 0;
+        color: transparent;
+}
+
+input[type='file'] {
+    color: transparent;
+  }
