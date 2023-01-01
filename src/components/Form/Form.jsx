@@ -128,9 +128,10 @@ const handleClose = () => {
             onAddChip={(chip) => handleAddChip(chip)}
             onDeleteChip={(chip) => handleDeleteChip(chip)}
           />
-         
+           <div>
             <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })}/>
-     
+           
+            </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

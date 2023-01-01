@@ -1,13 +1,16 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
+import { useDispatch } from 'react-redux';
 import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton, Checkbox } from '@mui/material';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {Menu, MenuItem} from '@mui/material';
 import { ThumbUpAlt} from '@mui/icons-material';
 import { ThumbUpAltOutlined } from '@mui/icons-material';
-import moment from 'moment'
+import moment from 'moment';
+import {deletePost} from '../../../action/posts'
 
 import './styles.css'
 const Post = ({post, setCurrentId}) => {
+    const dispatch = useDispatch();
     const [showMore, setShowmore] = useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const handleOpenUserMenu = (event) => {
@@ -17,7 +20,10 @@ const Post = ({post, setCurrentId}) => {
         setAnchorElUser(null);
         setCurrentId(post._id)
       };
-
+    const handleDelete = () =>{
+        setAnchorElUser(null);
+        dispatch(deletePost(post._id))
+    }
    
   return (
 
@@ -55,7 +61,7 @@ const Post = ({post, setCurrentId}) => {
                 <MenuItem  onClick={handleCloseUserMenu} >
                   <Typography textAlign="center">Edit</Typography>
                 </MenuItem>
-                <MenuItem  onClick={()=> setAnchorElUser(null)}>
+                <MenuItem  onClick={handleDelete}>
                   <Typography textAlign="center">Delete</Typography>
                 </MenuItem>
       
