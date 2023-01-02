@@ -1,14 +1,20 @@
 import React,{ useState} from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate}  from "react-router-dom";
 import { Button, Paper, Grid, Typography, Container } from '@mui/material';
 import Input from './Input';
-import './styles.css'
+import './styles.css';
+import {signin, signup} from '../../action/auth'
 
 const initialState ={firstName: '', lastName:'', email:'', password: '', confirmPassword:''}
 
 const Auth = () => {
+
   const [isSignup, setIsSignUp] = useState(false);  
   const [showPassword, setShowPassword] =useState(false);
   const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   const handleShowPassword = () =>{
@@ -26,6 +32,16 @@ const Auth = () => {
     setShowPassword(false);
   }
 
+  const handleSubmit =(e) =>{
+    e.preventDefault();
+
+    if(isSignup){
+       dispatch(signup(formData, navigate))
+    }else {
+      dispatch(signin(formData, navigate))
+    }
+  }
+
   return (
     <>
        <Container maxWidth={false} disableGutters component="main" sx={{ display:"flex", justifyContent:"space-evenly", alignItems:"center", height:"70vh", flexDirection:{xs: 'column', lg:'row', xl:'row'} }}>
@@ -36,7 +52,7 @@ const Auth = () => {
           </Grid>
         </Grid>
         <Paper className='paper' elevation={1} sx={{ maxWidth:{xs:"80%", lg:"30%", xl:"30%" } } }>
-          <form className='form' onSubmit={() => {}}>
+          <form  onSubmit={handleSubmit}>
              <Grid container spacing={2}>
                {isSignup && (
                 <>
@@ -65,3 +81,5 @@ const Auth = () => {
 }
 
 export default Auth
+
+// email, password, confirmPassword, firstName, lastName

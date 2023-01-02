@@ -1,14 +1,28 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
+import { useDispatch } from 'react-redux';
+import {Link, useNavigate, useLocation} from 'react-router-dom'
 import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar,  Tooltip, MenuItem } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import './navBarStyles.css'
+import * as actionType from '../../constants/actionTypes';
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navbar = () => {
 
     const [anchorElUser, setAnchorElUser] = useState(null);
-  
-   
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const logOut =() =>{
+      dispatch({
+        type: actionType.LOGOUT
+      })
+      navigate('/auth')
+
+      setUser(null)
+    }
     const handleOpenUserMenu = (event) => {
       setAnchorElUser(event.currentTarget);
     };
@@ -64,7 +78,7 @@ const Navbar = () => {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography component='button' onClick={logOut}  textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
