@@ -1,0 +1,12 @@
+.paper{
+    display: 'flex';
+    align-items: 'center';
+    padding: 2rem;
+}
+.form{
+    width: 100%;
+
+}
+.submit{
+  margin-top: 2rem;
+}
