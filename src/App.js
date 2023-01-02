@@ -1,24 +1,31 @@
-import React from 'react';
-import {Routes, Route} from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {Routes, Route, useLocation} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Container from '@mui/material/Container'
 // import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
 
-
 function App() {
+  
+  const [user, setUser ]= useState(null)
+  const location = useLocation();
+  //  JSON.parse(localStorage.getItem('profile'))
+  
+  // console.log(location)
+  useEffect(() =>{
+    setUser(JSON.parse(localStorage.getItem('profile')))
+  },[location])
+   
+  // console.log(user?.result?._id)
   return (
-    
-    <Router>
     <Container style={{padding: 0}} maxWidth="xl">
     <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/auth' element={<Auth />} />
+      <Route path='/' element={ user?.result?._id? <Navigate to="/posts"/> : <Navigate to="/auth" replace /> }  />
+      <Route path='/posts' element={ user?.result?._id === undefined ? <Navigate to="/auth" replace /> : <Home />    } />
+      <Route path='/auth' element={ user?.result?._id === undefined ? <Auth /> : <Navigate to="/posts" replace />    } /> 
     </Routes>
     </Container>
-    </Router>
-    
   );
 }
 

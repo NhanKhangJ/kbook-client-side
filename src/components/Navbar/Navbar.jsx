@@ -1,11 +1,12 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { useDispatch } from 'react-redux';
-import {Link, useNavigate, useLocation} from 'react-router-dom'
+import { useNavigate, useLocation} from 'react-router-dom';
 import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar,  Tooltip, MenuItem } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import './navBarStyles.css'
 import * as actionType from '../../constants/actionTypes';
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import decode from 'jwt-decode'
+
 
 const Navbar = () => {
 
@@ -19,10 +20,23 @@ const Navbar = () => {
       dispatch({
         type: actionType.LOGOUT
       })
-      navigate('/auth')
-
+      
+      navigate('/auth');
       setUser(null)
     }
+  
+    useEffect(() => {
+      const token = user?.token;
+  
+      if (token) {
+        const decodedToken = decode(token);
+  
+        if (decodedToken.exp * 1000 < new Date().getTime()) logOut();
+      }
+  
+      setUser(JSON.parse(localStorage.getItem('profile')));
+    }, [location]);
+
     const handleOpenUserMenu = (event) => {
       setAnchorElUser(event.currentTarget);
     };
@@ -57,7 +71,7 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={user ? user.result.name : ""} src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -76,11 +90,9 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography component='button' onClick={logOut}  textAlign="center">{setting}</Typography>
+                  <MenuItem  onClick={handleCloseUserMenu}>
+                    <Typography onClick={logOut} textAlign="center">Logout</Typography>
                   </MenuItem>
-                ))}
               </Menu>
             </Box>
           </Toolbar>
