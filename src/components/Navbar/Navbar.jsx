@@ -24,7 +24,7 @@ const Navbar = () => {
       navigate('/auth');
       setUser(null)
     }
-  
+   
     useEffect(() => {
       const token = user?.token;
   
@@ -35,6 +35,7 @@ const Navbar = () => {
       }
   
       setUser(JSON.parse(localStorage.getItem('profile')));
+      // eslint-disable-next-line
     }, [location]);
 
     const handleOpenUserMenu = (event) => {

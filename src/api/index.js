@@ -11,7 +11,9 @@ API.interceptors.request.use((req) =>{ // a function is going to happen for each
 export const fetchPosts= () => API.get('/posts');
 export const createPost= (newPost) => API.post('/posts', newPost);
 export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost)
+export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const deletePost = (id) => API.delete(`/posts/${id}`);
+
 
 
 export const signIn = (formData) => API.post('/user/signin', formData)

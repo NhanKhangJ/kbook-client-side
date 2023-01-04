@@ -14,11 +14,9 @@ const store = configureStore({reducer: reducers},compose(applyMiddleware(thunk))
 
 
 root.render(
-  
     <Provider store={store}>
     <BrowserRouter>
       <App />  
     </BrowserRouter> 
     </Provider>
-
 );

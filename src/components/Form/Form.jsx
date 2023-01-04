@@ -13,13 +13,17 @@ import './formStyles.css'
 
 const Form = ({currentId, setCurrentId}) => {
 
-const dispatch = useDispatch();
+
 const [postData, setPostData] = useState({
     content:"",
     tags:[],
     selectedFile:""
 });
 const post = useSelector((state) => (currentId ? state.posts.find((post) => post._id === currentId): null));
+
+const dispatch = useDispatch();
+const user = JSON.parse(localStorage.getItem('profile'))
+
 const [open, setOpen] = useState(false);
 const [showImage, setShowImage] = useState(false)
 
@@ -46,12 +50,15 @@ useEffect(() =>{
 const handleSubmit = async (e) =>{
     e.preventDefault()
     if(currentId === 0) {
-      dispatch(createPost(postData));
+      await dispatch(createPost({...postData, name: user?.result?.name }));
+    
       console.log('create')
     } else{
-     dispatch(updatePost(currentId, postData));
+     await dispatch(updatePost(currentId,{...postData, name: user?.result?.name}));
+   
      console.log('update')
     }
+    setCurrentId(0)
 }
 
 
@@ -86,7 +93,7 @@ const handleClose = () => {
   
        <Box display="flex" justifyContent="center" sx={{p:2}}>
         <div className='avatar'>
-          <Avatar  src=''  sx={{p:1}}/>
+          <Avatar alt={user?.result?.name}  src="/static/images/avatar/2.jpg"  sx={{p:1}}/>
         </div>
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px'}}>
             Start a post
@@ -99,13 +106,12 @@ const handleClose = () => {
         <DialogContent>
           <Box display="flex" >
           <div className='avatar'>
-            <Avatar  src=''  sx={{p:1}}/>
+            <Avatar alt={user?.result?.name}  src="/static/images/avatar/2.jpg" sx={{p:1}}/>
            </div>
            <div>
-            <Typography variant='h6'>user Name</Typography>
+            <Typography variant='h6'>{user?.result?.name}</Typography>
            </div>
           </Box>
-        
           <TextField
             margin="dense"
             name='content'
@@ -131,7 +137,7 @@ const handleClose = () => {
            <div>
             <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })}/>
            
-            </div>
+           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

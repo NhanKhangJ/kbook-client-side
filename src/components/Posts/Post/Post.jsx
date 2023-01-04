@@ -1,18 +1,24 @@
 import React,{useState} from 'react';
 import { useDispatch } from 'react-redux';
-import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton, Checkbox } from '@mui/material';
+import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton,  CircularProgress } from '@mui/material';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {Menu, MenuItem} from '@mui/material';
 import { ThumbUpAlt} from '@mui/icons-material';
 import { ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
-import {deletePost} from '../../../action/posts'
+import {deletePost, likePost} from '../../../action/posts'
 
 import './styles.css'
 const Post = ({post, setCurrentId}) => {
     const dispatch = useDispatch();
     const [showMore, setShowmore] = useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const user = JSON.parse(localStorage.getItem('profile'));
+    const userId = user?.result?.googleId || user?.result?._id
+    const [likes, setLikes] = useState(post?.likes);
+    const hasLikedPost = post.likes.find((like) => like === userId)
+
+
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
       };
@@ -24,24 +30,48 @@ const Post = ({post, setCurrentId}) => {
         setAnchorElUser(null);
         dispatch(deletePost(post._id))
     }
-   
-  return (
+    
+    const handleLike = async () =>{
+      dispatch(likePost(post._id));
 
+     if(hasLikedPost) {
+       setLikes(post.likes.filter((id) => id !== userId))
+     } else{
+       setLikes([...post.likes, userId])
+     }
+    }
+
+    const Likes = () =>{
+      if (likes.length > 0) {
+        return likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+          ? (
+            <><ThumbUpAlt fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}` }</>
+          ) : (
+            <><ThumbUpAltOutlined fontSize="small" />&nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</>
+          );
+      }
+  
+      return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
+    }
+
+  return (
+    <>
+      {!post.name ? <CircularProgress />  :(
       <Card sx={{mt:3}}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            K
-          </Avatar>
+          <Avatar alt={post?.name}  src="/static/images/avatar/2.jpg"  sx={{p:1}}/>
         }
         action={
+          user?.result?._id === post?.creator &&
           <IconButton aria-label="settings" onClick={handleOpenUserMenu}>
             <MoreVertIcon />
           </IconButton>
         }
-        title="User Name"
+        title={post?.name}
         subheader={moment(post.createdAt).fromNow()}
       />
+     
        <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -57,13 +87,16 @@ const Post = ({post, setCurrentId}) => {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-            >
-                <MenuItem  onClick={handleCloseUserMenu} >
+            > 
+           
+              <MenuItem  onClick={handleCloseUserMenu} >
                   <Typography textAlign="center">Edit</Typography>
                 </MenuItem>
                 <MenuItem  onClick={handleDelete}>
                   <Typography textAlign="center">Delete</Typography>
                 </MenuItem>
+            
+               
       
             </Menu>
     
@@ -80,10 +113,6 @@ const Post = ({post, setCurrentId}) => {
                      Show More
                 </Button> 
                 )}
-
-                 {/* {showMore ? 
-                  (<><Typography color='primary'>{post.tags.map((tag) =>`#${tag} `)}</Typography></>)
-                 : null} */}
                 </Typography>
                 <br></br>
                 {showMore ? 
@@ -110,13 +139,14 @@ const Post = ({post, setCurrentId}) => {
         alt=""
       />
       <CardActions disableSpacing>
-       <IconButton aria-label="add to favorites"> 
-       <Checkbox icon={<ThumbUpAltOutlined />} checkedIcon={<ThumbUpAlt />}/>
-        </IconButton> 
+      <Button size='small' color='primary'  onClick={handleLike}>
+          <Likes />
+        </Button>
       </CardActions>
       
     </Card>
-      
+     )}
+    </>
   )
 }
 
