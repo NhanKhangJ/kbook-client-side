@@ -15,10 +15,12 @@ const Post = ({post, setCurrentId}) => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?.googleId || user?.result?._id
-    const [likes, setLikes] = useState(post?.likes);
-    const hasLikedPost = post.likes.find((like) => like === userId)
-
-
+    const [likes, setLikes] = useState(post?.likes);//[{userId, UserName}] nested object array
+    // const hasLikedPost = post.likes.find((like) => like === userId)
+    const hasLikedPost = post.likes.find((p) => p.userId === userId)
+    // console.log(hasLikedPost)
+    // console.log(likes)
+  
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
       };
@@ -35,15 +37,30 @@ const Post = ({post, setCurrentId}) => {
       dispatch(likePost(post._id));
 
      if(hasLikedPost) {
-       setLikes(post.likes.filter((id) => id !== userId))
+      //  setLikes(post.likes.filter((id) => id !== userId))
+       setLikes(post.likes.filter((p)=> p.userId !== userId))
      } else{
-       setLikes([...post.likes, userId])
+      //  setLikes([...post.likes, userId])
+       setLikes([...post.likes, {userId: userId, name: user.name }])
      }
     }
 
+    // const Likes = () =>{
+    //   if (likes.length > 0) {
+    //     return likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+    //       ? (
+    //         <><ThumbUpAlt fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}` }</>
+    //       ) : (
+    //         <><ThumbUpAltOutlined fontSize="small" />&nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</>
+    //       );
+    //   }
+  
+    //   return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
+    // }
+   
     const Likes = () =>{
       if (likes.length > 0) {
-        return likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+        return likes.find((p) => p.userId === (user?.result?.googleId || user?.result?._id))
           ? (
             <><ThumbUpAlt fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}` }</>
           ) : (
@@ -53,7 +70,7 @@ const Post = ({post, setCurrentId}) => {
   
       return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     }
-
+     
   return (
     <>
       {!post.name ? <CircularProgress />  :(
