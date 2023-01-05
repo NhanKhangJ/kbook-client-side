@@ -10,7 +10,7 @@ const Home = () => {;
   const dispatch = useDispatch();
 
  useEffect(()=>{
-  dispatch(getPosts())
+   dispatch(getPosts())
  },[currentId, dispatch])  
 
   return (

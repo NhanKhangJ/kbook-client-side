@@ -21,9 +21,9 @@ const Post = ({post, setCurrentId}) => {
     const userId = user?.result?.googleId || user?.result?._id
     const [likes, setLikes] = useState(post?.likes);//[{userId, UserName}] nested object array
     // const hasLikedPost = post.likes.find((like) => like === userId)
-    const hasLikedPost = post.likes.find((p) => p.userId === userId)
+    const hasLikedPost = likes.find((p) => p?.userId === userId)
     // console.log(hasLikedPost)
-    // console.log(likes)
+    console.log(likes.length)
   
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -156,30 +156,27 @@ const Post = ({post, setCurrentId}) => {
      
      <CardContent sx={{paddingTop: 0, paddingBottom: 0}}>
       { likes.length > 0 &&
-        ( likes.find((p) => p.userId === (user?.result?.googleId || user?.result?._id))
+        ( likes.find((p) => p.userId === userId)
           ? (
             <>  
-            <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}` }</Typography>
+            <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${hasLikedPost ? `${user?.result.name} ${`and ${likes[0]?.name}`}`: null}` }</Typography>
             </>
           ) : (
-            <><Typography variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit'  />&nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</Typography></>
+            <>
+            <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `${likes[0].name} and ${likes.length - 1} others` : `${likes[0].name}${likes[1]?.name ? ` and ${likes[1]?.name}` : "" }` }</Typography>
+            </>
           )
       )}
-      {/* need to add one more logic to show that the current user like this post */}
       <hr style={{opacity:'50%'}}/>
       </CardContent>
-   
      <CardActions disableSpacing>
-   
       <Button  size='large' color='primary'  onClick={handleLike}>
           <Likes />
         </Button>
         <Button size='large' color='primary' onClick={() => {setExpansed(!expansed)}} >
         <ChatBubbleOutlineIcon fontSize='medium' />&nbsp;Comment
         </Button>
-      
       </CardActions>
-
       <Collapse in={expansed} timeout="auto" unmountOnExit>
       <CardContent sx={{display: 'flex', justifyContent: "center"}}>
         <Avatar style={{width: ""}}  sx={{ width: 56, height: 56 }} alt={user?.result?.name}  src="/static/images/avatar/2.jpg"  />
