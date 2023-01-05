@@ -10,3 +10,7 @@
 .content{
     margin: 2rem;
 }
+
+.commentInput fieldset{
+ border-radius: 35px;
+}
