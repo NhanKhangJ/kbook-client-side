@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import { useDispatch } from 'react-redux';
-import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton,  CircularProgress, Collapse, TextField } from '@mui/material';
+import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton,  CircularProgress, Collapse } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {Menu, MenuItem} from '@mui/material';
@@ -8,7 +8,7 @@ import { ThumbUpAlt} from '@mui/icons-material';
 import { ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
 import {deletePost, likePost} from '../../../action/posts'
-import './styles.css'
+import Comments from './Comments';
 
 
 
@@ -23,7 +23,6 @@ const Post = ({post, setCurrentId}) => {
     // const hasLikedPost = post.likes.find((like) => like === userId)
     const hasLikedPost = likes.find((p) => p?.userId === userId)
     // console.log(hasLikedPost)
-    console.log(likes.length)
   
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -64,7 +63,7 @@ const Post = ({post, setCurrentId}) => {
           );
       }
   
-      return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
+      // return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     }
      
   return (
@@ -178,12 +177,7 @@ const Post = ({post, setCurrentId}) => {
         </Button>
       </CardActions>
       <Collapse in={expansed} timeout="auto" unmountOnExit>
-      <CardContent sx={{display: 'flex', justifyContent: "center"}}>
-        <Avatar style={{width: ""}}  sx={{ width: 56, height: 56 }} alt={user?.result?.name}  src="/static/images/avatar/2.jpg"  />
-        <div style={{width:"100%", margin:"0 0.5rem",borderRadius:"30%"}} className="commentInput" >
-        <TextField size='medium' fullWidth />
-        </div>
-      </CardContent>
+        <Comments post={post} />
       </Collapse>
     </Card>
      )}
