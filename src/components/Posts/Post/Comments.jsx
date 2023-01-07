@@ -35,12 +35,13 @@ const Comments = ({post}) => {
     ) : null}
     </div>
      </CardContent>
-     <CardContent sx={{display: 'flex', justifyContent: "center", flexDirection:"column"}}>
+     <CardContent sx={{display: 'flex', justifyContent: "center", flexDirection:"column-reverse"}}>
       {comments.map((c,index)=>(
-        <div style={{width:"100%", display: 'flex', justifyContent: "center", alignItems:"center"}}  key={index}>
+        <div style={{width:"100%", display: 'flex', justifyContent: "center", alignItems:"start"}}  key={index}>
         <Avatar alt={c.creator} src="/static/images/avatar/2.jpg" />
-        <div style={{width:"100%", margin:"0 0.5rem"}} >
-        <Typography style={{backgroundColor:"#f2f2f2"}}  borderRadius="5px">{c.comment}</Typography>
+        <div style={{width:"100%", margin:"0 0.5rem 2rem 0.5rem", backgroundColor:"#f2f2f2", borderRadius:"5px", height:"auto", padding:"0.1rem 0.5rem 0.5rem 0.5rem" }} >
+        <Typography variant='h6' fontWeight="bold" fontSize='large'  mb="0.5rem">{c.creator}</Typography>
+        <Typography variant='subtitle1'>{c.comment}</Typography>
         </div>
         </div>
        ))}  

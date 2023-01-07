@@ -69,7 +69,7 @@ const Post = ({post, setCurrentId}) => {
   return (
     <>
       {!post.name ? <CircularProgress />  :(
-      <Card sx={{mt:3}}>
+      <Card sx={{mt:3}} elevation={2}>
       <CardHeader
         avatar={
           <Avatar alt={post?.name}  src="/static/images/avatar/2.jpg"  sx={{p:1}}/>
@@ -169,7 +169,7 @@ const Post = ({post, setCurrentId}) => {
       <hr style={{opacity:'50%'}}/>
       </CardContent>
      <CardActions disableSpacing>
-      <Button  size='large' color='primary'  onClick={handleLike}>
+        <Button  size='large' color='primary'  onClick={handleLike}>
           <Likes />
         </Button>
         <Button size='large' color='primary' onClick={() => {setExpansed(!expansed)}} >
