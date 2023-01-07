@@ -7,8 +7,13 @@ const Comments = ({post}) => {
     const dispatch = useDispatch();
     const [comments, setComments] = useState(post?.comments)
     const [comment, setComment] = useState("");
+    const [loadComments, setLoadComments] = useState(2)
     const user = JSON.parse(localStorage.getItem('profile'));
     
+    const handleLoadComments = () => {
+      let newComments = loadComments +  2
+      setLoadComments(newComments)
+    }
     // console.log(comments)
     const handleClick = async () =>{        
         const newComments = await dispatch(commentPost(comment, post._id));
@@ -35,18 +40,26 @@ const Comments = ({post}) => {
     ) : null}
     </div>
      </CardContent>
-     <CardContent sx={{display: 'flex', justifyContent: "center", flexDirection:"column-reverse"}}>
+     <CardContent sx={{display: 'flex', justifyContent: "center", flexDirection:"column", paddingBottom: "0"}}>
+
       {comments.map((c,index)=>(
         <div style={{width:"100%", display: 'flex', justifyContent: "center", alignItems:"start"}}  key={index}>
         <Avatar alt={c.creator} src="/static/images/avatar/2.jpg" />
-        <div style={{width:"100%", margin:"0 0.5rem 2rem 0.5rem", backgroundColor:"#f2f2f2", borderRadius:"5px", height:"auto", padding:"0.1rem 0.5rem 0.5rem 0.5rem" }} >
+        <div style={{width:"100%", margin:"0 0.5rem 1rem 0.5rem", backgroundColor:"#f2f2f2", borderRadius:"5px", height:"auto", padding:"0.1rem 0.5rem 0.5rem 0.5rem" }} >
         <Typography variant='h6' fontWeight="bold" fontSize='large'  mb="0.5rem">{c.creator}</Typography>
         <Typography variant='subtitle1'>{c.comment}</Typography>
         </div>
         </div>
-       ))}  
-       {/*next step add on the user name in side the user comment and do more styling for other user comment */}
+       )).reverse().splice(0,loadComments)}  
+
       </CardContent>
+      {loadComments < comments.length && (
+      <CardContent style={{paddingBottom: "0", paddingTop: "0"}} sx={{}}>
+      {comments.length > 2 && (
+        <Button type='text' onClick={handleLoadComments}>load more</Button>
+       ) }
+      </CardContent>
+      )}
     </>
   )
 }

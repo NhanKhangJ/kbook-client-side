@@ -6,12 +6,13 @@ import Input from './Input';
 import './styles.css';
 import {signin, signup} from '../../action/auth'
 
-const initialState ={firstName: '', lastName:'', email:'', password: '', confirmPassword:''}
+
 
 const Auth = () => {
 
   const [isSignup, setIsSignUp] = useState(false);  
   const [showPassword, setShowPassword] =useState(false);
+  const initialState ={firstName: '', lastName:'', email:'', password: '', confirmPassword:''}
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Auth = () => {
     setIsSignUp((preIsSignUp) =>!preIsSignUp);
     setShowPassword(false);
   }
+
 
   const handleSubmit =(e) =>{
     e.preventDefault();
@@ -60,8 +62,8 @@ const Auth = () => {
                   <Input name="lastName"  label="Last Name" handleChange={handleChange} half />
                 </>
                )}
-               <Input name="email" label="Email Address" handleChange={handleChange} type="email"/>
-               <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword=
+               <Input name="email" value={formData.email} label="Email Address" handleChange={handleChange} type="email"/>
+               <Input name="password" value={formData.password} label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword=
             {handleShowPassword}/>
                {isSignup && <Input name="confirmPassword" label="Repeat Password" type="password"  handleChange={handleChange}/>}
              </Grid>
