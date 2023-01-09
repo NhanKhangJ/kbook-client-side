@@ -63,7 +63,7 @@ const Post = ({post, setCurrentId}) => {
           );
       }
   
-      // return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
+      return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     }
      
   return (
@@ -158,7 +158,9 @@ const Post = ({post, setCurrentId}) => {
         ( likes.find((p) => p.userId === userId)
           ? (
             <>  
-            <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${hasLikedPost ? `${user?.result.name} ${`and ${likes[0]?.name}`}`: null}` }</Typography>
+            <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` :
+            `${likes.length === 2  ? `${user?.result?.name} and ${likes[0].name}`: user?.result?.name} `
+              }</Typography>
             </>
           ) : (
             <>

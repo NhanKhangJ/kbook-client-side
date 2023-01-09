@@ -5,6 +5,7 @@ import Container from '@mui/material/Container'
 // import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
+import UserProfile from './components/UserProfile/UserProfile';
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
       <Route path='/' element={ user?.result?._id? <Navigate to="/posts"/> : <Navigate to="/auth" replace /> }  />
       <Route path='/posts' element={ user?.result?._id === undefined ? <Navigate to="/auth" replace /> : <Home />    } />
       <Route path='/auth' element={ user?.result?._id === undefined ? <Auth /> : <Navigate to="/posts" replace />    } /> 
+      <Route path='/user/:id' element={<UserProfile />} />
     </Routes>
     </Container>
   );

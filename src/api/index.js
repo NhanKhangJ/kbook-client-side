@@ -16,6 +16,8 @@ export const commentPost = (value, id) => API.patch(`/posts/${id}/commentPost`, 
 export const deletePost = (id) => API.delete(`/posts/${id}`);
 
 
+export const fetchUser = (id) => API.get(`/user/${id}`)
+
 
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)

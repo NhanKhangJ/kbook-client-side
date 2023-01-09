@@ -24,7 +24,11 @@ const Navbar = () => {
       navigate('/auth');
       setUser(null)
     }
-   
+    
+    const navigateProfile = () =>{
+      navigate(`/user/${user.result._id}`)
+    }
+
     useEffect(() => {
       const token = user?.token;
   
@@ -37,7 +41,7 @@ const Navbar = () => {
       setUser(JSON.parse(localStorage.getItem('profile')));
       // eslint-disable-next-line
     }, [location]);
-
+ 
     const handleOpenUserMenu = (event) => {
       setAnchorElUser(event.currentTarget);
     };
@@ -90,7 +94,10 @@ const Navbar = () => {
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
-              >
+              >   
+                 <MenuItem  onClick={handleCloseUserMenu}>
+                    <Typography onClick={navigateProfile}  textAlign="center">Profile</Typography>
+                  </MenuItem>
                   <MenuItem  onClick={handleCloseUserMenu}>
                     <Typography onClick={logOut} textAlign="center">Logout</Typography>
                   </MenuItem>
