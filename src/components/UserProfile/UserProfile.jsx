@@ -1,16 +1,24 @@
-import { withTheme } from '@emotion/react';
-import { Avatar, Card, CardMedia, Container, Grid, Typography, CardActionArea, Menu, MenuItem, Paper, Button } from '@mui/material';
-import React, { useEffect } from 'react'
+
+import { Avatar,Container, Typography, CardActionArea, Menu, MenuItem, Paper, Grow, Stack, Box } from '@mui/material';
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getUser } from '../../action/users';
+import { getPosts } from '../../action/posts';
 import Navbar from '../Navbar/Navbar';
+import Intro from './Introduction/Intro';
+import Form from '../Form/Form';
+import Posts from '../Posts/Posts';
 
 const UserProfile = () => {
+  const [currentId, setCurrentId] = useState(0)
     const dispatch = useDispatch();
     const {id} = useParams()
     const [anchorElUser, setAnchorElUser] = React.useState(null);
   const {users, user} = useSelector((state) => state.users);
+  useEffect(()=>{
+    dispatch(getPosts())
+  },[currentId, dispatch])  
   
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -38,8 +46,8 @@ const handleDelete = () =>{
     <>
     <Navbar />
   
-      <Container sx={{mt: 8, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
-        <Paper style={{height:'45vh'}}>
+      <Container component={Grow} in sx={{mt: 8, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
+        <Paper style={{height:'40vh'}}>
          <div style={{backgroundImage: 'url(https://static01.nyt.com/images/2022/10/25/arts/25avatar-interviews1/25avatar-interviews1-videoSixteenByNineJumbo1600-v2.jpg)', backgroundSize: "cover",backgroundColor: 'bisque', height: '60%'}} >
            Profile cover
          </div>
@@ -73,6 +81,15 @@ const handleDelete = () =>{
          </div>
          </Paper>
       </Container>
+      <Stack direction="row" spacing={2} justifyContent="space-between" sx={{margin:{lg: '1.5rem', xl: '1.5rem' }}}>
+         <Box flex={4} >
+           <Intro />
+         </Box>
+         <Box flex={6} p={2}>
+         <Form currentId={currentId} setCurrentId={setCurrentId} />
+            <Posts  setCurrentId={setCurrentId} />
+         </Box>
+      </Stack>
 
     </>
     )}
