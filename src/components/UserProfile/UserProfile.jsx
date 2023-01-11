@@ -1,5 +1,5 @@
 
-import { Avatar,Container, Typography, CardActionArea, Menu, MenuItem, Paper, Stack, Box,Grow } from '@mui/material';
+import { Avatar,Container, Typography, Paper, Stack, Box,Grow } from '@mui/material';
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -15,33 +15,21 @@ const UserProfile = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
     const currentUser = JSON.parse(localStorage.getItem('profile'));
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {users, user} = useSelector((state) => state.users);
+    const {users, user} = useSelector((state) => state.users);
+  
+  
   useEffect(()=>{
     dispatch(getPosts())
   },[currentId, dispatch])  
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+
   // console.log(user._id)
   // console.log(id)
-const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-  const handleEditUser = () => {
-    setAnchorElUser(null);
-  
-  };
-const handleDelete = () =>{
-    setAnchorElUser(null);
-
-}
 
   useEffect(()=>{
     dispatch(getUser(id))
   },[dispatch, id])
 
-  console.log(currentUser?.result?._id)
+  // console.log(currentUser?.result?._id)
 
   return (
     <>
@@ -50,37 +38,15 @@ const handleDelete = () =>{
     <>
     <Navbar />
       <Container component={Grow} in sx={{mt: 8, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
-        <Paper style={{height:'40vh'}}>
-         <div style={{backgroundImage: 'url(https://static01.nyt.com/images/2022/10/25/arts/25avatar-interviews1/25avatar-interviews1-videoSixteenByNineJumbo1600-v2.jpg)', backgroundSize: "cover",backgroundColor: 'bisque', height: '60%'}} >
+        <Paper style={{height:'550px'}}>
+         <div style={{backgroundImage: 'url(https://static01.nyt.com/images/2022/10/25/arts/25avatar-interviews1/25avatar-interviews1-videoSixteenByNineJumbo1600-v2.jpg)', backgroundSize:"cover",backgroundColor: 'bisque', height: '60%'}} >
            Profile cover
          </div>
          <div style={{display:'flex', justifyContent:'center', alignItems:'center' ,flexDirection:'column', height:'35%', position:'relative', top:'-50px'}}>
            <div >
-           <Avatar  onClick={handleOpenUserMenu}  component={CardActionArea} alt={user.name} src="https://variety.com/wp-content/uploads/2022/02/Screen-Shot-2022-05-09-at-10.04.13-AM.png" sx={{ width:200, height:200, border: "10px solid white" }} />
-           </div >
+           <Avatar alt={user.name} src="https://variety.com/wp-content/uploads/2022/02/Screen-Shot-2022-05-09-at-10.04.13-AM.png" sx={{ width:200, height:200, border: "10px solid white" }} />
+           </div>
            <Typography variant="h3" gutterBottom>{user.name}</Typography>
-           <Menu  
-              sx={{ mt: '0'}}
-              anchorEl={anchorElUser}
-              // anchorOrigin={{
-              //   vertical: 'bottom',
-              //   horizontal: 'right',
-              // }}
-              keepMounted
-              // transformOrigin={{
-              //   vertical: 'top',
-              //   horizontal: 'right',
-              // }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            > 
-              <MenuItem sx={{width:200}}  onClick={handleEditUser} >
-                  <Typography  textAlign="center">Upload Images</Typography>
-                </MenuItem>
-                <MenuItem  onClick={handleDelete}>
-                  <Typography textAlign="center">Delete</Typography>
-                </MenuItem>
-            </Menu>
          </div>
          </Paper>
       </Container>
@@ -89,7 +55,7 @@ const handleDelete = () =>{
        direction="row"
        spacing={2} 
        justifyContent="space-between"
-       sx={{margin:{lg: '1.5rem', xl: '1.5rem'}, flexDirection :{xs: 'column', sm: 'column', lg:'row' ,xl: 'row' } }}
+       sx={{margin:{lg: '0.4rem', xl: '0.4rem'}, flexDirection :{xs: 'column', sm: 'column', lg:'row' ,xl: 'row' } }}
             >
          <Box flex={4} p={2} >
            <Intro />

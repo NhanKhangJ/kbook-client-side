@@ -136,7 +136,6 @@ const handleClose = () => {
           />
            <div>
             <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })}/>
-           
            </div>
         </DialogContent>
         <DialogActions>

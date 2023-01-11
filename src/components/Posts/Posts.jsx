@@ -33,7 +33,7 @@ const Posts = ({ profileId, setCurrentId }) => {
     <Box>
        {posts.map((post) =>(
         <Post setCurrentId={setCurrentId} key={post._id} post={post} />
-      ))}
+      )).reverse()}
     </Box>
     )
     
