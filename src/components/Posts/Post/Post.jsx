@@ -47,7 +47,7 @@ const Post = ({post, setCurrentId}) => {
      } else{
        setLikes([...post.likes, {userId: userId, name: user.name }])
      }
-    }
+    } 
 
     const Likes = () =>{
       if (likes.length > 0) {

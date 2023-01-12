@@ -1,4 +1,4 @@
-import { FETCH_USER, FETCH_ALL } from "../constants/actionTypes";
+import { FETCH_USER, FETCH_ALL, UPDATE } from "../constants/actionTypes";
 
 const users = (state = {users: []}, action) =>{
     switch(action.type){
@@ -6,6 +6,8 @@ const users = (state = {users: []}, action) =>{
             return {...state, users: action.payload}
         case FETCH_USER:
             return {...state, user: action.payload}
+        case UPDATE:
+            return {...state, users: state.users.map((user)=> user._id === action.payload._id ? action.payload : user)}
         default:
             return state
     }
