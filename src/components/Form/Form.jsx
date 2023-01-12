@@ -11,7 +11,7 @@ import {createPost, updatePost} from '../../action/posts'
 
 import './formStyles.css'
 
-const Form = ({currentId, setCurrentId}) => {
+const Form = ({currentUser, currentId, setCurrentId}) => {
 
 
 const [postData, setPostData] = useState({
@@ -93,7 +93,7 @@ const handleClose = () => {
   
        <Box display="flex" justifyContent="center" sx={{p:2}}>
         <div className='avatar'>
-          <Avatar alt={user?.result?.name}  src="/static/images/avatar/2.jpg"  sx={{p:1}}/>
+          <Avatar sx={{width:'4rem', height:'4rem'}} alt={user?.result?.name}  src={currentUser?.avatar ? currentUser?.avatar : "/static/images/avatar/2.jpg" }   />
         </div>
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px'}}>
             Start a post
@@ -106,7 +106,7 @@ const handleClose = () => {
         <DialogContent>
           <Box display="flex" >
           <div className='avatar'>
-            <Avatar alt={user?.result?.name}  src="/static/images/avatar/2.jpg" sx={{p:1}}/>
+            <Avatar sx={{width:'4rem', height:'4rem'}} alt={user?.result?.name}  src={currentUser?.avatar ? currentUser?.avatar : "/static/images/avatar/2.jpg" } />
            </div>
            <div>
             <Typography variant='h6'>{user?.result?.name}</Typography>

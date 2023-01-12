@@ -1,17 +1,25 @@
 import React,{useEffect, useState} from 'react'
 import { Stack,Box, Grow } from '@mui/material'
 import Form from '../Form/Form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../../action/posts';
 import Posts from '../Posts/Posts';
 import Navbar from '../Navbar/Navbar';
+import { getUser } from '../../action/users';
 const Home = () => {;
-  const [currentId, setCurrentId] = useState(0)
+  const [currentId, setCurrentId] = useState(0);
+  const currentUser = JSON.parse(localStorage.getItem('profile'));
+  const {users, user} = useSelector((state) => state.users); // eslint-disable-line
   const dispatch = useDispatch();
-
+ 
  useEffect(()=>{
    dispatch(getPosts())
  },[currentId, dispatch])  
+
+ useEffect(()=>{
+  dispatch(getUser(currentUser?.result?._id))
+ },[dispatch]) // eslint-disable-line
+// eslint-disable-line
 
   return (
     <> 
@@ -20,7 +28,7 @@ const Home = () => {;
            <Stack direction="row" spacing={2} justifyContent="space-between" sx={{margin:{lg: '0 2rem', xl: '0 2rem' }}}>
           <Box flex={2} p={2}	sx={{ display: { xs: 'none', md: 'block', lg: 'block', xl: 'block' } }}>Profile </Box>
            <Box flex={5} p={2}>
-            <Form currentId={currentId} setCurrentId={setCurrentId} />
+            <Form currentUser={user} currentId={currentId} setCurrentId={setCurrentId} />
             <Posts  setCurrentId={setCurrentId} />
            </Box>
           <Box flex={3} p={2} sx={{ display: { xs: 'none', md: 'none', lg: 'block', xl: 'block' } }}>Advertiser </Box>

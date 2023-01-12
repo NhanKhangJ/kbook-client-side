@@ -1,5 +1,14 @@
 import * as api from '../api/index.js';
-import { FETCH_USER,UPDATE } from '../constants/actionTypes.js';
+import { FETCH_USER, FETCH_USERS, UPDATE } from '../constants/actionTypes.js';
+
+export const getUsers = () => async(dispatch) =>{
+    try {
+        const {data} = await api.fetchUsers();
+        dispatch({type: FETCH_USERS, payload: data})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 export const getUser = (id) => async(dispatch) =>{
     try {

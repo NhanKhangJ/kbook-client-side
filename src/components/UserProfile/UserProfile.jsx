@@ -3,7 +3,7 @@ import { Avatar,Container, Typography, Paper, Stack, Box,Grow, CircularProgress 
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getUser } from '../../action/users';
+import { getUser, getUsers } from '../../action/users';
 import { getPosts } from '../../action/posts';
 import Navbar from '../Navbar/Navbar';
 import Intro from './Introduction/Intro';
@@ -16,10 +16,9 @@ const UserProfile = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
     const currentUser = JSON.parse(localStorage.getItem('profile'));
-    const {users, user} = useSelector((state) => state.users);
+    const {users, user} = useSelector((state) => state.users);  
     const [openDialog, setOpenDialog] = useState(false)
-    // console.log(openDialog)
-  
+    const localUser = users?.filter(user => user._id === currentUser?.result?._id)
   useEffect(()=>{
     dispatch(getPosts())
   },[currentId, dispatch])  
@@ -28,17 +27,20 @@ const UserProfile = () => {
   // console.log(id)
 
   useEffect(()=>{
+    dispatch(getUsers())
     dispatch(getUser(id))
-  },[dispatch, id,user])
-
-  // console.log(currentUser?.result?._id)
+  },[dispatch, id, openDialog])  // eslint-disable-line
+  
+  // useEffect(()=>{
+  //   dispatch(getUser(id))
+  // },[])  // eslint-disable-line
 
   return (
     <>
       
    {!user  ? (<CircularProgress />): (
     <>
-    <Navbar />
+    <Navbar openDialog={openDialog} />
       <Container component={Grow} in sx={{mt: 8, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
         <Paper style={{height:'550px'}}>
          <div style={{backgroundImage:  `url(${user.cover})`, backgroundSize:"contain",backgroundColor: 'bisque', height: '60%'}} >
@@ -67,7 +69,7 @@ const UserProfile = () => {
          </Box>
          <Box flex={6} p={2} style={{margin: '0px'}} >
            {currentUser?.result?._id === id && (
-            <Form currentId={currentId} setCurrentId={setCurrentId} />
+            <Form currentUser={localUser[0]} currentId={currentId} setCurrentId={setCurrentId} />
            )}
             <Posts profileId={id} setCurrentId={setCurrentId} />
          </Box>

@@ -1,36 +1,44 @@
 import React,{useState,useEffect} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation} from 'react-router-dom';
 import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar,  Tooltip, MenuItem } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import './navBarStyles.css'
 import * as actionType from '../../constants/actionTypes';
 import decode from 'jwt-decode'
+import { getUsers } from '../../action/users';
 
 
-const Navbar = () => {
+const Navbar = ({openDialog}) => {
 
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem('profile')));
+    const {users, user} = useSelector((state) => state.users); // eslint-disable-line
+    let  localUser  = users?.filter(user => user._id === userLogin?.result?._id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-
+    
     const logOut =() =>{
       dispatch({
         type: actionType.LOGOUT
       })
       
       navigate('/auth');
-      setUser(null)
+      setUserLogin(null)
     }
     
     const navigateProfile = () =>{
-      navigate(`/user/${user.result._id}`)
-    }
+      navigate(`/user/${userLogin.result._id}`)
+    } 
+
+    useEffect(()=>{
+      dispatch(getUsers())
+     },[dispatch, openDialog]) // eslint-disable-line
+    //  console.log(localUser[0].avatar)
 
     useEffect(() => {
-      const token = user?.token;
+      const token = userLogin?.token;
   
       if (token) {
         const decodedToken = decode(token);
@@ -38,7 +46,7 @@ const Navbar = () => {
         if (decodedToken.exp * 1000 < new Date().getTime()) logOut();
       }
   
-      setUser(JSON.parse(localStorage.getItem('profile')));
+      setUserLogin(JSON.parse(localStorage.getItem('profile')));
       // eslint-disable-next-line
     }, [location]);
  
@@ -76,7 +84,7 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={user ? user.result.name : ""} src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar} />
                 </IconButton>
               </Tooltip>
               <Menu

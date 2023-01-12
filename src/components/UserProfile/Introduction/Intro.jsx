@@ -1,6 +1,7 @@
 import React from 'react';
 import { BusinessCenter, Edit, LocationOn, School, WatchLater } from '@mui/icons-material'
-import { Button, Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
+import moment from 'moment';
 
 import './styles.css'
 
@@ -24,7 +25,7 @@ const Intro = ({user, setOpenDialog}) => {
       </CardContent>
       <CardContent sx={{display:'flex', alignItems:'center', alignContent:'center'}} >
        <WatchLater />
-       <Typography>User Join at</Typography>
+       <Typography>{moment(user.createdAt).format("MMMM Do YYYY")}</Typography>
       </CardContent>
       <CardActions >
        <Button fullWidth variant='contained' onClick={() => setOpenDialog(true)}>

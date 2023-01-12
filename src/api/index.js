@@ -15,7 +15,7 @@ export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const commentPost = (value, id) => API.patch(`/posts/${id}/commentPost`, {value})
 export const deletePost = (id) => API.delete(`/posts/${id}`);
 
-
+export const fetchUsers = () => API.get('/user')
 export const fetchUser = (id) => API.get(`/user/${id}`);
 export const updateUser = (id, updatedUser) => API.patch(`/user/${id}`, updatedUser)
 
