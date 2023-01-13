@@ -1,4 +1,5 @@
 import React,{useState,useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Avatar, Box, Button, Paper, TextField, Typography} from '@mui/material';
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -87,6 +88,7 @@ const handleClose = () => {
   setCurrentId(0);
 };
 
+// console.log(currentUser)
 
   return (
    <>
@@ -94,7 +96,9 @@ const handleClose = () => {
   
        <Box display="flex" justifyContent="center" sx={{p:2}}>
         <div className='avatar'>
+         <Link to={`/user/${currentUser?._id}`}>
           <Avatar sx={{width:'3.5rem', height:'3.5rem'}} alt={user?.result?.name}  src={currentUser?.avatar ? currentUser?.avatar : "/static/images/avatar/2.jpg" }   />
+          </Link>
         </div>
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px', display:'flex', justifyContent:'start', color:'GrayText'}}>
             Start a post

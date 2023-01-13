@@ -25,13 +25,15 @@ const Home = () => {;
     <> 
        <Navbar />
        <Grow in sx={{m: {md: 10, lg: 10, xl: 10}, mt:{xs: 10} }}>
-           <Stack direction="row" spacing={2} justifyContent="space-between" sx={{margin:{lg: '0 2rem', xl: '0 2rem' }}}>
-          <Box flex={2} p={2}	sx={{ display: { xs: 'none', md: 'block', lg: 'block', xl: 'block' } }}>Profile </Box>
-           <Box flex={5} p={2}>
+           <Stack direction="row" spacing={2} justifyContent="space-between" style={{gap:"2rem"}} sx={{margin:{lg: '0 2rem', xl: '0 2rem'}}}>
+          <Box flex={2} sx={{ display: { xs: 'none', md: 'block', lg: 'block', xl: 'block' } }}>
+          Profile Card
+          </Box>
+           <Box flex={5}  style={{marginLeft:'0'}}>
             <Form currentUser={user} currentId={currentId} setCurrentId={setCurrentId} />
             <Posts currentUser={user} setCurrentId={setCurrentId} />
            </Box>
-          <Box flex={3} p={2} sx={{ display: { xs: 'none', md: 'none', lg: 'block', xl: 'block' } }}>Advertiser </Box>
+          <Box flex={3} style={{marginLeft:'0'}} sx={{ display: { xs: 'none', md: 'none', lg: 'block', xl: 'block' } }}>Advertiser </Box>
            </Stack> 
         </Grow>    
     </>

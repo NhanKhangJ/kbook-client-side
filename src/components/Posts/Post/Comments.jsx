@@ -1,4 +1,5 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
+import { Link } from 'react-router-dom';
 import { TextField, Button, Avatar, Typography, CardContent } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import './styles.css'
@@ -45,7 +46,9 @@ const Comments = ({currentUser, post}) => {
 
       {comments.map((c,index)=>(
         <div style={{width:"100%", display: 'flex', justifyContent: "center", alignItems:"start"}}  key={index}>
+        <Link to={`/user/${c.id}`}>
         <Avatar alt={c.creator} src={c?.creatorAvatar || "/static/images/avatar/2.jpg"} />
+        </Link>
         <div style={{width:"100%", margin:"0 0.5rem 1rem 0.5rem", backgroundColor:"#f2f2f2", borderRadius:"5px", height:"auto", padding:"0.1rem 0.5rem 0.5rem 0.5rem" }} >
         <Typography variant='h6' fontWeight="bold" fontSize='large'  mb="0.5rem">{c.creator}</Typography>
         <Typography variant='subtitle1'>{c.comment}</Typography>

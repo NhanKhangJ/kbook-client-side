@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
+import {Link} from 'react-router-dom'
 import { useDispatch } from 'react-redux';
-import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton,  CircularProgress, Collapse } from '@mui/material';
+import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton,  CircularProgress, Collapse} from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {Menu, MenuItem} from '@mui/material';
@@ -50,6 +51,7 @@ const Post = ({currentUser, post, setCurrentId}) => {
     } 
     // console.log(currentUser.avatar)
     // console.log(post?.creatorAvatar)
+    // console.log(post.creator)
     const Likes = () =>{
       if (likes.length > 0) {
         return likes.find((p) => p.userId === (user?.result?.googleId || user?.result?._id))
@@ -71,9 +73,12 @@ const Post = ({currentUser, post, setCurrentId}) => {
     <>
       {!post.name ? <CircularProgress />  :(
       <Card sx={{mt:3}} elevation={2}>
-      <CardHeader
+      <CardHeader 
+        
         avatar={
-          <Avatar alt={post?.name}  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}/>
+          <Link to={`/user/${post.creator}`}>
+           <Avatar alt={post?.name}  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}/>
+           </Link>
         }
         action={
           user?.result?._id === post?.creator &&
