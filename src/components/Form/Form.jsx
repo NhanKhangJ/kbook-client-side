@@ -7,7 +7,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useDispatch, useSelector} from 'react-redux';
 import FileBase from 'react-file-base64'
 import {MuiChipsInput} from 'mui-chips-input';
-import {createPost, updatePost} from '../../action/posts'
+import {createPost, updatePost} from '../../action/posts';
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 
 import './formStyles.css'
 
@@ -93,9 +94,9 @@ const handleClose = () => {
   
        <Box display="flex" justifyContent="center" sx={{p:2}}>
         <div className='avatar'>
-          <Avatar sx={{width:'4rem', height:'4rem'}} alt={user?.result?.name}  src={currentUser?.avatar ? currentUser?.avatar : "/static/images/avatar/2.jpg" }   />
+          <Avatar sx={{width:'3.5rem', height:'3.5rem'}} alt={user?.result?.name}  src={currentUser?.avatar ? currentUser?.avatar : "/static/images/avatar/2.jpg" }   />
         </div>
-        <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px'}}>
+        <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px', display:'flex', justifyContent:'start', color:'GrayText'}}>
             Start a post
         </Button>
        </Box>
@@ -134,9 +135,12 @@ const handleClose = () => {
             onAddChip={(chip) => handleAddChip(chip)}
             onDeleteChip={(chip) => handleDeleteChip(chip)}
           />
-           <div>
+          <Button component="label" variant='contained' color='primary'>
+           <div style={{display:'none'}}>
             <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })}/>
            </div>
+           <ImageSearchIcon />
+           </Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

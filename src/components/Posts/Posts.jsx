@@ -6,24 +6,26 @@ import './styles.css';
 import Post from './Post/Post';
 import { useParams } from 'react-router-dom';
 
-const Posts = ({ profileId, setCurrentId }) => {
+const Posts = ({currentUser, profileId, setCurrentId }) => {
     const posts = useSelector((state) =>
          state.posts
     )
     
     const currentId = useParams();
 
+    //  console.log(currentUser)
     // const test = posts.filter(post => post.creator === profileId);
     // console.log(test)
     // console.log(currentId.id);
     // console.log(profileId)
+    
   return (
      profileId === currentId.id && currentId.id !== undefined ?
      !posts.length ? <CircularProgress /> : (
 
       <Box>
       {posts.filter(post => post.creator === profileId).map((post) => ( 
-       <Post setCurrentId={setCurrentId} key={post._id} post={post} />
+       <Post currentUser={currentUser} setCurrentId={setCurrentId} key={post._id} post={post} />
      ))}
    </Box>
      )
@@ -32,7 +34,7 @@ const Posts = ({ profileId, setCurrentId }) => {
    : !posts.length ? <CircularProgress /> : (
     <Box>
        {posts.map((post) =>(
-        <Post setCurrentId={setCurrentId} key={post._id} post={post} />
+        <Post currentUser={currentUser} setCurrentId={setCurrentId} key={post._id} post={post} />
       )).reverse()}
     </Box>
     )

@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation} from 'react-router-dom';
-import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar,  Tooltip, MenuItem } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar,  Tooltip, MenuItem, Paper, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
+import LogoutIcon from '@mui/icons-material/Logout';
 import './navBarStyles.css'
 import * as actionType from '../../constants/actionTypes';
 import decode from 'jwt-decode'
@@ -14,7 +15,7 @@ const Navbar = ({openDialog}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem('profile')));
     const {users, user} = useSelector((state) => state.users); // eslint-disable-line
-    let  localUser  = users?.filter(user => user._id === userLogin?.result?._id)
+    const  localUser  = users?.filter(user => user._id === userLogin?.result?._id)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -34,8 +35,8 @@ const Navbar = ({openDialog}) => {
 
     useEffect(()=>{
       dispatch(getUsers())
-     },[dispatch, openDialog]) // eslint-disable-line
-    //  console.log(localUser[0].avatar)
+     },[dispatch, location, openDialog]) // eslint-disable-line
+    //  console.log(localUser)
 
     useEffect(() => {
       const token = userLogin?.token;
@@ -50,6 +51,7 @@ const Navbar = ({openDialog}) => {
       // eslint-disable-next-line
     }, [location]);
  
+
     const handleOpenUserMenu = (event) => {
       setAnchorElUser(event.currentTarget);
     };
@@ -84,7 +86,7 @@ const Navbar = ({openDialog}) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar} />
+                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar}  sx={{width:'3rem', height:'3rem'}} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -104,10 +106,17 @@ const Navbar = ({openDialog}) => {
                 onClose={handleCloseUserMenu}
               >   
                  <MenuItem  onClick={handleCloseUserMenu}>
-                    <Typography onClick={navigateProfile}  textAlign="center">Profile</Typography>
+                    <Paper component={Button} onClick={navigateProfile}  sx={{display:'flex', width:{xs:'400px', sm:'400px',lg:'400px', xl:'400px'}, justifyContent:'space-between', alignItems:'center', padding:'1rem'}}>
+                     <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar}  sx={{width:'3rem', height:'3rem'}} />
+                     <Typography fontSize="1.2rem" textAlign="center">{localUser[0]?.name}</Typography>
+                    </Paper>
                   </MenuItem>
                   <MenuItem  onClick={handleCloseUserMenu}>
-                    <Typography onClick={logOut} textAlign="center">Logout</Typography>
+                    <Box component={Button} onClick={logOut}  sx={{display:'flex', alignItems:'center', color:'black'}}>
+                    <LogoutIcon />
+                    <Typography  fontSize="1.2rem" textAlign="center">&nbsp;Logout</Typography>
+                    </Box>
+
                   </MenuItem>
               </Menu>
             </Box>

@@ -29,7 +29,7 @@ const Home = () => {;
           <Box flex={2} p={2}	sx={{ display: { xs: 'none', md: 'block', lg: 'block', xl: 'block' } }}>Profile </Box>
            <Box flex={5} p={2}>
             <Form currentUser={user} currentId={currentId} setCurrentId={setCurrentId} />
-            <Posts  setCurrentId={setCurrentId} />
+            <Posts currentUser={user} setCurrentId={setCurrentId} />
            </Box>
           <Box flex={3} p={2} sx={{ display: { xs: 'none', md: 'none', lg: 'block', xl: 'block' } }}>Advertiser </Box>
            </Stack> 

@@ -34,6 +34,7 @@ const UserProfile = () => {
   // useEffect(()=>{
   //   dispatch(getUser(id))
   // },[])  // eslint-disable-line
+  // console.log(localUser[0].avatar)
 
   return (
     <>
@@ -62,7 +63,7 @@ const UserProfile = () => {
        sx={{margin:{lg: '0.4rem', xl: '0.4rem'}, flexDirection :{xs: 'column', sm: 'column', lg:'row' ,xl: 'row' } }}
             >
          <Box flex={4} p={2} >
-           <Intro user={user} setOpenDialog={setOpenDialog} />
+           <Intro currentUser={localUser[0]} user={user} setOpenDialog={setOpenDialog} />
            {currentUser?.result?._id === id && (
            <ProfileForm user={user} openDialog={openDialog} setOpenDialog={setOpenDialog} />
            )}
@@ -71,7 +72,7 @@ const UserProfile = () => {
            {currentUser?.result?._id === id && (
             <Form currentUser={localUser[0]} currentId={currentId} setCurrentId={setCurrentId} />
            )}
-            <Posts profileId={id} setCurrentId={setCurrentId} />
+            <Posts currentUser={localUser[0]} profileId={id} setCurrentId={setCurrentId} />
          </Box>
       </Stack>
       </Grow>

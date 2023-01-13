@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import './styles.css'
 
-const Intro = ({user, setOpenDialog}) => {
+const Intro = ({currentUser, user, setOpenDialog}) => {
 
   return (
     <>
@@ -27,12 +27,15 @@ const Intro = ({user, setOpenDialog}) => {
        <WatchLater />
        <Typography>{moment(user.createdAt).format("MMMM Do YYYY")}</Typography>
       </CardContent>
-      <CardActions >
+      {currentUser?._id === user?._id && (
+        <CardActions >
        <Button fullWidth variant='contained' onClick={() => setOpenDialog(true)}>
        <Edit/>
          Edit Profile
        </Button>
       </CardActions>
+      )}
+   
      </Card>
      
     </>

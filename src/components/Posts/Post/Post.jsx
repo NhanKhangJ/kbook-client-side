@@ -12,7 +12,7 @@ import Comments from './Comments';
 
 
 
-const Post = ({post, setCurrentId}) => {
+const Post = ({currentUser, post, setCurrentId}) => {
     const dispatch = useDispatch();
     const [showMore, setShowmore] = useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -23,7 +23,7 @@ const Post = ({post, setCurrentId}) => {
     // const hasLikedPost = post.likes.find((like) => like === userId)
     const hasLikedPost = likes.find((p) => p?.userId === userId)
     // console.log(hasLikedPost)
-  
+    // console.log(post)
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
       };
@@ -48,7 +48,8 @@ const Post = ({post, setCurrentId}) => {
        setLikes([...post.likes, {userId: userId, name: user.name }])
      }
     } 
-
+    // console.log(currentUser.avatar)
+    // console.log(post?.creatorAvatar)
     const Likes = () =>{
       if (likes.length > 0) {
         return likes.find((p) => p.userId === (user?.result?.googleId || user?.result?._id))
@@ -65,13 +66,14 @@ const Post = ({post, setCurrentId}) => {
   
       return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     }
+    // console.log(post.comments)
   return (
     <>
       {!post.name ? <CircularProgress />  :(
       <Card sx={{mt:3}} elevation={2}>
       <CardHeader
         avatar={
-          <Avatar alt={post?.name}  src="/static/images/avatar/2.jpg"  sx={{p:1}}/>
+          <Avatar alt={post?.name}  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}/>
         }
         action={
           user?.result?._id === post?.creator &&
@@ -152,7 +154,8 @@ const Post = ({post, setCurrentId}) => {
       />
       ) : null}
      
-     <CardContent sx={{paddingTop: 0, paddingBottom: 0}}>
+     <CardContent sx={{paddingTop: '0.5rem', paddingBottom: '0.5rem', display:'flex', justifyContent:'space-between'}}>
+      <div>
       { likes.length > 0 &&
         ( likes.find((p) => p.userId === userId)
           ? (
@@ -167,9 +170,17 @@ const Post = ({post, setCurrentId}) => {
             </>
           )
       )}
-      <hr style={{opacity:'50%'}}/>
-      </CardContent>
-     <CardActions disableSpacing>
+      </div>
+      <div>
+      {post?.comments.length > 0 && (
+         <Typography variant='subtitle2' color="GrayText">{post.comments.length} {post?.comments?.length < 2 ? "comment" : 'comments'}</Typography>
+      )}
+      </div>
+     </CardContent>
+     <CardContent sx={{paddingBottom:'0', paddingTop:'0'}} >
+      <hr style={{opacity:'50%', padding:'0' , margin:'0px'}}/>
+     </CardContent>
+     <CardActions disableSpacing sx={{paddingBottom:'0px', paddingTop:'0px'}}>
         <Button  size='large' color='primary'  onClick={handleLike}>
           <Likes />
         </Button>
@@ -178,7 +189,7 @@ const Post = ({post, setCurrentId}) => {
         </Button>
       </CardActions>
       <Collapse in={expansed} timeout="auto" unmountOnExit>
-        <Comments post={post} />
+        <Comments currentUser={currentUser} post={post} />
       </Collapse>
     </Card>
      )}
