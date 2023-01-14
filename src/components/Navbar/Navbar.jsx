@@ -32,10 +32,17 @@ const Navbar = ({openDialog}) => {
     const navigateProfile = () =>{
       navigate(`/user/${userLogin.result._id}`)
     } 
-
+    
+    
     useEffect(()=>{
-      dispatch(getUsers())
-     },[dispatch, location, openDialog]) // eslint-disable-line
+       if(openDialog === true || openDialog === false){
+       
+        console.log('slow')
+      } else{
+        dispatch(getUsers())
+      }
+     },[dispatch, location])   // eslint-disable-line
+   
     //  console.log(localUser)
 
     useEffect(() => {

@@ -69,6 +69,7 @@ const Post = ({currentUser, post, setCurrentId}) => {
       return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     }
     // console.log(post.comments)
+    // console.log(post)
   return (
     <>
       {!post.name ? <CircularProgress />  :(

@@ -17,20 +17,37 @@ const UserProfile = () => {
     const {id} = useParams();
     const currentUser = JSON.parse(localStorage.getItem('profile'));
     const {users, user} = useSelector((state) => state.users);  
+    const posts = useSelector((state) =>
+         state.posts
+    )
+
     const [openDialog, setOpenDialog] = useState(false)
     const localUser = users?.filter(user => user._id === currentUser?.result?._id)
+
   useEffect(()=>{
     dispatch(getPosts())
   },[currentId, dispatch])  
-
-  // console.log(user._id)
+// console.log(user._id)
   // console.log(id)
+
+  // useEffect(()=>{
+  //   dispatch(getUsers())
+  //   dispatch(getUser(id))
+  // },[dispatch, id, openDialog]) 
 
   useEffect(()=>{
     dispatch(getUsers())
     dispatch(getUser(id))
-  },[dispatch, id, openDialog])  // eslint-disable-line
+  },[dispatch, id]) 
   
+  
+  // useEffect(()=>{
+  //   dispatch(getUsers())
+  //   dispatch(getUser(id))
+  // },[dispatch, openDialog]) // eslint-disable-line
+
+
+
   // useEffect(()=>{
   //   dispatch(getUser(id))
   // },[])  // eslint-disable-line
@@ -44,8 +61,8 @@ const UserProfile = () => {
     <Navbar openDialog={openDialog} />
       <Container component={Grow} in sx={{mt: 8, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
         <Paper style={{height:'550px'}}>
-         <div style={{backgroundImage:  `url(${user.cover})`, backgroundSize:"contain",backgroundColor: 'bisque', height: '60%'}} >
-           Profile cover
+         <div style={{backgroundImage:  `url(${user.cover})`, backgroundSize:"100% 120%",backgroundColor: 'bisque', height: '60%'}} >
+  
          </div>
          <div style={{display:'flex', justifyContent:'center', alignItems:'center' ,flexDirection:'column', height:'35%', position:'relative', top:'-50px'}}>
            <div>
@@ -72,7 +89,7 @@ const UserProfile = () => {
            {currentUser?.result?._id === id && (
             <Form currentUser={localUser[0]} currentId={currentId} setCurrentId={setCurrentId} />
            )}
-            <Posts currentUser={localUser[0]} profileId={id} setCurrentId={setCurrentId} />
+            <Posts posts={posts} currentUser={localUser[0]} profileId={id} setCurrentId={setCurrentId} />
          </Box>
       </Stack>
       </Grow>

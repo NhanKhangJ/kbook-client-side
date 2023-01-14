@@ -6,11 +6,14 @@ import './styles.css';
 import Post from './Post/Post';
 import { useParams } from 'react-router-dom';
 
-const Posts = ({currentUser, profileId, setCurrentId }) => {
-    const posts = useSelector((state) =>
-         state.posts
-    )
-    
+
+const Posts = ({posts, currentUser, profileId, setCurrentId }) => {
+
+    // const posts = useSelector((state) =>
+    //      state.posts
+    // )
+
+
     const currentId = useParams();
 
     //  console.log(currentUser)
