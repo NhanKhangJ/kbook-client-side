@@ -13,9 +13,9 @@ const Home = () => {;
   const currentUser = JSON.parse(localStorage.getItem('profile'));
   const {users, user} = useSelector((state) => state.users); // eslint-disable-line
   const dispatch = useDispatch();
-  const posts = useSelector((state) =>
-  state.posts
-)
+//   const posts = useSelector((state) =>
+//   state.posts
+// )
  useEffect(()=>{
    dispatch(getPosts())
  },[currentId, dispatch])  
@@ -29,13 +29,13 @@ const Home = () => {;
     <> 
        <Navbar />
        <Grow in sx={{m: {md: 10, lg: 10, xl: 10}, mt:{xs: 10} }}>
-           <Stack direction="row" spacing={2} justifyContent="space-between" style={{gap:"2rem"}} sx={{margin:{lg: '0 2rem', xl: '0 2rem'}}}>
-          <Box flex={2} sx={{ display: { xs: 'none', md: 'block', lg: 'block', xl: 'block' } }} >
+           <Stack direction="row" spacing={2} justifyContent="space-between" style={{gap:"2rem"}} sx={{margin:{lg: '0 2rem', xl: '0 2rem'}}} >
+          <Box flex={2} style={{position:'sticky', top:'0'}} sx={{ display: { xs: 'none', md: 'block', lg: 'block', xl: 'block' } }} >
            <ProfileCard currentUser={user} />
           </Box>
-           <Box flex={5}  style={{marginLeft:'0'}}>
+           <Box flex={5}  style={{marginLeft:'0', overflowY:'scroll'}}>
             <Form currentUser={user} currentId={currentId} setCurrentId={setCurrentId} />
-            <Posts posts={posts} currentUser={user} setCurrentId={setCurrentId} />
+            <Posts  currentUser={user} setCurrentId={setCurrentId} />
            </Box>
           <Box flex={3} style={{marginLeft:'0'}} sx={{ display: { xs: 'none', md: 'none', lg: 'block', xl: 'block' } }}>
            <Sponsor /> 

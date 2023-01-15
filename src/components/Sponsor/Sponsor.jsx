@@ -1,30 +1,31 @@
 import React from 'react'
 import Carousel from 'react-material-ui-carousel'
-import {Paper, Button, Card, CardMedia, CardContent, Typography} from '@mui/material'
-import { Home } from '@mui/icons-material'
+import {Paper,  Card, CardMedia, CardContent, Typography} from '@mui/material'
+
 import { Box } from '@mui/system'
-
-
+import PerShcolas from '../../images/PerScholas.png'
+import ActivateWork from '../../images/ActivateWork.jpeg'
 const Sponsor = () => {
     const items = [
         {
-            name: "Random Name #1",
-            description: "Hello World!"
+            name: "ActivateWork",
+            description: "ActivateWork is a nonprofit recruiting, training, and coaching firm that connects underrepresented talent to life-changing careers.",
+            image: ActivateWork
         },
         {
-            name: "Random Name #2",
-            description: "Hello World!"
+            name: "PerSholas",
+            description: "At Per Scholas, we believe a thriving workforce starts with equitable access to education. Learn about Per Scholas and how we provide skills training.",
+            image: PerShcolas
         }
     ]
     const Item = ({item}) =>{
         return (
-          <Card>
+          <Card elevation={1} style={{border:' 1px solid #ddd'}}>
             <CardMedia
-                    sx={{ height: 140 }}
-             image="https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=2000"
+                    sx={{ height: 200 }}
+             image={item.image}
               />
-            <CardContent>
-                <Typography>{item.name}</Typography>
+            <CardContent style={{background:'#EBECF0'}}>
                 <Typography>{item.description}</Typography>
             </CardContent>
           </Card>
@@ -32,8 +33,9 @@ const Sponsor = () => {
     } 
 
     return (
-        <Box position="fixed" width={338} >
-        <Carousel
+        <Box component={Paper}  p={2} >
+        <Typography variant='h6'>Sponsor by</Typography> 
+         <Carousel
          stopAutoPlayOnHover
          indicatorIconButtonProps={{
         style: {
@@ -48,6 +50,7 @@ const Sponsor = () => {
                 items.map( (item, i) => <Item key={i} item={item} /> )
             }
         </Carousel>
+
         </Box>
     )
 }

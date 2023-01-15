@@ -17,9 +17,9 @@ const UserProfile = () => {
     const {id} = useParams();
     const currentUser = JSON.parse(localStorage.getItem('profile'));
     const {users, user} = useSelector((state) => state.users);  
-    const posts = useSelector((state) =>
-         state.posts
-    )
+    // const posts = useSelector((state) =>
+    //      state.posts
+    // )
 
     const [openDialog, setOpenDialog] = useState(false)
     const localUser = users?.filter(user => user._id === currentUser?.result?._id)
@@ -89,7 +89,7 @@ const UserProfile = () => {
            {currentUser?.result?._id === id && (
             <Form currentUser={localUser[0]} currentId={currentId} setCurrentId={setCurrentId} />
            )}
-            <Posts posts={posts} currentUser={localUser[0]} profileId={id} setCurrentId={setCurrentId} />
+            <Posts  currentUser={localUser[0]} profileId={id} setCurrentId={setCurrentId} />
          </Box>
       </Stack>
       </Grow>

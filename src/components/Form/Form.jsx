@@ -92,12 +92,12 @@ const handleClose = () => {
 
   return (
    <>
-    <Paper>
+    <Paper sx={{mb: 2}}>
   
        <Box display="flex" justifyContent="center" sx={{p:2}}>
         <div className='avatar'>
          <Link to={`/user/${currentUser?._id}`}>
-          <Avatar sx={{width:'3.5rem', height:'3.5rem'}} alt={user?.result?.name}  src={currentUser?.avatar ? currentUser?.avatar : "/static/images/avatar/2.jpg" }   />
+          <Avatar sx={{width:'3.5rem', height:'3.5rem'}}  src={currentUser?.avatar}></Avatar>
           </Link>
         </div>
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px', display:'flex', justifyContent:'start', color:'GrayText'}}>

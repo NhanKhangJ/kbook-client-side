@@ -4,11 +4,13 @@ import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@mui/mate
 import Link from '@mui/material/Link';
 import { BusinessCenter, LocationOn, School } from '@mui/icons-material';
 
+//
 const ProfileCard = ({currentUser}) => {
+  
   // console.log(currentUser)
   return (
     <> 
-      <Box position="fixed" width={224} >
+      <Box >
        <Card  sx={{maxWidth:'100%', maxHeight:'300px'}}>
          <div>
           <CardMedia
