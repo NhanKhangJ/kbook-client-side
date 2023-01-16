@@ -1,6 +1,6 @@
 import React from 'react'
 import Carousel from 'react-material-ui-carousel'
-import {Paper,  Card, CardMedia, CardContent, Typography} from '@mui/material'
+import {Paper,  Card, CardMedia, CardContent, Typography, Link} from '@mui/material'
 
 import { Box } from '@mui/system'
 import PerShcolas from '../../images/PerScholas.png'
@@ -10,18 +10,20 @@ const Sponsor = () => {
         {
             name: "ActivateWork",
             description: "ActivateWork is a nonprofit recruiting, training, and coaching firm that connects underrepresented talent to life-changing careers.",
-            image: ActivateWork
+            image: ActivateWork, 
+            website: 'https://www.activatework.org/'
         },
         {
             name: "PerSholas",
             description: "At Per Scholas, we believe a thriving workforce starts with equitable access to education. Learn about Per Scholas and how we provide skills training.",
-            image: PerShcolas
+            image: PerShcolas,
+            website: 'https://perscholas.org/'
         }
     ]
     const Item = ({item}) =>{
         return (
-          <Card elevation={1} style={{border:' 1px solid #ddd'}}>
-            <CardMedia
+          <Card  elevation={2} style={{border:' 1px solid #ddd'}}>
+            <CardMedia component={Link} href={item.website} underline="none" target="_blank"
                     sx={{ height: 200 }}
              image={item.image}
               />

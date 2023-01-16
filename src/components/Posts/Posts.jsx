@@ -14,13 +14,14 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
     )
 
 
-    const currentId = useParams();
+    const  currentId  = useParams();
 
     //  console.log(currentUser)
     // const test = posts.filter(post => post.creator === profileId);
     // console.log(test)
     // console.log(currentId.id);
     // console.log(profileId)
+    // console.log(currentId)
     
   return (
      profileId === currentId.id && currentId.id !== undefined ?

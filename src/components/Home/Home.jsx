@@ -8,6 +8,7 @@ import Navbar from '../Navbar/Navbar';
 import { getUser } from '../../action/users';
 import ProfileCard from '../ProfileCard/ProfileCard';
 import Sponsor from '../Sponsor/Sponsor';
+import CopyRight from '../CopyRight/CopyRight';
 const Home = () => {;
   const [currentId, setCurrentId] = useState(0);
   const currentUser = JSON.parse(localStorage.getItem('profile'));
@@ -39,6 +40,7 @@ const Home = () => {;
            </Box>
           <Box flex={3} style={{marginLeft:'0'}} sx={{ display: { xs: 'none', md: 'none', lg: 'block', xl: 'block' } }}>
            <Sponsor /> 
+           <CopyRight />
           </Box>
            </Stack> 
         </Grow>    

@@ -47,7 +47,7 @@ const ProfileCard = ({currentUser}) => {
         <CardContent>
             <Typography variant='h6'>Note</Typography>
             <Typography variant='subtitle2'>Hi {currentUser?.name}!</Typography>
-            <Typography variant='subtitle2'>Thank you for using my application. Feel free to reach out to me with my <Link href='mailto:khangle51096@gmail.com'>email</Link> or take a look at my <Link href="https://nhankhangleportfolio.onrender.com/" target="_blank">portfolio</Link> to know more a bout me. </Typography>
+            <Typography variant='subtitle2'>Thank you for using my application. There are a lot of things to improve in my app. I hope you enjoy using it.</Typography>
             <Typography  variant='subtitle2'>Regards,</Typography>
             <Typography  variant='subtitle2'>Nhan Khang Le</Typography>
             <div>
