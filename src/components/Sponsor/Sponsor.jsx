@@ -15,7 +15,7 @@ const Sponsor = () => {
         },
         {
             name: "PerSholas",
-            description: "At Per Scholas, we believe a thriving workforce starts with equitable access to education. Learn about Per Scholas and how we provide skills training.",
+            description: "Per Scholas is a non-profit that provides technology education and career training to individuals from under-served communities.",
             image: PerShcolas,
             website: 'https://perscholas.org/'
         }

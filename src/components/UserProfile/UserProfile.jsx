@@ -11,6 +11,8 @@ import Form from '../Form/Form';
 import Posts from '../Posts/Posts';
 import ProfileForm from './ProfileForm/ProfileForm';
 import freeBackground from '../../images/freeBackground.jpeg'
+import ImagesCollection from '../ImagesCollection/ImagesCollection';
+import CopyRight from '../CopyRight/CopyRight';
 
 const UserProfile = () => {
   const [currentId, setCurrentId] = useState(0)
@@ -82,9 +84,12 @@ const UserProfile = () => {
             >
          <Box flex={4} p={2} >
            <Intro currentUser={localUser[0]} user={user} setOpenDialog={setOpenDialog} />
+           <ImagesCollection profileId={id} />
+           <CopyRight />
            {currentUser?.result?._id === id && (
            <ProfileForm user={user} openDialog={openDialog} setOpenDialog={setOpenDialog} />
            )}
+       
          </Box>
          <Box flex={6} p={2} style={{margin: '0px'}} >
            {currentUser?.result?._id === id && (

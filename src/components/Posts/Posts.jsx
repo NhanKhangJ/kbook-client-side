@@ -24,27 +24,29 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
     // console.log(currentId)
     
   return (
-     profileId === currentId.id && currentId.id !== undefined ?
-     !posts.length ? <CircularProgress /> : (
+     profileId === currentId.id && currentId.id !== undefined 
+     
+    ? 
 
+     !posts.length ? <CircularProgress /> : (
       <Box display="flex" flexDirection="column" gap={2}>
-      {posts.filter(post => post.creator === profileId).map((post) => ( 
-       <Post currentUser={currentUser} setCurrentId={setCurrentId} key={post._id} post={post} />
-     ))}
-   </Box>
+       {posts.filter(post => post.creator === profileId).map((post) => ( 
+        <Post currentUser={currentUser} setCurrentId={setCurrentId} key={post._id} post={post} />
+       ))}
+      </Box>
      )
 
+    :
 
-   : !posts.length ? <CircularProgress /> : (
-    <Box display="flex" flexDirection="column" gap={2}>
+     !posts.length ? <CircularProgress /> : (
+      <Box display="flex" flexDirection="column" gap={2}>
        {posts.map((post) =>(
         <Post currentUser={currentUser} setCurrentId={setCurrentId} key={post._id} post={post} />
-      )).reverse()}
-    </Box>
+        )).reverse()}
+      </Box>
     )
     
-  
-    ) 
+  ) 
   
 }
 

@@ -70,6 +70,8 @@ const Post = ({currentUser, post, setCurrentId}) => {
     }
     // console.log(post.comments)
     // console.log(index)
+
+    // ready for dialog mode
   return (
     <>
       {!post.name ? <CircularProgress />  :(
