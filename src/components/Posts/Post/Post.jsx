@@ -153,7 +153,7 @@ const Post = ({currentUser, post, setCurrentId}) => {
       </CardContent>
       {post.selectedFile ? (
         <CardMedia
-        sx={{objectFit:'contain', height:{xs: 224, sm: 500, lg: 350, xl: 350}}}
+        sx={{objectFit:{xs: 'contain', sm: 'contain' , lg:'cover', xl:'cover'}, height:{xs: 224, sm: 500, lg: 350, xl: 350}}}
         component="img" //The component used for the root node. Either a string to use a HTML element or a component.
         image={post.selectedFile} 
         alt=""

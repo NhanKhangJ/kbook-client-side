@@ -3,7 +3,7 @@ import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@mui/mate
 
 import Link from '@mui/material/Link';
 import { BusinessCenter, LocationOn, School } from '@mui/icons-material';
-
+import freeBackground from '../../images/freeBackground.jpeg'
 //
 const ProfileCard = ({currentUser}) => {
   
@@ -15,13 +15,13 @@ const ProfileCard = ({currentUser}) => {
          <div>
           <CardMedia
            sx={{height:75, objectFit:'cover'}}
-           image={currentUser?.cover}
+           image={currentUser?.cover || freeBackground}
            component='img'
             />
          </div>
          <div>
           <CardContent sx={{position:'relative', display:'flex', flexDirection:'column',  top:'-50px'}}>
-            <Avatar  sx={{width:'5rem', height:'5rem', border: '5px solid white', alignSelf:'center' }} alt={currentUser?.name} src={currentUser?.avatar}>{currentUser?.name}</Avatar>
+            <Avatar  sx={{width:'5rem', height:'5rem', border: '5px solid white', alignSelf:'center' }} alt=" " src={currentUser?.avatar}>{currentUser?.name.split(" ")[0].substring(0,1)}{currentUser?.name.split(" ")[1].substring(0,1)}</Avatar>
             <Link sx={{alignSelf:'center'}} variant='h5' href={`/user/${currentUser?._id}`} underline="hover" color="black">{currentUser?.name}</Link>
 
              <Typography marginBottom="1rem" display="flex" alignSelf="flex-start" variant='caption'>

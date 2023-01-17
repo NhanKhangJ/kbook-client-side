@@ -13,19 +13,19 @@ const Intro = ({currentUser, user, setOpenDialog}) => {
       <CardHeader title="Introduction"  />
       <CardContent sx={{display:'flex', alignItems:'center', alignContent:'center'}} >
        <BusinessCenter />
-       <Typography>{user.job}</Typography>
+       <Typography>&nbsp;{user?.job ? ` Working at ${user.job}` : "Update your employment"}</Typography>
       </CardContent>
       <CardContent sx={{display:'flex', alignItems:'center', alignContent:'center'}} >
        <School />
-       <Typography>{user.education}</Typography>
+       <Typography>&nbsp;{user?.education ? ` Studied at ${user.education}` : "Update your education"}</Typography>
       </CardContent>
       <CardContent sx={{display:'flex', alignItems:'center', alignContent:'center'}} >
        <LocationOn />
-       <Typography>{user.location}</Typography>
+       <Typography>&nbsp;{user.location ? ` Live at ${user.location}` : "Update your location"}</Typography>
       </CardContent>
       <CardContent sx={{display:'flex', alignItems:'center', alignContent:'center'}} >
        <WatchLater />
-       <Typography>{moment(user.createdAt).format("MMMM Do YYYY")}</Typography>
+       <Typography>&nbsp;Join at {moment(user.createdAt).format("MMMM Do YYYY")}</Typography>
       </CardContent>
       {currentUser?._id === user?._id && (
         <CardActions >

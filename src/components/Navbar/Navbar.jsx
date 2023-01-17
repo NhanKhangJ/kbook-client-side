@@ -93,7 +93,7 @@ const Navbar = ({openDialog}) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar}  sx={{width:'3rem', height:'3rem'}} />
+                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar}  sx={{width:'3rem', height:'3rem'}}>{localUser[0]?.name?.split(" ")[0].substring(0,1)}{localUser[0]?.name?.split(" ")[1].substring(0,1)}</Avatar>
                 </IconButton>
               </Tooltip>
               <Menu

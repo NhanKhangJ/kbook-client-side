@@ -1,6 +1,6 @@
 import React,{useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Avatar, Box, Button, Paper, TextField, Typography} from '@mui/material';
+// import { Link } from 'react-router-dom';
+import { Avatar, Box, Button, Paper, TextField, Typography ,Link} from '@mui/material';
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -96,8 +96,8 @@ const handleClose = () => {
   
        <Box display="flex" justifyContent="center" sx={{p:2}}>
         <div className='avatar'>
-         <Link to={`/user/${currentUser?._id}`}>
-          <Avatar sx={{width:'3.5rem', height:'3.5rem'}}  src={currentUser?.avatar}></Avatar>
+         <Link href={`/user/${currentUser?._id}`} underline="none">
+          <Avatar sx={{width:'3.5rem', height:'3.5rem'}}  src={currentUser?.avatar}>{currentUser?.name?.split(" ")[0].substring(0,1)}{currentUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
           </Link>
         </div>
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px', display:'flex', justifyContent:'start', color:'GrayText'}}>
@@ -106,7 +106,7 @@ const handleClose = () => {
        </Box>
    
        <Dialog open={open} fullWidth>
-        <DialogTitle>Create a Post</DialogTitle>
+        <DialogTitle>{currentId ? "Edit a post" : "Create a Post"}</DialogTitle>
         <form autoComplete='off' noValidate onSubmit={handleSubmit}>
         <DialogContent>
           <Box display="flex" >
@@ -148,7 +148,7 @@ const handleClose = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type='submit' variant='contained' onClick={() => setOpen(false)}>Post</Button>
+          <Button type='submit' variant='contained' onClick={() => setOpen(false)}>{currentId ? "Update" : "Post"}</Button>
         </DialogActions>
         </form>
       </Dialog>

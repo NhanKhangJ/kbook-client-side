@@ -10,6 +10,7 @@ import Intro from './Introduction/Intro';
 import Form from '../Form/Form';
 import Posts from '../Posts/Posts';
 import ProfileForm from './ProfileForm/ProfileForm';
+import freeBackground from '../../images/freeBackground.jpeg'
 
 const UserProfile = () => {
   const [currentId, setCurrentId] = useState(0)
@@ -61,12 +62,12 @@ const UserProfile = () => {
     <Navbar openDialog={openDialog} />
       <Container component={Grow} in sx={{mt: 8, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
         <Paper style={{height:'550px'}}>
-         <div style={{backgroundImage:  `url(${user.cover})`, backgroundSize:"100% 120%",backgroundColor: 'bisque', height: '60%'}} >
+         <div style={{backgroundImage:  `url(${user.cover || freeBackground})`, backgroundSize:"100% 120%",backgroundColor: 'bisque', height: '60%'}} >
   
          </div>
          <div style={{display:'flex', justifyContent:'center', alignItems:'center' ,flexDirection:'column', height:'35%', position:'relative', top:'-50px'}}>
            <div>
-           <Avatar alt={user.name} src={user.avatar} sx={{ width:200, height:200, border: "10px solid white" }} />
+           <Avatar alt={user.name} src={user.avatar} sx={{ width:200, height:200, border: "10px solid white", fontSize:'4rem' }}>{user.name.split(" ")[0].substring(0,1)}{user.name.split(" ")[1].substring(0,1)}</Avatar>
            </div>
            <Typography variant="h3" gutterBottom>{user.name}</Typography>
          </div>
