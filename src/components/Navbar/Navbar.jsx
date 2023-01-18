@@ -113,9 +113,9 @@ const Navbar = ({openDialog}) => {
                 onClose={handleCloseUserMenu}
               >   
                  <MenuItem  onClick={handleCloseUserMenu}>
-                    <Paper component={Button} onClick={navigateProfile}  sx={{display:'flex', width:{xs:'400px', sm:'400px',lg:'400px', xl:'400px'}, justifyContent:'space-between', alignItems:'center', padding:'1rem'}}>
+                    <Paper  onClick={navigateProfile}  sx={{display:'flex', width:{xs:'400px', sm:'400px',lg:'400px', xl:'400px'}, justifyContent:'space-between', alignItems:'center', padding:'1rem', cursor:'pointer'}}>
                      <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar}  sx={{width:'3rem', height:'3rem'}} />
-                     <Typography fontSize="1.2rem" textAlign="center">{localUser[0]?.name}</Typography>
+                     <Typography fontSize="1.2rem" variant='h5' textAlign="center">{localUser[0]?.name?.replace(/\b[a-z]/g, c => c.toUpperCase())}</Typography>
                     </Paper>
                   </MenuItem>
                   <MenuItem  onClick={handleCloseUserMenu} sx={{padding:0}}>

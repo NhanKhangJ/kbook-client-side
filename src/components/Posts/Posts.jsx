@@ -40,24 +40,32 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
       
         </div>
        )).reverse().splice(0,postCount)}
-       <Button onClick={handleDisplayPost}>Load more</Button>
+       {postCount < posts.length && 
+          posts.length > 4 && (
+            <Button onClick={handleDisplayPost}>Load more</Button>
+          )
+        }
       </Box>
      )
 
     :
 
-     !posts.length ? <CircularProgress /> : (
+     !posts.length ? 
+     <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'70vh'}}>
+     <CircularProgress size="5rem" />
+     </div>
+      : (
       <Box display="flex" flexDirection="column" gap={2}>
        {posts.map((post) =>(
         <div key={post._id}>
          <Post  currentUser={currentUser} setCurrentId={setCurrentId}  post={post} />
         </div>
         )).reverse().splice(0,postCount)}
-        {postCount < posts?.length && (
-          posts?.length > 4 && (
+        {postCount < posts.length && 
+          posts.length > 4 && (
             <Button onClick={handleDisplayPost}>Load more</Button>
           )
-        )}
+        }
       
       </Box>
     )

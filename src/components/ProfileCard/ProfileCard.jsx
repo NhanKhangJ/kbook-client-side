@@ -22,7 +22,7 @@ const ProfileCard = ({currentUser}) => {
          <div>
           <CardContent sx={{position:'relative', display:'flex', flexDirection:'column',  top:'-50px'}}>
             <Avatar  sx={{width:'5rem', height:'5rem', border: '5px solid white', alignSelf:'center' }} alt=" " src={currentUser?.avatar}>{currentUser?.name.split(" ")[0].substring(0,1)}{currentUser?.name.split(" ")[1].substring(0,1)}</Avatar>
-            <Link sx={{alignSelf:'center'}} variant='h5' href={`/user/${currentUser?._id}`} underline="hover" color="black">{currentUser?.name}</Link>
+            <Link sx={{alignSelf:'center'}} variant='h5' href={`/user/${currentUser?._id}`} underline="hover" color="black">{currentUser?.name.replace(/\b[a-z]/g, c => c.toUpperCase())}</Link>
 
              <Typography marginBottom="1rem" display="flex" alignSelf="flex-start" variant='caption'>
              <BusinessCenter fontSize='small' />

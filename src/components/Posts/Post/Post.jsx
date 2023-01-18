@@ -5,7 +5,7 @@ import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avat
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {Menu, MenuItem} from '@mui/material';
-import { ThumbUpAlt} from '@mui/icons-material';
+import { Clear, ThumbUpAlt} from '@mui/icons-material';
 import { ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
 import {deletePost,  likePost} from '../../../action/posts'
@@ -232,7 +232,7 @@ const Post = ({ currentUser, post, setCurrentId}) => {
         sx={{position:'fixed'}}
       >
        <Stack  sx={{height: '80vh', display:'flex', flexDirection:{xs: 'column', sm:'column', md:'row', lg: 'row', xl:'row'}}}>
-       <Button onClick={handleClose} style={{position:'absolute', top:'0', left:'0'}}>X</Button>
+       <Button onClick={handleClose} style={{position:'absolute', top:'0', left:'0', padding:'1rem 0'}} color='inherit' ><Clear /></Button>
         <Box flex={7} style={{ display:'flex', justifyContent:'center', backgroundColor:' #f4f4f4'}}>
 
          <img src={post.selectedFile} alt=' ' style={{width:'100%', objectFit:'contain'}}/>    
