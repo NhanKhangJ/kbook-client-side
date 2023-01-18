@@ -91,7 +91,7 @@ const Navbar = ({openDialog}) => {
               KBOOK
             </Typography>
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title="Open menu">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar}  sx={{width:'3rem', height:'3rem'}}>{localUser[0]?.name?.split(" ")[0].substring(0,1)}{localUser[0]?.name?.split(" ")[1].substring(0,1)}</Avatar>
                 </IconButton>
@@ -118,8 +118,8 @@ const Navbar = ({openDialog}) => {
                      <Typography fontSize="1.2rem" textAlign="center">{localUser[0]?.name}</Typography>
                     </Paper>
                   </MenuItem>
-                  <MenuItem  onClick={handleCloseUserMenu}>
-                    <Box component={Button} onClick={logOut}  sx={{display:'flex', alignItems:'center', color:'black'}}>
+                  <MenuItem  onClick={handleCloseUserMenu} sx={{padding:0}}>
+                    <Box component={Button} onClick={logOut}  sx={{display:'flex', justifyContent:'start', color:'black', width:'100%', padding:'6px 1rem'}}>
                     <LogoutIcon />
                     <Typography  fontSize="1.2rem" textAlign="center">&nbsp;Logout</Typography>
                     </Box>

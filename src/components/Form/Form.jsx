@@ -1,6 +1,6 @@
 import React,{useState,useEffect } from 'react';
 // import { Link } from 'react-router-dom';
-import { Avatar, Box, Button, Paper, TextField, Typography ,Link} from '@mui/material';
+import { Avatar, Box, Button, Paper, TextField, Typography ,Link, Tooltip, Fab} from '@mui/material';
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -12,6 +12,7 @@ import {createPost, updatePost} from '../../action/posts';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 
 import './formStyles.css'
+import { Add } from '@mui/icons-material';
 
 const Form = ({currentUser, currentId, setCurrentId}) => {
 
@@ -92,9 +93,14 @@ const handleClose = () => {
 
   return (
    <>
-    <Paper sx={{mb: 2}}>
-  
-       <Box display="flex" justifyContent="center" sx={{p:2}}>
+    <Paper sx={{mb:{xs: 0, sm: 0, md: 2, lg: 2, xl: 2}}}>
+     
+    <Tooltip title="Add" sx={{position:"fixed", bottom:20, right:{xs: "calc(5%)", md: 30},display:{xs:'block', sm:'block', md:'none', lg:'none',xl:'none'}}}>
+   <Fab onClick={handleClickOpen} color='primary' aria-label="add">
+      <Add />
+   </Fab>
+   </Tooltip> 
+       <Box display="flex" justifyContent="center" sx={{p:2, display:{xs:'none', sm:'none' ,md:'flex', lg:'flex', xl:'flex'}}}>
         <div className='avatar'>
          <Link href={`/user/${currentUser?._id}`} underline="none">
           <Avatar sx={{width:'3.5rem', height:'3.5rem'}}  src={currentUser?.avatar}>{currentUser?.name?.split(" ")[0].substring(0,1)}{currentUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
@@ -129,7 +135,7 @@ const handleClose = () => {
             rows={6}
             onChange={(e)=>{ setPostData({ ...postData, content: e.target.value })}}
           />
-            {showImage ?( <img width="100%" src={postData.selectedFile} alt=''/>) :null }
+            {showImage ?( <img width="100%" style={{objectFit:'cover'}} src={postData.selectedFile} alt=''/>) :null }
           <MuiChipsInput 
               name="tags"
             label="Tags"

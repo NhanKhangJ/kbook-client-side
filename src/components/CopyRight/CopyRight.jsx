@@ -1,10 +1,10 @@
 import { Copyright } from '@mui/icons-material'
-import { Link, Typography } from '@mui/material'
+import { Link, Stack, Typography } from '@mui/material'
 import React from 'react'
 
 const CopyRight = () => {
   return (
-    <div>
+    <Stack sx={{display:{xs:'none', sm:'none', md:'none', lg:'block', xl:'block'}, width:'100%'}}>
      <div style={{display:'flex', justifyContent:'space-around', margin:'2rem'}}>
         <Link href='https://github.com/NhanKhangJ' target="_blank"  underline='hover'>
             GitHub
@@ -21,7 +21,7 @@ const CopyRight = () => {
           Nhan Khang Le <Copyright fontSize='sm' /> 2023
         </Typography>
      </div>
-    </div>
+     </Stack>
   )
 }
 

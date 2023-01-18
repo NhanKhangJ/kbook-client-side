@@ -62,7 +62,7 @@ const UserProfile = () => {
    {!user  ? (<CircularProgress />): (
     <>
     <Navbar openDialog={openDialog} />
-      <Container component={Grow} in sx={{mt: 8, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
+      <Container component={Grow} in sx={{mt: {xs:7, sm:7, md: 8, lg:8, xl:8}, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
         <Paper style={{height:'550px'}}>
          <div style={{backgroundImage:  `url(${user.cover || freeBackground})`, backgroundSize:"100% 120%",backgroundColor: 'bisque', height: '60%'}} >
   
@@ -71,7 +71,7 @@ const UserProfile = () => {
            <div>
            <Avatar alt={user.name} src={user.avatar} sx={{ width:200, height:200, border: "10px solid white", fontSize:'4rem' }}>{user.name.split(" ")[0].substring(0,1)}{user.name.split(" ")[1].substring(0,1)}</Avatar>
            </div>
-           <Typography variant="h3" gutterBottom>{user.name}</Typography>
+           <Typography variant="h3" gutterBottom>{user.name.replace(/\b[a-z]/g, c => c.toUpperCase())}</Typography>
          </div>
          </Paper>
       </Container>
@@ -82,7 +82,7 @@ const UserProfile = () => {
        justifyContent="space-between"
        sx={{margin:{lg: '0.4rem', xl: '0.4rem'}, flexDirection :{xs: 'column', sm: 'column', lg:'row' ,xl: 'row' } }}
             >
-         <Box flex={4} p={2} >
+         <Box flex={4} p={2} pb={0} >
            <Intro currentUser={localUser[0]} user={user} setOpenDialog={setOpenDialog} />
            <ImagesCollection profileId={id} />
            <CopyRight />
@@ -91,7 +91,7 @@ const UserProfile = () => {
            )}
        
          </Box>
-         <Box flex={6} p={2} style={{margin: '0px'}} >
+         <Box flex={6} p={2} style={{margin: '0px', marginTop:'1rem'}}  pt={0} >
            {currentUser?.result?._id === id && (
             <Form currentUser={localUser[0]} currentId={currentId} setCurrentId={setCurrentId} />
            )}

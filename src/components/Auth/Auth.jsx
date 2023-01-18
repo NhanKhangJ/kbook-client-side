@@ -5,6 +5,7 @@ import { Button, Paper, Grid, Typography, Container } from '@mui/material';
 import Input from './Input';
 import './styles.css';
 import {signin, signup} from '../../action/auth'
+import CopyRight from '../CopyRight/CopyRight';
 
 
 
@@ -46,7 +47,7 @@ const Auth = () => {
 
   return (
     <>
-       <Container maxWidth={false} disableGutters component="main" sx={{ display:"flex", justifyContent:"space-evenly", alignItems:"center", height:"70vh", flexDirection:{xs: 'column', lg:'row', xl:'row'} }}>
+      <Container maxWidth={false} disableGutters component="main" sx={{ display:"flex", justifyContent:"space-evenly", alignItems:"center", height:"80vh", flexDirection:{xs: 'column', lg:'row', xl:'row'} }}>
         <Grid display="flex" justifyContent="center" alignItems="center" sx={{maxWidth:"25%"}}>
           <Grid item>
              <Typography variant='h1' textTransform="uppercase" color="primary" >Kbook</Typography>
@@ -78,6 +79,9 @@ const Auth = () => {
           </form>
         </Paper>
        </Container> 
+       <Container maxWidth="sm" sx={{display:'flex', alignItems:'center', justifyContent:'center' ,height:'20vh'}}>
+        <CopyRight />
+       </Container>
     </>
   )
 }

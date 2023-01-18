@@ -19,8 +19,9 @@ const  currentId  = useParams();
       ? 
      
         !posts.length ? <CircularProgress /> : (
-          <ImageList  cols={3} rowHeight={162}>
+          <ImageList  cols={3} rowHeight={162} sx={{marginBottom:0}}>
             { posts.filter(post => post.creator === profileId).map((post, index) => ( 
+                     post?.selectedFile && (
                          <ImageListItem key={index}>
                             <img 
                               style={{objectFit:'cover', height:'100%', background:'#E4E4E4'}}
@@ -28,6 +29,7 @@ const  currentId  = useParams();
                               src={post.selectedFile}
                               />
                          </ImageListItem>
+                     ) 
              ))}
              </ImageList> 
         )

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, CircularProgress } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
 import './styles.css';
 
@@ -12,9 +12,13 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
     const posts = useSelector((state) =>
          state.posts
     )
-
-
     const  currentId  = useParams();
+    const [postCount, setPostCount] = useState(4)
+    
+    const handleDisplayPost = () =>{
+       const newPostCount = postCount + 4
+       setPostCount(newPostCount)
+    }
 
     //  console.log(currentUser)
     // const test = posts.filter(post => post.creator === profileId);
@@ -29,10 +33,14 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
     ? 
 
      !posts.length ? <CircularProgress /> : (
-      <Box display="flex" flexDirection="column" gap={2}>
+      <Box display="flex" flexDirection="column"  gap={2}>
        {posts.filter(post => post.creator === profileId).map((post) => ( 
-        <Post currentUser={currentUser} setCurrentId={setCurrentId} key={post._id} post={post} />
-       ))}
+        <div key={post._id}>
+         <Post  currentUser={currentUser} setCurrentId={setCurrentId}  post={post} />
+      
+        </div>
+       )).reverse().splice(0,postCount)}
+       <Button onClick={handleDisplayPost}>Load more</Button>
       </Box>
      )
 
@@ -41,8 +49,16 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
      !posts.length ? <CircularProgress /> : (
       <Box display="flex" flexDirection="column" gap={2}>
        {posts.map((post) =>(
-        <Post currentUser={currentUser} setCurrentId={setCurrentId} key={post._id} post={post} />
-        )).reverse()}
+        <div key={post._id}>
+         <Post  currentUser={currentUser} setCurrentId={setCurrentId}  post={post} />
+        </div>
+        )).reverse().splice(0,postCount)}
+        {postCount < posts?.length && (
+          posts?.length > 4 && (
+            <Button onClick={handleDisplayPost}>Load more</Button>
+          )
+        )}
+      
       </Box>
     )
     
