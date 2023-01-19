@@ -12,9 +12,6 @@ import {deletePost,  likePost} from '../../../action/posts'
 import Comments from './Comments';
 
 
-
-
-
 const Post = ({ currentUser, post, setCurrentId}) => {
     const dispatch = useDispatch();
     const [showMore, setShowmore] = useState(false);
@@ -34,12 +31,12 @@ const Post = ({ currentUser, post, setCurrentId}) => {
   
     const handleOpen = () => {
       setOpen(true);
-      console.log('open')
+      // console.log('open')
     };
   
     const handleClose = () => {
       setOpen(false);
-      console.log('close')
+
     };
 
 
@@ -231,14 +228,18 @@ const Post = ({ currentUser, post, setCurrentId}) => {
         onClose={handleClose}
         sx={{position:'fixed'}}
       >
-       <Stack  sx={{height: '80vh', display:'flex', flexDirection:{xs: 'column', sm:'column', md:'row', lg: 'row', xl:'row'}}}>
+       <Stack  sx={{height: '80vh', display:'flex', flexDirection:{xs: 'column', sm:'row', md:'row', lg: 'row', xl:'row'}}}>
        <Button onClick={handleClose} style={{position:'absolute', top:'0', left:'0', padding:'1rem 0'}} color='inherit' ><Clear /></Button>
-        <Box flex={{xs: 2, sm: 2, md: 4, lg: 7, xl: 7}}  style={{ display:'flex', justifyContent:'center', backgroundColor:' #f4f4f4'}}>
-
-            <img src={post.selectedFile} alt=' ' style={{width:'100%', objectFit:'contain'}}/>    
+        <Box flex={{xs: 2, sm: 5, md: 6, lg: 7, xl: 7}}  sx={{ display:'flex', justifyContent:'center', backgroundColor:' #f4f4f4', padding:{xs:'0 4rem', sm:'0', md:'0',lg:'0 3rem', xl:'0 3rem'}}}>
+            <CardMedia
+             image={post.selectedFile} 
+             style={{width:'100%', objectFit:'contain'}}
+             component="img"
+             alt=" "
+             />
         </Box>
-        <Box flex={{xs: 8, sm: 8, md: 6, lg: 3, xl: 3}}   style={{overflow: 'scroll'}}>
-    <Card style={{backgroundColor:'transparent'}} elevation={0}>
+        <Box flex={{xs: 8, sm: 5, md: 4, lg: 3, xl: 3}}   style={{overflow: 'scroll'}}>
+    <Card elevation={0}>
       <CardHeader 
         
         avatar={
