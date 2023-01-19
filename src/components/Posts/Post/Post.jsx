@@ -233,11 +233,11 @@ const Post = ({ currentUser, post, setCurrentId}) => {
       >
        <Stack  sx={{height: '80vh', display:'flex', flexDirection:{xs: 'column', sm:'column', md:'row', lg: 'row', xl:'row'}}}>
        <Button onClick={handleClose} style={{position:'absolute', top:'0', left:'0', padding:'1rem 0'}} color='inherit' ><Clear /></Button>
-        <Box flex={7} style={{ display:'flex', justifyContent:'center', backgroundColor:' #f4f4f4'}}>
+        <Box flex={{xs: 2, sm: 2, md: 4, lg: 7, xl: 7}}  style={{ display:'flex', justifyContent:'center', backgroundColor:' #f4f4f4'}}>
 
             <img src={post.selectedFile} alt=' ' style={{width:'100%', objectFit:'contain'}}/>    
         </Box>
-        <Box flex={3}  style={{overflow: 'scroll'}}>
+        <Box flex={{xs: 8, sm: 8, md: 6, lg: 3, xl: 3}}   style={{overflow: 'scroll'}}>
     <Card style={{backgroundColor:'transparent'}} elevation={0}>
       <CardHeader 
         
