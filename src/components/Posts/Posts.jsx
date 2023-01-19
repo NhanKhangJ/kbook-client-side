@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Button, CircularProgress } from '@mui/material';
-import { useSelector } from 'react-redux';
-import './styles.css';
-
-import Post from './Post/Post';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Post from './Post/Post';
+
 
 
 const Posts = ({ currentUser, profileId, setCurrentId }) => {

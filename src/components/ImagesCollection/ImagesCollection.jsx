@@ -8,9 +8,6 @@ const ImagesCollection = ({profileId}) => {
     state.posts
 )
 const  currentId  = useParams();
-// console.log(currentId.id)
-// console.log(posts.filter(post => post.creator === profileId))
-
   return (
     <Paper sx={{padding:2, mt: 2}}>
     <Typography variant='h5'>Images</Typography>
@@ -20,7 +17,7 @@ const  currentId  = useParams();
      
         !posts.length ? <CircularProgress /> : (
           <ImageList  cols={3} rowHeight={162} sx={{marginBottom:0}}>
-            { posts.filter(post => post.creator === profileId).map((post, index) => ( 
+            {posts.filter(post => post.creator === profileId).map((post, index) => ( 
                      post?.selectedFile && (
                          <ImageListItem key={index}>
                             <img 
@@ -31,7 +28,7 @@ const  currentId  = useParams();
                          </ImageListItem>
                      ) 
              ))}
-             </ImageList> 
+          </ImageList> 
         )
     
         

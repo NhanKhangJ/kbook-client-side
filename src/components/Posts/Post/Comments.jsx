@@ -26,21 +26,21 @@ const Comments = ({currentUser, post}) => {
     <>
      <CardContent sx={{display: 'flex', justifyContent: "center"}}>
       <Avatar style={{width: ""}}  sx={{ width: 56, height: 56 }} alt={user?.result?.name}  src={currentUser?.avatar || "/static/images/avatar/2.jpg"}  />
-      <div style={{width:"100%", margin:"0 0.5rem",borderRadius:"30%"}} className="commentInput" >
-    <TextField
-     size='medium'
-      fullWidth 
-      multiline 
-      value={comment}
-      onChange={(e) => setComment(e.target.value)}
-      placeholder="Write your comment"
-      />
+       <div style={{width:"100%", margin:"0 0.5rem",borderRadius:"30%"}} className="commentInput" >
+       <TextField
+        size='medium'
+        fullWidth 
+        multiline 
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Write your comment"
+       />
     {comment.length > 0 ? (  
      <Button onClick={handleClick}>
         Post
      </Button>
     ) : null}
-    </div>
+       </div>
      </CardContent>
      <CardContent sx={{display: 'flex', justifyContent: "center", flexDirection:"column", paddingBottom: "0px"}}>
 

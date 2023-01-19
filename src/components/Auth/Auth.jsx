@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate}  from "react-router-dom";
 import { Button, Paper, Grid, Typography, Container } from '@mui/material';
 import Input from './Input';
-import './styles.css';
 import {signin, signup} from '../../action/auth'
 import CopyRight from '../CopyRight/CopyRight';
 
@@ -54,7 +53,7 @@ const Auth = () => {
              <Typography fontWeight="bold" variant='h5'>Connect with your friend and the world around you on KBook</Typography>
           </Grid>
         </Grid>
-        <Paper className='paper' elevation={1} sx={{ maxWidth:{xs:"80%", lg:"30%", xl:"30%" } } }>
+        <Paper elevation={1} sx={{ maxWidth:{xs:"80%", lg:"30%", xl:"30%", display:'flex', alignItems:'center', padding:'2rem' } } }>
           <form  onSubmit={handleSubmit}>
              <Grid container spacing={2}>
                {isSignup && (

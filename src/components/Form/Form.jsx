@@ -1,18 +1,12 @@
 import React,{useState,useEffect } from 'react';
-// import { Link } from 'react-router-dom';
 import { Avatar, Box, Button, Paper, TextField, Typography ,Link, Tooltip, Fab} from '@mui/material';
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+import { Dialog, DialogContent, DialogActions, DialogTitle } from "@mui/material";
+import { Add, ImageSearch } from '@mui/icons-material';
 import { useDispatch, useSelector} from 'react-redux';
-import FileBase from 'react-file-base64'
 import {MuiChipsInput} from 'mui-chips-input';
 import {createPost, updatePost} from '../../action/posts';
-import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import FileBase from 'react-file-base64'
 
-import './formStyles.css'
-import { Add } from '@mui/icons-material';
 
 const Form = ({currentUser, currentId, setCurrentId}) => {
 
@@ -47,24 +41,15 @@ useEffect(() =>{
   }
 },[currentId])
 
-
-// console.log(postData)
-
 const handleSubmit = async (e) =>{
     e.preventDefault()
     if(currentId === 0) {
       await dispatch(createPost({...postData, name: user?.result?.name }));
-    
-      console.log('create')
     } else{
-     await dispatch(updatePost(currentId,{...postData, name: user?.result?.name}));
-   
-     console.log('update')
+      await dispatch(updatePost(currentId,{...postData, name: user?.result?.name}));
     }
     setCurrentId(0)
 }
-
-
 
 const handleAddChip = (tag) => {
     setPostData({ ...postData, tags: [...postData.tags, tag] });
@@ -89,23 +74,18 @@ const handleClose = () => {
   setCurrentId(0);
 };
 
-// console.log(currentUser)
-
   return (
    <>
     <Paper sx={{mb:{xs: 0, sm: 0, md: 2, lg: 2, xl: 2}}}>
-     
-    <Tooltip title="Add" sx={{position:"fixed", bottom:20, right:{xs: "calc(5%)", md: 30},display:{xs:'block', sm:'block', md:'none', lg:'none',xl:'none'}}}>
-   <Fab onClick={handleClickOpen} color='primary' aria-label="add">
+     <Tooltip title="Add" sx={{position:"fixed", bottom:20, right:{xs: "calc(5%)", md: 30},display:{xs:'block', sm:'block', md:'none', lg:'none',xl:'none'}}}>
+      <Fab onClick={handleClickOpen} color='primary' aria-label="add">
       <Add />
-   </Fab>
-   </Tooltip> 
+      </Fab>
+     </Tooltip> 
        <Box display="flex" justifyContent="center" sx={{p:2, display:{xs:'none', sm:'none' ,md:'flex', lg:'flex', xl:'flex'}}}>
-        <div className='avatar'>
-         <Link href={`/user/${currentUser?._id}`} underline="none">
+        <Link href={`/user/${currentUser?._id}`} underline="none" style={{width:'20%'}}>
           <Avatar sx={{width:'3.5rem', height:'3.5rem'}}  src={currentUser?.avatar}>{currentUser?.name?.split(" ")[0].substring(0,1)}{currentUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
-          </Link>
-        </div>
+        </Link>
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px', display:'flex', justifyContent:'start', color:'GrayText'}}>
             Start a post
         </Button>
@@ -147,9 +127,9 @@ const handleClose = () => {
           />
           <Button component="label" variant='contained' color='primary'>
            <div style={{display:'none'}}>
-            <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })}/>
+            <FileBase type='file' mutiple={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })}/>
            </div>
-           <ImageSearchIcon />
+           <ImageSearch />
            </Button>
         </DialogContent>
         <DialogActions>

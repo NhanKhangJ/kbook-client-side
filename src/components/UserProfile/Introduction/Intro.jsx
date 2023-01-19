@@ -3,8 +3,6 @@ import { BusinessCenter, Edit, LocationOn, School, WatchLater } from '@mui/icons
 import { Button, Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
 import moment from 'moment';
 
-import './styles.css'
-
 const Intro = ({currentUser, user, setOpenDialog}) => {
 
   return (
@@ -37,7 +35,6 @@ const Intro = ({currentUser, user, setOpenDialog}) => {
       )}
    
      </Card>
-     
     </>
   )
 }

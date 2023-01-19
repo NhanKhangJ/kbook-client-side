@@ -36,17 +36,16 @@ const Sponsor = () => {
 
     return (
         <Box component={Paper}  p={2} >
-        <Typography variant='h6'>Sponsor by</Typography> 
-         <Carousel
-         stopAutoPlayOnHover
-         indicatorIconButtonProps={{
-        style: {
+         <Typography variant='h6'>Sponsor by</Typography> 
+          <Carousel
+           stopAutoPlayOnHover
+           indicatorIconButtonProps={{
+           style: {
             display:'none',
             padding: '10',    // 1
             color: 'blue'       // 3
-        }
-    }}
-        animation="slide"
+            }}}
+           animation="slide"
          >
             {
                 items.map( (item, i) => <Item key={i} item={item} /> )

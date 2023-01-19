@@ -15,18 +15,15 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
     location: user.location
   })
   const dispatch = useDispatch();
-  // console.log(userInfo)
 
   const handleUserInfo = (e) =>{
     setUserInfo({...userInfo, [e.target.name] : e.target.value})
   }
-  // console.log(userInfo)
 
   const handleSubmit = async (e) =>{
     e.preventDefault();
     setOpenDialog(false)
      await dispatch(updateUser(user._id, userInfo))
-    // setTimeout(() => dispatch(getPosts()), 1000) 
      await dispatch(getUser(user?._id))
      await dispatch(getPosts())
 
@@ -36,9 +33,9 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
     setOpenDialog(false)
   }; 
   return (
-    <Dialog open={openDialog} onClose={handleClose} maxWidth='md' fullWidth> 
-       <DialogTitle>Edit personal profile</DialogTitle>
-       <form onSubmit={handleSubmit}>
+  <Dialog open={openDialog} onClose={handleClose} maxWidth='md' fullWidth> 
+    <DialogTitle>Edit personal profile</DialogTitle>
+      <form onSubmit={handleSubmit}>
        <DialogContent sx={{display:'flex', flexDirection:'column'}}>
         <div style={{display:'flex', alignItems:"center", justifyContent:'space-between'}} >
          <Typography variant='h6'>Avatar</Typography>
@@ -54,29 +51,30 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
        </DialogContent>
        <DialogContent sx={{display:'flex', flexDirection:'column'}}>
         <div style={{display:'flex', alignItems:"center", justifyContent:'space-between'}} >
-        <Typography variant='h6'>Profile Cover</Typography>
+         <Typography variant='h6'>Profile Cover</Typography>
            
         <Button component="label" variant='text'>
-        <div style={{display:'none'}}>
-         <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setUserInfo({...userInfo, cover: base64 })} />
-        </div> 
-        Edit
+         <div style={{display:'none'}}>
+          <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setUserInfo({...userInfo, cover: base64 })} />
+         </div> 
+          Edit
         </Button> 
         </div> 
         <div style={{display:'flex', justifyContent:'center', padding:"1rem 4rem"}}>
-       {userInfo.cover ? (
-        <CardMedia
-         style={{borderRadius:'10px', width:'80%'}}
-        component="img" 
-        image={userInfo.cover} 
-      /> 
-      ) : (
-       <CardMedia
-         style={{borderRadius:'10px', width:'80%'}}
-        component="img" 
-        image={"https://www.namepros.com/attachments/empty-png.89209/"} 
-      /> 
-        )}
+       {userInfo.cover 
+        ? (
+          <CardMedia
+           style={{borderRadius:'10px', width:'80%'}}
+           component="img" 
+           image={userInfo.cover} 
+          /> 
+        ):(
+          <CardMedia
+          style={{borderRadius:'10px', width:'80%'}}
+          component="img" 
+          image={"https://www.namepros.com/attachments/empty-png.89209/"} 
+          /> 
+         )}
         </div>
        </DialogContent>
        <div>
@@ -96,8 +94,8 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
           />
       </DialogContent>
       <DialogContent sx={{display:'flex', alignItems:'end', alignContent:'center'}} >
-      <School />
-      <TextField
+       <School />
+        <TextField
             autoFocus
             style={{margin:'0 1rem 0 1rem'}}
             name="education"
@@ -107,11 +105,11 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
             fullWidth
             variant="standard"
             onChange={handleUserInfo}
-          />
+        />
       </DialogContent>
-      <DialogContent sx={{display:'flex', alignItems:'end', alignContent:'center'}} >
-      <LocationOn />
-      <TextField
+       <DialogContent sx={{display:'flex', alignItems:'end', alignContent:'center'}} >
+        <LocationOn />
+         <TextField
             autoFocus
             style={{margin:'0 1rem 0 1rem'}}
             name="location"
@@ -124,12 +122,12 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
           />
       </DialogContent>
       </div>
-      <DialogActions style={{paddingRight:'1.5rem'}} >
+       <DialogActions style={{paddingRight:'1.5rem'}} >
         <Button variant='text' onClick={handleClose}>Cancel</Button>
         <Button variant='contained' type='submit' >Save</Button>
       </DialogActions>
       </form>
-     </Dialog>
+  </Dialog>
   )
 }
 

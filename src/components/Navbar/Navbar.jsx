@@ -4,14 +4,12 @@ import { useNavigate, useLocation} from 'react-router-dom';
 import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar,  Tooltip, MenuItem, Paper, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
-import './navBarStyles.css'
 import * as actionType from '../../constants/actionTypes';
 import decode from 'jwt-decode'
 import { getUsers } from '../../action/users';
 
 
 const Navbar = ({openDialog}) => {
-
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem('profile')));
     const {users, user} = useSelector((state) => state.users); // eslint-disable-line
@@ -19,7 +17,6 @@ const Navbar = ({openDialog}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    
     const logOut =() =>{
       dispatch({
         type: actionType.LOGOUT
@@ -33,7 +30,6 @@ const Navbar = ({openDialog}) => {
       navigate(`/user/${userLogin.result._id}`)
     } 
     
-    
     useEffect(()=>{
        if(openDialog === true || openDialog === false){
        
@@ -42,8 +38,6 @@ const Navbar = ({openDialog}) => {
         dispatch(getUsers())
       }
      },[dispatch, location])   // eslint-disable-line
-   
-    //  console.log(localUser)
 
     useEffect(() => {
       const token = userLogin?.token;
@@ -58,21 +52,18 @@ const Navbar = ({openDialog}) => {
       // eslint-disable-next-line
     }, [location]);
  
-
     const handleOpenUserMenu = (event) => {
       setAnchorElUser(event.currentTarget);
     };
-  
-  
   
     const handleCloseUserMenu = () => {
       setAnchorElUser(null);
     };
   
     return (
-      <AppBar position="fixed">
+      <AppBar position="fixed"  >
         <Container  maxWidth="xl">
-          <Toolbar className='AppBar' disableGutters>
+          <Toolbar sx={{justifyContent:'space-between'}} disableGutters>
             <Typography
               variant="h6"
               noWrap

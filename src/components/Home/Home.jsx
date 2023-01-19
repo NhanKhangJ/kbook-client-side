@@ -30,7 +30,7 @@ const Home = () => {;
   return (
     <> 
        <Navbar />
-       <Grow in sx={{m: {md: 10, lg: 10, xl: 10}, mt:{xs: 6, sm: 6, md: 10, lg: 10, xl: 10} }}>
+        <Grow in sx={{m: {md: 10, lg: 10, xl: 10}, mt:{xs: 6, sm: 6, md: 10, lg: 10, xl: 10} }}>
            <Stack direction="row" spacing={2} justifyContent="space-between" style={{gap:"2rem"}} sx={{margin:{lg: '0 2rem', xl: '0 2rem'}}} >
           <Box flex={2} style={{position:'sticky', top:'0'}} sx={{ display: { xs: 'none', md: 'block', lg: 'block', xl: 'block' } }} >
            <ProfileCard currentUser={user} />

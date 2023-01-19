@@ -15,14 +15,11 @@ import ImagesCollection from '../ImagesCollection/ImagesCollection';
 import CopyRight from '../CopyRight/CopyRight';
 
 const UserProfile = () => {
-  const [currentId, setCurrentId] = useState(0)
+    const [currentId, setCurrentId] = useState(0)
     const dispatch = useDispatch();
     const {id} = useParams();
     const currentUser = JSON.parse(localStorage.getItem('profile'));
     const {users, user} = useSelector((state) => state.users);  
-    // const posts = useSelector((state) =>
-    //      state.posts
-    // )
 
     const [openDialog, setOpenDialog] = useState(false)
     const localUser = users?.filter(user => user._id === currentUser?.result?._id)
@@ -30,31 +27,12 @@ const UserProfile = () => {
   useEffect(()=>{
     dispatch(getPosts())
   },[currentId, dispatch])  
-// console.log(user._id)
-  // console.log(id)
-
-  // useEffect(()=>{
-  //   dispatch(getUsers())
-  //   dispatch(getUser(id))
-  // },[dispatch, id, openDialog]) 
 
   useEffect(()=>{
     dispatch(getUsers())
     dispatch(getUser(id))
   },[dispatch, id]) 
-  
-  
-  // useEffect(()=>{
-  //   dispatch(getUsers())
-  //   dispatch(getUser(id))
-  // },[dispatch, openDialog]) // eslint-disable-line
 
-
-
-  // useEffect(()=>{
-  //   dispatch(getUser(id))
-  // },[])  // eslint-disable-line
-  // console.log(localUser[0].avatar)
 
   return (
     <>
