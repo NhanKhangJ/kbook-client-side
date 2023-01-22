@@ -3,8 +3,7 @@ import { BusinessCenter, Edit, LocationOn, School, WatchLater } from '@mui/icons
 import { Button, Card, CardActions, CardContent, CardHeader, Typography } from '@mui/material';
 import moment from 'moment';
 
-const Intro = ({currentUser, user, setOpenDialog}) => {
-
+const Intro = ({localUser, user, setOpenDialog}) => {
   return (
     <>
     <Card elevation={2}>
@@ -25,7 +24,7 @@ const Intro = ({currentUser, user, setOpenDialog}) => {
        <WatchLater />
        <Typography>&nbsp;Join at {moment(user.createdAt).format("MMMM Do YYYY")}</Typography>
       </CardContent>
-      {currentUser?._id === user?._id && (
+      {localUser?._id === user?._id && (
         <CardActions >
        <Button fullWidth variant='contained' onClick={() => setOpenDialog(true)}>
        <Edit/>
@@ -34,7 +33,7 @@ const Intro = ({currentUser, user, setOpenDialog}) => {
       </CardActions>
       )}
    
-     </Card>
+    </Card>
     </>
   )
 }

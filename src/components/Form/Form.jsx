@@ -8,7 +8,7 @@ import {createPost, updatePost} from '../../action/posts';
 import FileBase from 'react-file-base64'
 
 
-const Form = ({currentUser, currentId, setCurrentId}) => {
+const Form = ({ currentId, setCurrentId}) => {
 
 
 const [postData, setPostData] = useState({
@@ -17,10 +17,9 @@ const [postData, setPostData] = useState({
     selectedFile:""
 });
 const post = useSelector((state) => (currentId ? state.posts.find((post) => post._id === currentId): null));
-
+const localUser = useSelector((state) => state.users.localUser)
 const dispatch = useDispatch();
 const user = JSON.parse(localStorage.getItem('profile'))
-
 const [open, setOpen] = useState(false);
 const [showImage, setShowImage] = useState(false)
 
@@ -83,8 +82,8 @@ const handleClose = () => {
       </Fab>
      </Tooltip> 
        <Box display="flex" justifyContent="center" sx={{p:2, display:{xs:'none', sm:'none' ,md:'flex', lg:'flex', xl:'flex'}}}>
-        <Link href={`/user/${currentUser?._id}`} underline="none" style={{width:'20%'}}>
-          <Avatar sx={{width:'3.5rem', height:'3.5rem'}}  src={currentUser?.avatar}>{currentUser?.name?.split(" ")[0].substring(0,1)}{currentUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
+        <Link href={`/user/${localUser?._id}`} underline="none" style={{width:'20%'}}>
+          <Avatar sx={{width:'3.5rem', height:'3.5rem'}}  src={localUser?.avatar}>{localUser?.name?.split(" ")[0].substring(0,1)}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
         </Link>
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px', display:'flex', justifyContent:'start', color:'GrayText'}}>
             Start a post
@@ -97,7 +96,7 @@ const handleClose = () => {
         <DialogContent>
           <Box display="flex" >
           <div className='avatar'>
-            <Avatar sx={{width:'4rem', height:'4rem'}} alt={user?.result?.name}  src={currentUser?.avatar ? currentUser?.avatar : "/static/images/avatar/2.jpg" } />
+            <Avatar sx={{width:'4rem', height:'4rem'}} alt={user?.result?.name}  src={localUser?.avatar ? localUser?.avatar : "/static/images/avatar/2.jpg" } />
            </div>
            <div>
             <Typography variant='h6'>{user?.result?.name}</Typography>
@@ -134,7 +133,7 @@ const handleClose = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type='submit' variant='contained' onClick={() => setOpen(false)}>{currentId ? "Update" : "Post"}</Button>
+          <Button type='submit' variant='contained' onClick={() => setOpen(false)} >{currentId ? "Update" : "Post"}</Button>
         </DialogActions>
         </form>
       </Dialog>

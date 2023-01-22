@@ -7,6 +7,7 @@ export const COMMENT = 'COMMENT';
 
 export const FETCH_USERS = 'FETCH_USERS'
 export const FETCH_USER = 'FETCH_USER'  
+export const FETCH_LOCAL_USER ='FETCH_LOCAL_USER'
 
 
 export const AUTH = 'AUTH';

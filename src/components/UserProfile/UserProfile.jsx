@@ -3,9 +3,8 @@ import { Avatar,Container, Typography, Paper, Stack, Box,Grow, CircularProgress 
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getUser, getUsers } from '../../action/users';
+import { getUser } from '../../action/users';
 import { getPosts } from '../../action/posts';
-import Navbar from '../Navbar/Navbar';
 import Intro from './Introduction/Intro';
 import Form from '../Form/Form';
 import Posts from '../Posts/Posts';
@@ -18,18 +17,14 @@ const UserProfile = () => {
     const [currentId, setCurrentId] = useState(0)
     const dispatch = useDispatch();
     const {id} = useParams();
-    const currentUser = JSON.parse(localStorage.getItem('profile'));
-    const {users, user} = useSelector((state) => state.users);  
-
+    const {users, user, localUser} = useSelector((state) => state.users); // eslint-disable-line
     const [openDialog, setOpenDialog] = useState(false)
-    const localUser = users?.filter(user => user._id === currentUser?.result?._id)
 
   useEffect(()=>{
     dispatch(getPosts())
   },[currentId, dispatch])  
 
   useEffect(()=>{
-    dispatch(getUsers())
     dispatch(getUser(id))
   },[dispatch, id]) 
 
@@ -39,7 +34,7 @@ const UserProfile = () => {
       
    {!user  ? (<CircularProgress />): (
     <>
-    <Navbar openDialog={openDialog} />
+    {/* <Navbar /> */}
       <Container component={Grow} in sx={{mt: {xs:7, sm:7, md: 8, lg:8, xl:8}, maxWidth:{xs:'xl', sm: 'xl', md:'xl', xl:'xl'}, padding:{xs:'0', sm:'0', md:'0', xl:'auto'}} }>
         <Paper style={{height:'550px'}}>
          <div style={{backgroundImage:  `url(${user.cover || freeBackground})`, backgroundSize:"100% 120%",backgroundColor: 'bisque', height: '60%'}} >
@@ -61,19 +56,19 @@ const UserProfile = () => {
        sx={{margin:{lg: '0.4rem', xl: '0.4rem'}, flexDirection :{xs: 'column', sm: 'column', lg:'row' ,xl: 'row' } }}
             >
          <Box flex={4} p={2} pb={0} >
-           <Intro currentUser={localUser[0]} user={user} setOpenDialog={setOpenDialog} />
+           <Intro localUser={localUser} user={user} setOpenDialog={setOpenDialog} />
            <ImagesCollection profileId={id} />
            <CopyRight />
-           {currentUser?.result?._id === id && (
-           <ProfileForm user={user} openDialog={openDialog} setOpenDialog={setOpenDialog} />
+           {localUser?._id === id && (
+           <ProfileForm user={localUser} openDialog={openDialog} setOpenDialog={setOpenDialog} />
            )}
        
          </Box>
          <Box flex={6} p={2} style={{margin: '0px', marginTop:'1rem'}}  pt={0} >
-           {currentUser?.result?._id === id && (
-            <Form currentUser={localUser[0]} currentId={currentId} setCurrentId={setCurrentId} />
+           {localUser?._id === id && (
+            <Form currentId={currentId} setCurrentId={setCurrentId} />
            )}
-            <Posts  currentUser={localUser[0]} profileId={id} setCurrentId={setCurrentId} />
+            <Posts profileId={id} setCurrentId={setCurrentId} />
          </Box>
       </Stack>
       </Grow>

@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
-import {Link} from 'react-router-dom'
+
 import { useDispatch } from 'react-redux';
-import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton,  CircularProgress, Collapse, Box, Stack, Dialog} from '@mui/material';
+import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton,  CircularProgress, Collapse, Box, Stack, Dialog, Link} from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {Menu, MenuItem} from '@mui/material';
@@ -12,20 +12,15 @@ import {deletePost,  likePost} from '../../../action/posts'
 import Comments from './Comments';
 
 
-const Post = ({ currentUser, post, setCurrentId}) => {
+const Post = ({ post, setCurrentId}) => {
     const dispatch = useDispatch();
     const [showMore, setShowmore] = useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [expansed, setExpansed] = useState(false)
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?.result?.googleId || user?.result?._id
-    const [likes, setLikes] = useState(post?.likes);//[{userId, UserName}] nested object array
-    // const hasLikedPost = post.likes.find((like) => like === userId)
+    const [likes, setLikes] = useState(post?.likes);
     const hasLikedPost = likes.find((p) => p?.userId === userId)
-    // console.log(hasLikedPost)
-    // console.log(post)
-    
-
     const [open, setOpen] =useState(false);
 
   
@@ -96,8 +91,8 @@ const Post = ({ currentUser, post, setCurrentId}) => {
       <CardHeader 
         
         avatar={
-          <Link to={`/user/${post.creator}`}>
-           <Avatar alt={post?.name}  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}/>
+          <Link href={`/user/${post.creator}`} underline="none">
+           <Avatar  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}>{post?.name?.split(" ")[0].substring(0,1)}{post?.name?.split(" ")[1].substring(0,1)}</Avatar>
            </Link>
         }
         action={
@@ -216,7 +211,7 @@ const Post = ({ currentUser, post, setCurrentId}) => {
         </Button>
       </CardActions>
       <Collapse in={expansed} timeout="auto" unmountOnExit>
-        <Comments currentUser={currentUser} post={post} />
+        <Comments post={post} />
       </Collapse>
     </Card>
      )}
@@ -352,7 +347,7 @@ const Post = ({ currentUser, post, setCurrentId}) => {
         <ChatBubbleOutlineIcon fontSize='medium' />&nbsp;Comment
         </Button>
       </CardActions>
-        <Comments currentUser={currentUser} post={post} />
+        <Comments post={post} />
     </Card>
         </Box>
        </Stack>

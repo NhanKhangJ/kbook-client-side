@@ -1,6 +1,7 @@
 import axios from 'axios';
 const API = axios.create({baseURL: 'https://kbook-server-side.onrender.com'});
 
+//https://kbook-server-side.onrender.com
 API.interceptors.request.use((req) =>{ // a function is going to happen for each one of our request
     if(localStorage.getItem('profile')) { //send our token to our backend so it can verify the user
         req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`
@@ -20,6 +21,6 @@ export const fetchUser = (id) => API.get(`/user/${id}`);
 export const updateUser = (id, updatedUser) => API.patch(`/user/${id}`, updatedUser)
 
 
-
+ 
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)

@@ -6,13 +6,14 @@ import Container from '@mui/material/Container'
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
 import UserProfile from './components/UserProfile/UserProfile';
+import Navbar from './components/Navbar/Navbar';
+
 
 function App() {
   
   const [user, setUser ]= useState(null)
   const location = useLocation();
   //  JSON.parse(localStorage.getItem('profile'))
-  
   // console.log(location)
   useEffect(() =>{
     setUser(JSON.parse(localStorage.getItem('profile')))
@@ -21,6 +22,7 @@ function App() {
   // console.log(user?.result?._id)
   return (
     <Container style={{padding: 0}} maxWidth="xl">
+     {user === null ? "" : <Navbar /> }
     <Routes>
       <Route path='/' element={ user?.result?._id? <Navigate to="/posts"/> : <Navigate to="/auth" replace /> }  />
       <Route path='/posts' element={ user?.result?._id === undefined ? <Navigate to="/auth" replace /> : <Home />    } />

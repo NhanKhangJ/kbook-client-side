@@ -1,32 +1,39 @@
-import React,{useState} from 'react';
+import React,{ useState } from 'react';
 import { BusinessCenter, LocationOn, School} from '@mui/icons-material'
 import { Avatar, Button, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import FileBase from 'react-file-base64';
 import { useDispatch } from 'react-redux';
-import { getUser, updateUser } from '../../../action/users';
+import { getLocalUser, getUser, updateUser } from '../../../action/users';
 import { getPosts } from '../../../action/posts';
+
+
 
 const ProfileForm = ({user, openDialog, setOpenDialog}) => {
   const [userInfo, setUserInfo] = useState({
-    avatar: user.avatar,
-    cover: user.cover,
-    job: user.job,
-    education: user.education,
-    location: user.location
+     avatar: user.avatar,
+      cover: user.cover,
+      job: user.job,
+      education: user.education,
+      location: user.location
   })
   const dispatch = useDispatch();
 
   const handleUserInfo = (e) =>{
     setUserInfo({...userInfo, [e.target.name] : e.target.value})
   }
-
+  
   const handleSubmit = async (e) =>{
     e.preventDefault();
     setOpenDialog(false)
-     await dispatch(updateUser(user._id, userInfo))
-     await dispatch(getUser(user?._id))
-     await dispatch(getPosts())
+     try {
 
+      await dispatch(updateUser(user._id, userInfo))
+      await dispatch(getUser(user?._id))
+      await dispatch(getLocalUser(user?._id))
+      await dispatch(getPosts())
+     } catch (error) {
+      console.log(error)
+     }
   }
 
   const handleClose = () => {
@@ -42,7 +49,7 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
   
          <Button component="label" variant='text'>
            <div style={{display:'none'}}>
-            <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setUserInfo({...userInfo, avatar: base64 })} />
+            <FileBase type='file' mutiple={false} onDone={({base64}) =>setUserInfo({...userInfo, avatar: base64 })} />
            </div> 
             Edit
          </Button> 
@@ -55,7 +62,7 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
            
         <Button component="label" variant='text'>
          <div style={{display:'none'}}>
-          <FileBase className="fileInput" type='file' mutiple={false} onDone={({base64}) =>setUserInfo({...userInfo, cover: base64 })} />
+          <FileBase type='file' mutiple={false} onDone={({base64}) =>setUserInfo({...userInfo, cover: base64 })} />
          </div> 
           Edit
         </Button> 

@@ -1,26 +1,30 @@
 import React,{useState,useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar,  Tooltip, MenuItem, Paper, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
 import * as actionType from '../../constants/actionTypes';
 import decode from 'jwt-decode'
-import { getUsers } from '../../action/users';
+import {  getLocalUser } from '../../action/users';
 
 
-const Navbar = ({openDialog}) => {
+const Navbar = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem('profile')));
-    const {users, user} = useSelector((state) => state.users); // eslint-disable-line
-    const  localUser  = users?.filter(user => user._id === userLogin?.result?._id)
+    const localUser = useSelector((state) => state.users.localUser);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
+
+    useEffect(()=>{
+  dispatch(getLocalUser(userLogin?.result?._id))
+ },[dispatch]) // eslint-disable-line
+
     const logOut =() =>{
       dispatch({
         type: actionType.LOGOUT
-      })
+      })  
       
       navigate('/auth');
       setUserLogin(null)
@@ -30,14 +34,6 @@ const Navbar = ({openDialog}) => {
       navigate(`/user/${userLogin.result._id}`)
     } 
     
-    useEffect(()=>{
-       if(openDialog === true || openDialog === false){
-       
-        console.log('slow')
-      } else{
-        dispatch(getUsers())
-      }
-     },[dispatch, location])   // eslint-disable-line
 
     useEffect(() => {
       const token = userLogin?.token;
@@ -84,7 +80,7 @@ const Navbar = ({openDialog}) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open menu">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar}  sx={{width:'3rem', height:'3rem'}}>{localUser[0]?.name?.split(" ")[0].substring(0,1)}{localUser[0]?.name?.split(" ")[1].substring(0,1)}</Avatar>
+                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser?.avatar}  sx={{width:'3rem', height:'3rem'}}>{localUser?.name?.split(" ")[0].substring(0,1)}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
@@ -105,8 +101,8 @@ const Navbar = ({openDialog}) => {
               >   
                  <MenuItem  onClick={handleCloseUserMenu}>
                     <Paper  onClick={navigateProfile}  sx={{display:'flex', width:{xs:'400px', sm:'400px',lg:'400px', xl:'400px'}, justifyContent:'space-between', alignItems:'center', padding:'1rem', cursor:'pointer'}}>
-                     <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser[0]?.avatar}  sx={{width:'3rem', height:'3rem'}} />
-                     <Typography fontSize="1.2rem" variant='h5' textAlign="center">{localUser[0]?.name?.replace(/\b[a-z]/g, c => c.toUpperCase())}</Typography>
+                     <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser?.avatar}  sx={{width:'3rem', height:'3rem'}} />
+                     <Typography fontSize="1.2rem" variant='h5' textAlign="center">{localUser?.name?.replace(/\b[a-z]/g, c => c.toUpperCase())}</Typography>
                     </Paper>
                   </MenuItem>
                   <MenuItem  onClick={handleCloseUserMenu} sx={{padding:0}}>

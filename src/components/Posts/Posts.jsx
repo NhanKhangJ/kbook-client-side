@@ -6,8 +6,8 @@ import Post from './Post/Post';
 
 
 
-const Posts = ({ currentUser, profileId, setCurrentId }) => {
-
+const Posts = ({ profileId, setCurrentId }) => {
+   
     const posts = useSelector((state) =>
          state.posts
     )
@@ -18,13 +18,6 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
        const newPostCount = postCount + 4
        setPostCount(newPostCount)
     }
-
-    //  console.log(currentUser)
-    // const test = posts.filter(post => post.creator === profileId);
-    // console.log(test)
-    // console.log(currentId.id);
-    // console.log(profileId)
-    // console.log(currentId)
     
   return (
      profileId === currentId.id && currentId.id !== undefined 
@@ -35,11 +28,11 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
       <Box display="flex" flexDirection="column"  gap={2}>
        {posts.filter(post => post.creator === profileId).map((post) => ( 
         <div key={post._id}>
-         <Post  currentUser={currentUser} setCurrentId={setCurrentId}  post={post} />
+         <Post  setCurrentId={setCurrentId}  post={post} />
       
         </div>
        )).reverse().splice(0,postCount)}
-       {postCount < posts.length && 
+       {postCount < posts.filter(post => post.creator === profileId).length && 
           posts.length > 4 && (
             <Button onClick={handleDisplayPost}>Load more</Button>
           )
@@ -57,7 +50,7 @@ const Posts = ({ currentUser, profileId, setCurrentId }) => {
       <Box display="flex" flexDirection="column" gap={2}>
        {posts.map((post) =>(
         <div key={post._id}>
-         <Post  currentUser={currentUser} setCurrentId={setCurrentId}  post={post} />
+         <Post  setCurrentId={setCurrentId}  post={post} />
         </div>
         )).reverse().splice(0,postCount)}
         {postCount < posts.length && 
