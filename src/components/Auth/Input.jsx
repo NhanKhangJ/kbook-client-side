@@ -7,6 +7,7 @@ const Input = ({name, handleChange, half, label, autoFocus, handleShowPassword, 
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
         <TextField 
+          autoComplete='on'
           disabled={disabled}
           name={name}
           onChange={handleChange}

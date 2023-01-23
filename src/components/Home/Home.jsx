@@ -10,19 +10,11 @@ import { getPosts } from '../../action/posts';
 
 const Home = () => {;
   const [currentId, setCurrentId] = useState(0);
-  // const currentUser = JSON.parse(localStorage.getItem('profile'));
   const dispatch = useDispatch();
-//   const posts = useSelector((state) =>
-//   state.posts
-// )
+
  useEffect(()=>{
    dispatch(getPosts())
  },[currentId, dispatch])  
-
-//  useEffect(()=>{
-//   dispatch(getLocalUser(currentUser?.result?._id))
-//  },[dispatch]) // eslint-disable-line
-// // eslint-disable-line
 
   return (
     <> 

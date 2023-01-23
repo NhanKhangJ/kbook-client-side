@@ -14,8 +14,8 @@ const Auth = () => {
   const [showPassword, setShowPassword] =useState(false);
   const initialState ={firstName: '', lastName:'', email:'', password: '', confirmPassword:''}
   const [formData, setFormData] = useState(initialState);
-  const [disabled, setdisabled] = useState(false);
-  const [showError, setShowError] = useState(true)
+  const [disabled, setDisabled] = useState(false);
+  const [showSignUpError, setShowSignUpError] = useState(true)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,18 +38,22 @@ const Auth = () => {
 
   const handleSubmit = async (e) =>{
     e.preventDefault();
-      setdisabled(true)
        setTimeout(()=>{
-        setdisabled(false)
-        setShowError(false)
-       },4000)
-       setTimeout(()=>{
-        setShowError(true)
-       }, 10000)
-    if(isSignup){ 
-       dispatch(signup(formData, navigate))
+        setDisabled(false)
+       },8000)
+    if(isSignup){  
+      if(formData.password === formData.confirmPassword){
+        setDisabled(true)
+        dispatch(signup(formData, navigate))
+      }else{
+        setShowSignUpError(false)
+        setTimeout(()=>{
+          setShowSignUpError(true)
+        },4000)
+      }
     }else {
-       dispatch(signin(formData, navigate))
+        setDisabled(true)
+        dispatch(signin(formData, navigate))
     }
   }
 
@@ -91,8 +95,8 @@ const Auth = () => {
              <Button onClick={switchMode}>
                    {isSignup ? "Already have an account? Sign In" : "Don't have an account? Sign Up"}
              </Button>
-             </Grid>
-             {showError ? "" : <Typography color="darkorange">error: email or password is not correct!</Typography>}                
+             </Grid> 
+             {showSignUpError ? "" : <Typography color="darkorange">error: Password are not matching</Typography>}                
              </> 
              )}
              

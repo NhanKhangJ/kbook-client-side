@@ -40,6 +40,7 @@ useEffect(() =>{
   }
 },[currentId])
 
+
 const handleSubmit = async (e) =>{
     e.preventDefault()
     if(currentId === 0) {
@@ -82,9 +83,9 @@ const handleClose = () => {
       </Fab>
      </Tooltip> 
        <Box display="flex" justifyContent="center" sx={{p:2, display:{xs:'none', sm:'none' ,md:'flex', lg:'flex', xl:'flex'}}}>
-        <Link href={`/user/${localUser?._id}`} underline="none" style={{width:'20%'}}>
-          <Avatar sx={{width:'3.5rem', height:'3.5rem'}}  src={localUser?.avatar}>{localUser?.name?.split(" ")[0].substring(0,1)}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
-        </Link>
+      
+          <Avatar component={Link} href={`/user/${localUser?._id}`} underline="none" sx={{width:'3.5rem', height:'3.5rem', marginRight:'1rem'}}  src={localUser?.avatar}>{localUser?.name?.split(" ")[0].substring(0,1)}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
+
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px', display:'flex', justifyContent:'start', color:'GrayText'}}>
             Start a post
         </Button>
@@ -133,7 +134,11 @@ const handleClose = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
+          { (postData.content !== "" && postData.content.trim().length !== 0 ) || postData.tags.length !== 0 || postData.selectedFile !== "" ? 
           <Button type='submit' variant='contained' onClick={() => setOpen(false)} >{currentId ? "Update" : "Post"}</Button>
+          :
+          <Button type='submit' variant='contained' onClick={() => setOpen(false)} disabled>{currentId ? "Update" : "Post"}</Button> 
+           }
         </DialogActions>
         </form>
       </Dialog>
