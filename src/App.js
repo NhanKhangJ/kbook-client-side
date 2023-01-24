@@ -7,13 +7,14 @@ import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
 import UserProfile from './components/UserProfile/UserProfile';
 import Navbar from './components/Navbar/Navbar';
+import StartNavbar from './components/Navbar/StartNavbar';
 
 
 
 function App() {
   
   
-  const [mode, setMode] =useState("dark");
+  const [mode, setMode] =useState("light");
 
 
 
@@ -34,7 +35,7 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
     <Box bgcolor={mode !== "light" ? "background.default" : ""} color="text.primary" justifyContent="center" display="flex" >
-     {user === null ? "" : <Navbar bgcolor={"background.default"} color="text.primary" mode={mode} setMode={setMode}/> }
+     {user === null ? <StartNavbar mode={mode} setMode={setMode}/> : <Navbar bgcolor={"background.default"} color="text.primary" mode={mode} setMode={setMode}/> }
     <Routes>
       <Route path='/' element={ user?.result?._id? <Navigate to="/posts"/> : <Navigate to="/auth" replace /> }  />
       <Route path='/posts' element={ user?.result?._id === undefined ? <Navigate to="/auth" replace /> : <Home />    } />
