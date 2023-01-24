@@ -22,12 +22,12 @@ const Sponsor = () => {
     ]
     const Item = ({item}) =>{
         return (
-          <Card  elevation={2} style={{border:' 1px solid #ddd'}}>
+          <Card  elevation={0}  style={{border:' 1px solid #ddd'}}>
             <CardMedia component={Link} href={item.website} underline="none" target="_blank"
                     sx={{ height: 200 }}
              image={item.image}
               />
-            <CardContent style={{background:'#EBECF0'}}>
+            <CardContent >
                 <Typography>{item.description}</Typography>
             </CardContent>
           </Card>

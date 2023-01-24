@@ -4,7 +4,7 @@ import React from 'react'
 
 const CopyRight = () => {
   return (
-    <Stack sx={{display:{xs:'none', sm:'none', md:'none', lg:'block', xl:'block'}, width:'100%'}}>
+    <Stack sx={{display:{xs:'block', sm:'block', md:'block', lg:'block', xl:'block'}, width:'100%'}}>
      <div style={{display:'flex', justifyContent:'space-around', margin:'2rem'}}>
         <Link href='https://github.com/NhanKhangJ' target="_blank"  underline='hover'>
             GitHub
@@ -17,7 +17,7 @@ const CopyRight = () => {
         </Link>
      </div>
      <div style={{display:'flex' ,justifyContent:'center', alignItems:'center'}}>
-        <Typography variant='subtitle2'>
+        <Typography variant='subtitle1' >
           Nhan Khang Le <Copyright fontSize='sm' /> 2023
         </Typography>
      </div>

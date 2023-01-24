@@ -1,5 +1,7 @@
 import axios from 'axios';
-const API = axios.create({baseURL: 'https://kbook-server-side.onrender.com'});
+// const API = axios.create({baseURL: 'https://kbook-server-side.onrender.com'}); //production 
+
+const API = axios.create({baseURL: 'http://localhost:4000/'}); //testing
 
 // http://localhost:4000/
 // https://kbook-server-side.onrender.com

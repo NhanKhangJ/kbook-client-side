@@ -224,7 +224,7 @@ const Post = ({ post, setCurrentId}) => {
       >
        <Stack  sx={{height: '80vh', display:'flex', flexDirection:{xs: 'column', sm:'row', md:'row', lg: 'row', xl:'row'}}}>
        <Button onClick={handleClose} style={{position:'absolute', top:'0', left:'0', padding:'1rem 0'}} color='inherit' ><Clear /></Button>
-        <Box flex={{xs: 2, sm: 5, md: 6, lg: 7, xl: 7}}  sx={{ display:'flex', justifyContent:'center', backgroundColor:' #f4f4f4', padding:{xs:'0 4rem', sm:'0', md:'0',lg:'0 3rem', xl:'0 3rem'}}}>
+        <Box flex={{xs: 2, sm: 5, md: 6, lg: 7, xl: 7}}  sx={{ display:'flex', justifyContent:'center', padding:{xs:'0 4rem', sm:'0', md:'0',lg:'0 3rem', xl:'0 3rem'}}}>
             <CardMedia
              image={post.selectedFile} 
              style={{width:'100%', objectFit:'contain'}}
@@ -232,8 +232,8 @@ const Post = ({ post, setCurrentId}) => {
              alt=" "
              />
         </Box>
-        <Box flex={{xs: 8, sm: 5, md: 4, lg: 3, xl: 3}}   style={{overflow: 'scroll'}}>
-    <Card elevation={0}>
+   <Box component={Card} flex={{xs: 8, sm: 5, md: 4, lg: 3, xl: 3}}   style={{overflow: 'scroll', height:'100%'}}>
+    {/* <Card elevation={0}  style={{overflow: 'scroll', height:'100%'}}> */}
       <CardHeader 
         
         avatar={
@@ -347,7 +347,7 @@ const Post = ({ post, setCurrentId}) => {
         </Button>
       </CardActions>
         <Comments post={post} />
-    </Card>
+    {/* </Card> */}
         </Box>
        </Stack>
     </Dialog>
