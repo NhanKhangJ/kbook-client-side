@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {  Card, CardActions, CardContent, CardHeader, CardMedia, Typography,Avatar,Button, IconButton,  CircularProgress, Collapse, Box, Stack, Dialog, Link} from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -13,14 +13,13 @@ import Comments from './Comments';
 
 
 const Post = ({ post, setCurrentId}) => {
+    const localUser = useSelector((state) => state.users.localUser)
     const dispatch = useDispatch();
     const [showMore, setShowmore] = useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [expansed, setExpansed] = useState(false)
-    const user = JSON.parse(localStorage.getItem('profile'));
-    const userId = user?.result?.googleId || user?.result?._id
     const [likes, setLikes] = useState(post?.likes);
-    const hasLikedPost = likes.find((p) => p?.userId === userId)
+    const hasLikedPost = likes.find((p) => p?.userId === localUser?._id)
     const [open, setOpen] =useState(false);
 
   
@@ -53,12 +52,12 @@ const Post = ({ post, setCurrentId}) => {
     }
     
     const handleLike = async () =>{
-      dispatch(likePost(post._id));
+      await dispatch(likePost(post._id));
 
      if(hasLikedPost) {
-       setLikes(post.likes.filter((p)=> p.userId !== userId))
+       setLikes(post.likes.filter((p)=> p.userId !== localUser?._id))
      } else{
-       setLikes([...post.likes, {userId: userId, name: user.name }])
+       setLikes([...post.likes, {userId: localUser?._id, name: localUser?.name }])
      }
     } 
     // console.log(currentUser.avatar)
@@ -66,7 +65,7 @@ const Post = ({ post, setCurrentId}) => {
     // console.log(post.creator)
     const Likes = () =>{
       if (likes.length > 0) {
-        return likes.find((p) => p.userId === (user?.result?.googleId || user?.result?._id))
+        return likes.find((p) => p.userId === localUser?._id)
           ? (
             <>
             <ThumbUpAlt  fontSize="medium" />&nbsp;like
@@ -96,7 +95,7 @@ const Post = ({ post, setCurrentId}) => {
            </Link>
         }
         action={
-          user?.result?._id === post?.creator &&
+          localUser?._id === post?.creator &&
           <IconButton aria-label="settings" onClick={handleOpenUserMenu}>
             <MoreVertIcon />
           </IconButton>
@@ -179,11 +178,11 @@ const Post = ({ post, setCurrentId}) => {
      <CardContent sx={{paddingTop: '0.5rem', paddingBottom: '0.5rem', display:'flex', justifyContent:'space-between'}}>
       <div>
       { likes.length > 0 &&
-        ( likes.find((p) => p.userId === userId)
+        ( likes.find((p) => p.userId === localUser?._id)
           ? (
             <>  
             <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` :
-            `${likes.length === 2  ? `${user?.result?.name} and ${likes[0].name}`: user?.result?.name} `
+            `${likes.length === 2  ? `${localUser?.name} and ${likes[0].name}`: localUser?.name} `
               }</Typography>
             </>
           ) : (
@@ -243,7 +242,7 @@ const Post = ({ post, setCurrentId}) => {
            </Link>
         }
         action={
-          user?.result?._id === post?.creator &&
+          localUser?._id === post?.creator &&
           <IconButton aria-label="settings" onClick={handleOpenUserMenu}>
             <MoreVertIcon />
           </IconButton>
@@ -316,11 +315,11 @@ const Post = ({ post, setCurrentId}) => {
      <CardContent sx={{paddingTop: '0.5rem', paddingBottom: '0.5rem', display:'flex', justifyContent:'space-between'}}>
       <div>
       { likes.length > 0 &&
-        ( likes.find((p) => p.userId === userId)
+        ( likes.find((p) => p.userId === localUser?._id)
           ? (
             <>  
             <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` :
-            `${likes.length === 2  ? `${user?.result?.name} and ${likes[0].name}`: user?.result?.name} `
+            `${likes.length === 2  ? `${localUser?.name} and ${likes[0].name}`: localUser?.name} `
               }</Typography>
             </>
           ) : (

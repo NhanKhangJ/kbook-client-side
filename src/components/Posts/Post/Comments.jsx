@@ -8,7 +8,6 @@ const Comments = ({ post }) => {
     const [comments, setComments] = useState(post?.comments)
     const [comment, setComment] = useState("");
     const [loadComments, setLoadComments] = useState(2)
-    const user = JSON.parse(localStorage.getItem('profile'));
     const localUser = useSelector((state) => state.users.localUser);
     const handleLoadComments = () => {
       let newComments = loadComments +  2
@@ -22,7 +21,7 @@ const Comments = ({ post }) => {
   return (
     <>
      <CardContent sx={{display: 'flex', justifyContent: "center"}}>
-     <Avatar style={{width: ""}}  sx={{ width: 56, height: 56 }}  src={localUser?.avatar}>{user?.result?.name.split(" ")[0].substring(0,1)}{user?.result?.name.split(" ")[1].substring(0,1)}</Avatar>
+     <Avatar style={{width: ""}}  sx={{ width: 56, height: 56 }}  src={localUser?.avatar}>{localUser?.name.split(" ")[0].substring(0,1)}{localUser?.name.split(" ")[1].substring(0,1)}</Avatar>
        <div style={{width:"100%", margin:"0 0.5rem",borderRadius:"30%"}} className="commentInput" >
        <TextField
         required

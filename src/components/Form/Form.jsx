@@ -19,7 +19,6 @@ const [postData, setPostData] = useState({
 const post = useSelector((state) => (currentId ? state.posts.find((post) => post._id === currentId): null));
 const localUser = useSelector((state) => state.users.localUser)
 const dispatch = useDispatch();
-const user = JSON.parse(localStorage.getItem('profile'))
 const [open, setOpen] = useState(false);
 const [showImage, setShowImage] = useState(false)
 
@@ -44,9 +43,9 @@ useEffect(() =>{
 const handleSubmit = async (e) =>{
     e.preventDefault()
     if(currentId === 0) {
-      await dispatch(createPost({...postData, name: user?.result?.name }));
+      await dispatch(createPost({...postData, name: localUser?.name }));
     } else{
-      await dispatch(updatePost(currentId,{...postData, name: user?.result?.name}));
+      await dispatch(updatePost(currentId,{...postData, name: localUser?.name}));
     }
     setCurrentId(0)
 }
@@ -97,10 +96,10 @@ const handleClose = () => {
         <DialogContent>
           <Box display="flex" >
           <div className='avatar'>
-            <Avatar sx={{width:'4rem', height:'4rem'}} alt={user?.result?.name}  src={localUser?.avatar ? localUser?.avatar : "/static/images/avatar/2.jpg" } />
+            <Avatar sx={{width:'4rem', height:'4rem'}} src={localUser?.avatar ? localUser?.avatar : "/static/images/avatar/2.jpg" } />
            </div>
            <div>
-            <Typography variant='h6'>{user?.result?.name}</Typography>
+            <Typography variant='h6'>{localUser?.name}</Typography>
            </div>
           </Box>
           <TextField
