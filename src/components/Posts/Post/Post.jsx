@@ -25,16 +25,11 @@ const Post = ({ post, setCurrentId}) => {
   
     const handleOpen = () => {
       setOpen(true);
-      // console.log('open')
     };
   
     const handleClose = () => {
       setOpen(false);
-
     };
-
-
-
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -79,10 +74,7 @@ const Post = ({ post, setCurrentId}) => {
   
       return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
     }
-    // console.log(post.comments)
-    // console.log(index)
 
-    // ready for dialog mode
   return (
     <>
       {!post.name ? <CircularProgress />  :(

@@ -10,7 +10,8 @@ API.interceptors.request.use((req) =>{ // a function is going to happen for each
     return req;
 })
 
-export const fetchPosts= () => API.get('/posts');
+export const fetchPosts= (time) => API.get(`/posts/public?time=${time}`);
+export const fetchPostsByCreator = (userId, time) => API.get(`/posts/user?creator=${userId}&time=${time}`)
 export const createPost= (newPost) => API.post('/posts', newPost);
 export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost)
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
@@ -25,3 +26,4 @@ export const updateUser = (id, updatedUser) => API.patch(`/user/${id}`, updatedU
  
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)
+

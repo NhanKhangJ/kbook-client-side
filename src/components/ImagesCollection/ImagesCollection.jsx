@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 
 const ImagesCollection = ({profileId}) => {
     const posts = useSelector((state) =>
-    state.posts
+    state.posts.posts
 )
 const  currentId  = useParams();
   return (
@@ -15,9 +15,11 @@ const  currentId  = useParams();
      { profileId === currentId.id && currentId.id !== undefined 
       ? 
      
-        !posts.length ? <CircularProgress /> : (
+        !posts?.length ?
+          posts?.length === 0 ? "" :  <CircularProgress /> 
+           : (
           <ImageList  cols={3} rowHeight={162} sx={{marginBottom:0}}>
-            {posts.filter(post => post.creator === profileId).map((post, index) => ( 
+            {posts.map((post, index) => ( 
                      post?.selectedFile && (
                          <ImageListItem key={index}>
                             <img 

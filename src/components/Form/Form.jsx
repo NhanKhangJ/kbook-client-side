@@ -9,14 +9,14 @@ import FileBase from 'react-file-base64'
 
 
 const Form = ({ currentId, setCurrentId}) => {
-
-
+// const postInReducer = useSelector((state) => state.posts.posts)
+const totaPost = useSelector((state) => state.posts.totalPost)
 const [postData, setPostData] = useState({
     content:"",
     tags:[],
     selectedFile:""
 });
-const post = useSelector((state) => (currentId ? state.posts.find((post) => post._id === currentId): null));
+const post = useSelector((state) => (currentId ? state.posts.posts.find((post) => post._id === currentId): null));
 const localUser = useSelector((state) => state.users.localUser)
 const dispatch = useDispatch();
 const [open, setOpen] = useState(false);
@@ -43,7 +43,9 @@ useEffect(() =>{
 const handleSubmit = async (e) =>{
     e.preventDefault()
     if(currentId === 0) {
-      await dispatch(createPost({...postData, name: localUser?.name }));
+      // dispatch({type: REMOVE, payload: {updatedPost: postInReducer?.slice(0, -1), updatedTotal: (totaPostInReducer + 1) } })
+      await dispatch(createPost({...postData, name: localUser?.name }, totaPost));
+     
     } else{
       await dispatch(updatePost(currentId,{...postData, name: localUser?.name}));
     }

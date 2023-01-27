@@ -24,8 +24,8 @@ export const signup= (formData, navigate, setDisabled, setShowSignUpError) => as
         setTimeout(()=>{setShowSignUpError("")}, 4000)
       }
     try {
-        const { data } = await api.signUp(formData);
-        dispatch({type:AUTH, data})
+        const {data} = await api.signUp(formData);
+        await dispatch({type:AUTH, data})
         navigate('/posts')
     } catch (error) {
         signupFail(error.response.data.message)

@@ -3,8 +3,7 @@ import { BusinessCenter, LocationOn, School} from '@mui/icons-material'
 import { Avatar, Button, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import FileBase from 'react-file-base64';
 import { useDispatch } from 'react-redux';
-import { getLocalUser, getUser, updateUser } from '../../../action/users';
-import { getPosts } from '../../../action/posts';
+import { getUser, updateUser } from '../../../action/users';
 
 
 
@@ -23,14 +22,11 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
   }
   
   const handleSubmit = async (e) =>{
-    e.preventDefault();
+    // e.preventDefault();
     setOpenDialog(false)
      try {
-
       await dispatch(updateUser(user._id, userInfo))
       await dispatch(getUser(user?._id))
-      await dispatch(getLocalUser(user?._id))
-      await dispatch(getPosts())
      } catch (error) {
       console.log(error)
      }

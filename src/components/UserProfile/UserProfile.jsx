@@ -2,9 +2,9 @@
 import { Avatar,Container, Typography, Paper, Box,Grow, CircularProgress } from '@mui/material';
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { getUser } from '../../action/users';
-import { getPosts } from '../../action/posts';
+import { getPostsByCreator } from '../../action/posts';
 import Intro from './Introduction/Intro';
 import Form from '../Form/Form';
 import Posts from '../Posts/Posts';
@@ -12,6 +12,7 @@ import ProfileForm from './ProfileForm/ProfileForm';
 import freeBackground from '../../images/freeBackground.jpeg'
 import ImagesCollection from '../ImagesCollection/ImagesCollection';
 import CopyRight from '../CopyRight/CopyRight';
+import { REMOVE } from '../../constants/actionTypes';
 
 const UserProfile = () => {
     const [currentId, setCurrentId] = useState(0)
@@ -19,15 +20,25 @@ const UserProfile = () => {
     const {id} = useParams();
     const {users, user, localUser} = useSelector((state) => state.users); // eslint-disable-line
     const [openDialog, setOpenDialog] = useState(false)
+    const [loadCount, setLoadCount] = useState(1)
+
+    useEffect(()=>{
+      dispatch(getUser(id))
+    },[dispatch, id]) 
 
   useEffect(()=>{
-    dispatch(getPosts())
-  },[currentId, dispatch])  
+    dispatch({type: REMOVE})
+  },[dispatch])
 
+ 
   useEffect(()=>{
-    dispatch(getUser(id))
-  },[dispatch, id]) 
+    dispatch(getPostsByCreator(id, loadCount))
+  },[dispatch, id, loadCount])  //eslint-disable-line
 
+   
+ const handleLoadMore = () =>{
+  setLoadCount(loadCount+1)
+ }
 
   return (
     <>
@@ -42,7 +53,7 @@ const UserProfile = () => {
          </div>
          <div style={{display:'flex', justifyContent:'center', alignItems:'center' ,flexDirection:'column', height:'35%', position:'relative', top:'-50px'}}>
            <div>
-           <Avatar alt={user.name} src={user.avatar} sx={{ width:200, height:200, fontSize:'4rem' }}>{user.name.split(" ")[0].substring(0,1)}{user.name.split(" ")[1].substring(0,1)}</Avatar>
+           <Avatar alt={user.name} src={user.avatar} sx={{ width:200, height:200, fontSize:'4rem' }}>{user?.name?.split(" ")[0].substring(0,1)}{user?.name?.split(" ")[1].substring(0,1)}</Avatar>
            </div>
            <Typography variant="h3" gutterBottom>{user.name.replace(/\b[a-z]/g, c => c.toUpperCase())}</Typography>
          </div>
@@ -69,7 +80,7 @@ const UserProfile = () => {
            {localUser?._id === id && (
             <Form currentId={currentId} setCurrentId={setCurrentId} />
            )}
-            <Posts profileId={id} setCurrentId={setCurrentId} />
+            <Posts  setCurrentId={setCurrentId} handleLoadMore={handleLoadMore} />
          </Box>
 
       </Box>

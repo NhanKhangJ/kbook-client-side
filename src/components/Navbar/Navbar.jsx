@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate} from 'react-router-dom';
+import {  useLocation, useNavigate} from 'react-router-dom';
 import { AppBar, Box, Toolbar, Typography, Menu, Container, Avatar,  Tooltip, MenuItem, Paper, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -8,7 +8,6 @@ import * as actionType from '../../constants/actionTypes';
 import decode from 'jwt-decode'
 import {  getLocalUser } from '../../action/users';
 import MaterialUISwitch from './Switch';
-
 
 const Navbar = ({mode, setMode}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -23,6 +22,7 @@ const Navbar = ({mode, setMode}) => {
   dispatch(getLocalUser(userLogin?.result?._id))
  },[dispatch]) // eslint-disable-line
 
+//  dispatch(getLocalUser(userLogin?.result?._id))
     const logOut =() =>{
       dispatch({
         type: actionType.LOGOUT
@@ -36,7 +36,7 @@ const Navbar = ({mode, setMode}) => {
       navigate(`/user/${userLogin.result._id}`)
     } 
     
-
+ 
     useEffect(() => {
       const token = userLogin?.token;
   
@@ -54,7 +54,11 @@ const Navbar = ({mode, setMode}) => {
     const handleCloseUserMenu = () => {
       setAnchorElUser(null);
     };
-  
+    
+    const handleNavigate = ()=>{
+      navigate('/posts')
+    }
+    
     return (
       userLogin ? 
       <AppBar position="fixed" >
@@ -63,8 +67,8 @@ const Navbar = ({mode, setMode}) => {
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="/"
+              component={Button}
+              onClick={handleNavigate}
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'flex' },

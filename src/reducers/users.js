@@ -9,7 +9,7 @@ const users = (state = {users: []}, action) =>{
         case FETCH_LOCAL_USER:
             return {...state, localUser: action.payload}
         case UPDATE:
-            return {...state, users: state.users.map((user)=> user._id === action.payload._id ? action.payload : user)}
+            return {...state, localUser: action.payload }
         default:
             return state
     }

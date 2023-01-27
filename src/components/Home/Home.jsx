@@ -6,15 +6,30 @@ import Sponsor from '../Sponsor/Sponsor';
 import CopyRight from '../CopyRight/CopyRight';
 import Posts from '../Posts/Posts';
 import { useDispatch} from 'react-redux';
-import { getPosts } from '../../action/posts';
+import { getMorePosts } from '../../action/posts';
+import { REMOVE } from '../../constants/actionTypes';
 
 const Home = () => {;
   const [currentId, setCurrentId] = useState(0);
   const dispatch = useDispatch();
+  const [loadCount, setLoadCount] = useState(1)
+
+
+  useEffect(()=>{
+    dispatch({type: REMOVE})
+  },[dispatch])
 
  useEffect(()=>{
-   dispatch(getPosts())
- },[currentId, dispatch])  
+  if(loadCount) dispatch(getMorePosts(loadCount))
+ },[ dispatch,loadCount])  
+ //If 
+
+
+
+
+ const handleLoadMore = () =>{
+  setLoadCount(loadCount+1)
+ }
 
   return (
     <> 
@@ -25,7 +40,7 @@ const Home = () => {;
            </Box>
            <Box flex={5}  style={{marginLeft:'0', overflowY:'scroll'}}>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
-            <Posts setCurrentId={setCurrentId} />
+            <Posts setCurrentId={setCurrentId} handleLoadMore={handleLoadMore} />
            </Box>
            <Box flex={3} style={{marginLeft:'0'}} sx={{ display: { xs: 'none', md: 'none', lg: 'block', xl: 'block' } }}>
             <Sponsor /> 

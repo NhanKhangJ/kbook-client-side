@@ -13,6 +13,7 @@ export const getUsers = () => async(dispatch) =>{
 export const getUser = (id) => async(dispatch) =>{
     try {
         const {data} = await api.fetchUser(id);
+        
         dispatch({type: FETCH_USER, payload: data})
     } catch (error) {
         console.log(error.message)
@@ -22,6 +23,7 @@ export const getUser = (id) => async(dispatch) =>{
 export const getLocalUser = (id) => async(dispatch) =>{
     try {
         const {data} = await api.fetchUser(id);
+        // console.log(data)
         dispatch({type: FETCH_LOCAL_USER, payload: data})
     } catch (error) {
         console.log(error.message)

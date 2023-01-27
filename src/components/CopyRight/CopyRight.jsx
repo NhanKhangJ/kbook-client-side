@@ -4,7 +4,7 @@ import React from 'react'
 
 const CopyRight = () => {
   return (
-    <Stack sx={{display:{xs:'block', sm:'block', md:'block', lg:'block', xl:'block'}, width:'100%'}}>
+    <Stack sx={{display:{xs:'none', sm:'none', md:'block', lg:'block', xl:'block'}, width:'100%'}}>
      <div style={{display:'flex', justifyContent:'space-around', margin:'2rem'}}>
         <Link href='https://github.com/NhanKhangJ' target="_blank"  underline='hover'>
             GitHub

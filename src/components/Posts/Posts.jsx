@@ -1,69 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, CircularProgress } from '@mui/material';
-import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Post from './Post/Post';
 
 
 
-const Posts = ({ profileId, setCurrentId }) => {
+const Posts = ({ setCurrentId, handleLoadMore}) => {
    
-    const posts = useSelector((state) =>
-         state.posts
+    const posts = useSelector( (state) =>
+          state.posts.posts
     )
-    const  currentId  = useParams();
-    const [postCount, setPostCount] = useState(4)
+    const totalPost = useSelector((state) =>(
+       state.posts.totalPost
+    ))
+
+ 
+    return (
     
-    const handleDisplayPost = () =>{
-       const newPostCount = postCount + 4
-       setPostCount(newPostCount)
-    }
-    
-  return (
-     profileId === currentId.id && currentId.id !== undefined 
-     
-    ? 
-
-     !posts.length ? <CircularProgress /> : (
-      <Box display="flex" flexDirection="column"  gap={2}>
-       {posts.filter(post => post.creator === profileId).map((post) => ( 
-        <div key={post._id}>
-         <Post  setCurrentId={setCurrentId}  post={post} />
-      
-        </div>
-       )).reverse().splice(0,postCount)}
-       {postCount < posts.filter(post => post.creator === profileId).length && 
-          posts.length > 4 && (
-            <Button onClick={handleDisplayPost}>Load more</Button>
-          )
-        }
-      </Box>
-     )
-
-    :
-
-     !posts.length ? 
+     !posts?.length ?
      <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'70vh'}}>
      <CircularProgress size="5rem" />
      </div>
-      : (
+      :
+      (
       <Box display="flex" flexDirection="column" gap={2}>
-       {posts.map((post) =>(
+      {
+         posts?.map((post) =>(
         <div key={post._id}>
-         <Post  setCurrentId={setCurrentId}  post={post} />
+         <Post setCurrentId={setCurrentId}  post={post} />
         </div>
-        )).reverse().splice(0,postCount)}
-        {postCount < posts.length && 
-          posts.length > 4 && (
-            <Button onClick={handleDisplayPost}>Load more</Button>
-          )
-        }
-      
+        ))}
+        { totalPost > posts?.length ? 
+          <Button onClick={handleLoadMore}>Load more</Button>
+        : ""}
       </Box>
     )
     
   ) 
-  
+
 }
 
 export default Posts

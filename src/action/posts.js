@@ -1,12 +1,31 @@
 import * as api from '../api';
-import { FETCH_ALL,CREATE, UPDATE, DELETE, LIKE, COMMENT } from '../constants/actionTypes';
+import { FETCH_ALL,CREATE, UPDATE, DELETE, LIKE, COMMENT, FETCH_MORE } from '../constants/actionTypes';
 
-export const getPosts = () => async(dispatch) =>{
+export const getPosts = (time) => async(dispatch) =>{
     try {
-        const {data} = await api.fetchPosts();
+        const {data} = await api.fetchPosts(time);
         dispatch({type: FETCH_ALL, payload: data})
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
+    }
+}
+
+
+export const getPostsByCreator = (userId, time) => async(dispatch) =>{
+    try {
+        const {data} = await api.fetchPostsByCreator(userId,time);
+        dispatch({type: FETCH_MORE, payload: data})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getMorePosts= (time) => async(dispatch) =>{
+    try {
+        const {data} = await api.fetchPosts(time)
+        dispatch({type: FETCH_MORE, payload: data})
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -23,6 +42,7 @@ export const updatePost = (id, post) => async(dispatch) =>{
     try {
         // console.log(id)
         const {data} = await api.updatePost(id, post);
+        console.log(data)
         dispatch({type: UPDATE, payload: data})
     } catch (error) {
         console.log(error.message);
@@ -50,9 +70,8 @@ export const commentPost = (value, id) => async(dispatch) =>{
 
 export const deletePost = (id) => async(dispatch) =>{
     try {
-        await api.deletePost(id);
-
-        dispatch({type: DELETE, payload: id})
+        const {data} = await api.deletePost(id);
+        dispatch({type: DELETE, payload: data})
     } catch (error) {
         console.log(error)
     }
