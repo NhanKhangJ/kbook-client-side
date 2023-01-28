@@ -23,7 +23,7 @@ const ProfileCard = () => {
          <div>
           <CardContent sx={{position:'relative', display:'flex', flexDirection:'column',  top:'-50px'}}>
              <Avatar  sx={{width:'5rem', height:'5rem' ,alignSelf:'center'}} alt=" " src={localUser?.avatar}>{localUser?.name?.split(" ")[0].substring(0,1)}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
-             <Link sx={{alignSelf:'center'}} variant='h5' href={`/user/${localUser?._id}`} underline="hover">{localUser?.name.replace(/\b[a-z]/g, c => c.toUpperCase())}</Link>
+             <Link sx={{alignSelf:'center'}} variant='h5' href={`/user/${localUser?._id}`} underline="hover">{localUser?.name?.replace(/\b[a-z]/g, c => c.toUpperCase())}</Link>
 
              <Typography marginBottom="1rem" display="flex" alignSelf="flex-start" variant='caption'>
               <BusinessCenter fontSize='small' />

@@ -55,7 +55,7 @@ const UserProfile = () => {
            <div>
            <Avatar alt={user.name} src={user.avatar} sx={{ width:200, height:200, fontSize:'4rem' }}>{user?.name?.split(" ")[0].substring(0,1)}{user?.name?.split(" ")[1].substring(0,1)}</Avatar>
            </div>
-           <Typography variant="h3" gutterBottom>{user.name.replace(/\b[a-z]/g, c => c.toUpperCase())}</Typography>
+           <Typography variant="h3" gutterBottom>{user?.name?.replace(/\b[a-z]/g, c => c.toUpperCase())}</Typography>
          </div>
          </Paper>
 
