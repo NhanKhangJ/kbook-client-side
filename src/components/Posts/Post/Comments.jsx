@@ -49,7 +49,7 @@ const Comments = ({ post }) => {
       {comments?.map((c,index)=>(
         <Box style={{width:"100%", display: 'flex', justifyContent: "center", alignItems:"start"}}  key={index}>
         <Button variant='text' style={{padding: '0'}} onClick={()=> navigate(`/user/${c.id}`)}>
-        <Avatar  style={{width:'4rem', height: '4rem'}} src={c?.creatorAvatar}>{c.creator.split(" ")[0].substring(0,1)}{c.creator.split(" ")[1].substring(0,1)}</Avatar>
+        <Avatar  style={{width:'4rem', height: '4rem'}} src={c?.creatorAvatar}>{c?.creator?.split(" ")[0].substring(0,1)}{c?.creator?.split(" ")[1].substring(0,1)}</Avatar>
         </Button>
         <Box bgcolor={theme.palette.mode === "light" ? "#f4f4f4" : "background.default"} style={{width:"100%", margin:"0 0.5rem 1rem 0.5rem", borderRadius:"5px", height:"auto", padding:"0.1rem 0.5rem 0.5rem 0.5rem" }} >
         <Typography variant='h6' fontWeight="bold" fontSize='large'  mb="0.5rem">{c?.creator}</Typography>
