@@ -4,6 +4,7 @@ import { Avatar, Button, CardMedia, Dialog, DialogActions, DialogContent, Dialog
 import FileBase from 'react-file-base64';
 import { useDispatch } from 'react-redux';
 import { getUser, updateUser } from '../../../action/users';
+import { getPostsByCreator } from '../../../action/posts';
 
 
 
@@ -22,11 +23,12 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
   }
   
   const handleSubmit = async (e) =>{
-    // e.preventDefault();
+    e.preventDefault();
     setOpenDialog(false)
      try {
       await dispatch(updateUser(user._id, userInfo))
       await dispatch(getUser(user?._id))
+      await dispatch(getPostsByCreator(user?._id, 1))
      } catch (error) {
       console.log(error)
      }
