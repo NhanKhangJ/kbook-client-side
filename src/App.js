@@ -15,8 +15,13 @@ function App() {
   
   
   const [mode, setMode] =useState("light");
-
-
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+    const message = (currentHour >= 6 && currentHour < 12)  //eslint-disable-line
+      ? (console.log("Good morning! Time for a light mode."), setMode("light")) 
+      : (console.log("Good afternoon/evening! Time for a dark mode."), setMode("dark"));
+  }, []);
+ 
 
   const darkTheme= createTheme({
       palette:{
