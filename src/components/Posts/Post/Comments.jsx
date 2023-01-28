@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
-import { TextField, Button, Avatar, Typography, CardContent, Box } from '@mui/material';
+import { TextField, Button, Avatar, Typography, CardContent, Box, Link } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.css'
 import { commentPost } from '../../../action/posts';
 const Comments = ({ post }) => {
@@ -14,6 +14,11 @@ const Comments = ({ post }) => {
     const [comment, setComment] = useState("");
     const [loadComments, setLoadComments] = useState(2)
     const localUser = useSelector((state) => state.users.localUser);
+    const location = useLocation()
+    let substring = '/user/';
+    let reg = new RegExp("^"+substring);
+    console.log(reg.test(location.pathname))
+
     const handleLoadComments = () => {
       let newComments = loadComments +  2
       setLoadComments(newComments)
@@ -48,9 +53,16 @@ const Comments = ({ post }) => {
 
       {comments?.map((c,index)=>(
         <Box style={{width:"100%", display: 'flex', justifyContent: "center", alignItems:"start"}}  key={index}>
-        <Button variant='text' style={{padding: '0'}} onClick={()=> navigate(`/user/${c.id}`)}>
-        <Avatar  style={{width:'4rem', height: '4rem'}} src={c?.creatorAvatar}>{c?.creator?.split(" ")[0].substring(0,1)}{c?.creator?.split(" ")[1].substring(0,1)}</Avatar>
-        </Button>
+        {reg.test(location.pathname) && c?.id !== localUser?._id ?   
+         <Link href={`/user/${c.id}`} underline="none">
+           <Avatar  style={{width:'4rem', height: '4rem'}} src={c?.creatorAvatar}>{c?.creator?.split(" ")[0].substring(0,1)}{c?.creator?.split(" ")[1].substring(0,1)}</Avatar>
+         </Link>
+          : 
+         <Button variant='text' style={{padding: '0'}} onClick={()=> navigate(`/user/${c.id}`)}>
+          <Avatar  style={{width:'4rem', height: '4rem'}} src={c?.creatorAvatar}>{c?.creator?.split(" ")[0].substring(0,1)}{c?.creator?.split(" ")[1].substring(0,1)}</Avatar>
+         </Button>
+        }
+
         <Box bgcolor={theme.palette.mode === "light" ? "#f4f4f4" : "background.default"} style={{width:"100%", margin:"0 0.5rem 1rem 0.5rem", borderRadius:"5px", height:"auto", padding:"0.1rem 0.5rem 0.5rem 0.5rem" }} >
         <Typography variant='h6' fontWeight="bold" fontSize='large'  mb="0.5rem">{c?.creator}</Typography>
         <Typography variant='subtitle1'>{c?.comment}</Typography>

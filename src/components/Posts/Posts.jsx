@@ -6,23 +6,37 @@ import Post from './Post/Post';
 
 
 const Posts = ({ setCurrentId, handleLoadMore}) => {
-   
+    
+  const totalPost = useSelector((state) =>(
+    state.posts.totalPost
+ ))
     const posts = useSelector( (state) =>
           state.posts.posts
     )
-    const totalPost = useSelector((state) =>(
-       state.posts.totalPost
-    ))
+    if(totalPost === 0){
+      return ""
+    }
+     
+
+  if(!posts?.length){
+    return(
+      <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'70vh'}}>
+      <CircularProgress size="5rem" />
+      </div>
+    ) 
+  }
+
+
 
  
     return (
     
-     !posts?.length ?
-     <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'70vh'}}>
-     <CircularProgress size="5rem" />
-     </div>
-      :
-      (
+    //  !posts?.length ?
+    //  <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'70vh'}}>
+    //  <CircularProgress size="5rem" />
+    //  </div>
+    //   :
+    //   (
       <Box display="flex" flexDirection="column" gap={2}>
       {
          posts?.map((post) =>(
@@ -36,7 +50,7 @@ const Posts = ({ setCurrentId, handleLoadMore}) => {
       </Box>
     )
     
-  ) 
+  // ) 
 
 }
 
