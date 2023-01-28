@@ -53,7 +53,7 @@ const Comments = ({ post }) => {
 
       {comments?.map((c,index)=>(
         <Box style={{width:"100%", display: 'flex', justifyContent: "center", alignItems:"start"}}  key={index}>
-        {reg.test(location.pathname) && c?.id !== localUser?._id ?   
+        {( reg.test(location.pathname) && post?.creator !== c?.id )?   
          <Link href={`/user/${c.id}`} underline="none">
            <Avatar  style={{width:'4rem', height: '4rem'}} src={c?.creatorAvatar}>{c?.creator?.split(" ")[0].substring(0,1)}{c?.creator?.split(" ")[1].substring(0,1)}</Avatar>
          </Link>

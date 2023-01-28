@@ -10,7 +10,7 @@ import { ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
 import {deletePost,  likePost} from '../../../action/posts'
 import Comments from './Comments';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 
 const Post = ({ post, setCurrentId}) => {
@@ -23,12 +23,12 @@ const Post = ({ post, setCurrentId}) => {
     const [likes, setLikes] = useState(post?.likes);
     const hasLikedPost = likes.find((p) => p?.userId === localUser?._id)
     const [open, setOpen] =useState(false);
-    const location = useLocation()
-    console.log(location.pathname)
-//     let string = '/user/2q412q4';
-let substring = '/user/';
-let reg = new RegExp("^"+substring);
-console.log(reg.test(location.pathname))
+    // const location = useLocation()
+//     console.log(location.pathname)
+// //     let string = '/user/2q412q4';
+// let substring = '/user/';
+// let reg = new RegExp("^"+substring);
+// console.log(reg.test(location.pathname))
   
     const handleOpen = () => {
       setOpen(true);
