@@ -50,7 +50,7 @@ import { FETCH_ALL,CREATE, UPDATE, DELETE, LIKE, COMMENT, FETCH_MORE, REMOVE} fr
                 posts : []
             }            
         default:
-            return posts
+            return state
     }
 }
 

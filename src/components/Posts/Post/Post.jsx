@@ -10,11 +10,13 @@ import { ThumbUpAltOutlined } from '@mui/icons-material';
 import moment from 'moment';
 import {deletePost,  likePost} from '../../../action/posts'
 import Comments from './Comments';
+import { useNavigate } from 'react-router-dom';
 
 
 const Post = ({ post, setCurrentId}) => {
     const localUser = useSelector((state) => state.users.localUser)
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [showMore, setShowmore] = useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [expansed, setExpansed] = useState(false)
@@ -82,7 +84,7 @@ const Post = ({ post, setCurrentId}) => {
       <CardHeader 
         
         avatar={
-          <Link href={`/user/${post.creator}`} underline="none">
+          <Link style={{cursor:'pointer'}} onClick={()=>{navigate(`/user/${post.creator}`)}}  underline="none">
            <Avatar  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}>{post?.name?.split(" ")[0].substring(0,1)}{post?.name?.split(" ")[1].substring(0,1)}</Avatar>
            </Link>
         }
