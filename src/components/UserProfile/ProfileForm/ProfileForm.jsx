@@ -5,6 +5,7 @@ import FileBase from 'react-file-base64';
 import { useDispatch } from 'react-redux';
 import { getUser, updateUser } from '../../../action/users';
 import { getPostsByCreator } from '../../../action/posts';
+import { REMOVE } from '../../../constants/actionTypes';
 
 
 
@@ -28,6 +29,7 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
      try {
       await dispatch(updateUser(user._id, userInfo))
       await dispatch(getUser(user?._id))
+      await dispatch({type: REMOVE})
       await dispatch(getPostsByCreator(user?._id, 1))
      } catch (error) {
       console.log(error)
