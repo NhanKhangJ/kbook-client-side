@@ -3,7 +3,7 @@ import { BusinessCenter, LocationOn, School} from '@mui/icons-material'
 import { Avatar, Button, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import FileBase from 'react-file-base64';
 import { useDispatch } from 'react-redux';
-import { getUser, updateUser } from '../../../action/users';
+import { getLocalUser, getUser, updateUser } from '../../../action/users';
 import { getPostsByCreator } from '../../../action/posts';
 import { REMOVE } from '../../../constants/actionTypes';
 
@@ -29,6 +29,7 @@ const ProfileForm = ({user, openDialog, setOpenDialog}) => {
      try {
       await dispatch(updateUser(user._id, userInfo))
       await dispatch(getUser(user?._id))
+      await dispatch(getLocalUser(user?._id))
       await dispatch({type: REMOVE})
       await dispatch(getPostsByCreator(user?._id, 1))
      } catch (error) {

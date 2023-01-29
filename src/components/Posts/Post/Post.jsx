@@ -323,7 +323,7 @@ const Post = ({ post, setCurrentId}) => {
             </>
           ) : (
             <>
-            <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `${likes[0].name} and ${likes.length - 1} others` : `${likes[0].name}${likes[1]?.name ? ` and ${likes[1]?.name}` : "" }` }</Typography>
+            <Typography  variant='subtitle2' color="GrayText"><ThumbUpAlt fontSize='inherit' />&nbsp;{likes.length > 2 ? `${likes[0].name} and ${likes.length - 1} others` : `${likes[0]?.name}${likes[1]?.name ? ` and ${likes[1]?.name}` : "" }` }</Typography>
             </>
           )
       )}
