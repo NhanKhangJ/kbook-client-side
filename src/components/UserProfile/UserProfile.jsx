@@ -16,6 +16,7 @@ import { REMOVE } from '../../constants/actionTypes';
 
 const UserProfile = () => {
     const [currentId, setCurrentId] = useState(0)
+    const [openEditForm, setOpenEditForm] = useState(false)
     const dispatch = useDispatch();
     const {id} = useParams();
     const {users, user, localUser} = useSelector((state) => state.users); // eslint-disable-line
@@ -78,9 +79,9 @@ const UserProfile = () => {
          </Box>
          <Box flex={6} p={2} style={{margin: '0px', marginTop:'1rem'}}  pt={0} >
            {localUser?._id === id && (
-            <Form currentId={currentId} setCurrentId={setCurrentId} />
+            <Form currentId={currentId} setCurrentId={setCurrentId} setOpenEditForm={setOpenEditForm} openEditForm={openEditForm} />
            )}
-            <Posts  setCurrentId={setCurrentId} handleLoadMore={handleLoadMore} />
+            <Posts  setCurrentId={setCurrentId} handleLoadMore={handleLoadMore} setOpenEditForm={setOpenEditForm} />
          </Box>
 
       </Box>

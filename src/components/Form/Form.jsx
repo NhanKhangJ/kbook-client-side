@@ -6,10 +6,11 @@ import { useDispatch, useSelector} from 'react-redux';
 import {MuiChipsInput} from 'mui-chips-input';
 import {createPost, updatePost} from '../../action/posts';
 import FileBase from 'react-file-base64'
+import { getLocalUser } from '../../action/users';
 
 
-const Form = ({ currentId, setCurrentId}) => {
-// const postInReducer = useSelector((state) => state.posts.posts)
+const Form = ({ currentId, setCurrentId, openEditForm, setOpenEditForm}) => {
+
 const totaPost = useSelector((state) => state.posts.totalPost)
 const [postData, setPostData] = useState({
     content:"",
@@ -19,13 +20,11 @@ const [postData, setPostData] = useState({
 const post = useSelector((state) => (currentId ? state.posts.posts.find((post) => post._id === currentId): null));
 const localUser = useSelector((state) => state.users.localUser)
 const dispatch = useDispatch();
-const [open, setOpen] = useState(false);
 const [showImage, setShowImage] = useState(false)
 
 useEffect(() =>{
   setShowImage(true)
 },[postData.selectedFile])
-
 
 useEffect(()=>{
  if(post){
@@ -33,23 +32,17 @@ useEffect(()=>{
 }
 },[post])
 
-useEffect(() =>{
-  if(currentId){
-    setOpen(true)
-  }
-},[currentId])
-
-
 const handleSubmit = async (e) =>{
     e.preventDefault()
+    setCurrentId(0)
+    setOpenEditForm(false)
     if(currentId === 0) {
       // dispatch({type: REMOVE, payload: {updatedPost: postInReducer?.slice(0, -1), updatedTotal: (totaPostInReducer + 1) } })
       await dispatch(createPost({...postData, name: localUser?.name }, totaPost));
-     
     } else{
       await dispatch(updatePost(currentId,{...postData, name: localUser?.name}));
+      await dispatch(getLocalUser(post.creator))
     }
-    setCurrentId(0)
 }
 
 const handleAddChip = (tag) => {
@@ -61,17 +54,19 @@ const handleDeleteChip = (chipToDelete) => {
 };
 
 const handleClickOpen = () => {
+
   setCurrentId(0);
     setPostData({
     content:"",
     tags: [],
     selectedFile:""
 })
-  setOpen(true);
+setOpenEditForm(true)
+
 };
 
 const handleClose = () => {
-  setOpen(false);
+  setOpenEditForm(false)
   setCurrentId(0);
 };
 
@@ -92,7 +87,7 @@ const handleClose = () => {
         </Button>
        </Box>
    
-       <Dialog open={open} fullWidth>
+       <Dialog open={openEditForm} fullWidth>
         <DialogTitle>{currentId ? "Edit a post" : "Create a Post"}</DialogTitle>
         <form autoComplete='off' noValidate onSubmit={handleSubmit}>
         <DialogContent>
@@ -136,9 +131,9 @@ const handleClose = () => {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           { (postData.content !== "" && postData.content.trim().length !== 0 ) || postData.tags.length !== 0 || postData.selectedFile !== "" ? 
-          <Button type='submit' variant='contained' onClick={() => setOpen(false)} >{currentId ? "Update" : "Post"}</Button>
+          <Button type='submit' variant='contained' >{currentId ? "Update" : "Post"}</Button>
           :
-          <Button type='submit' variant='contained' onClick={() => setOpen(false)} disabled>{currentId ? "Update" : "Post"}</Button> 
+          <Button type='submit' variant='contained' disabled>{currentId ? "Update" : "Post"}</Button> 
            }
         </DialogActions>
         </form>

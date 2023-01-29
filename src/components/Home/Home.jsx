@@ -11,6 +11,7 @@ import { REMOVE } from '../../constants/actionTypes';
 
 const Home = () => {;
   const [currentId, setCurrentId] = useState(0);
+  const [openEditForm, setOpenEditForm] = useState(false)
   const dispatch = useDispatch();
   const [loadCount, setLoadCount] = useState(1)
 
@@ -39,8 +40,8 @@ const Home = () => {;
             <ProfileCard />
            </Box>
            <Box flex={5}  style={{marginLeft:'0', overflowY:'scroll'}}>
-            <Form currentId={currentId} setCurrentId={setCurrentId} />
-            <Posts setCurrentId={setCurrentId} handleLoadMore={handleLoadMore} />
+            <Form currentId={currentId} setCurrentId={setCurrentId} setOpenEditForm={setOpenEditForm} openEditForm={openEditForm} />
+            <Posts setCurrentId={setCurrentId} setOpenEditForm={setOpenEditForm} handleLoadMore={handleLoadMore} />
            </Box>
            <Box flex={3} style={{marginLeft:'0'}} sx={{ display: { xs: 'none', md: 'none', lg: 'block', xl: 'block' } }}>
             <Sponsor /> 

@@ -5,7 +5,7 @@ import Post from './Post/Post';
 
 
 
-const Posts = ({ setCurrentId, handleLoadMore}) => {
+const Posts = ({setCurrentId, setOpenEditForm ,handleLoadMore}) => {
     
   const totalPost = useSelector((state) =>(
     state.posts.totalPost
@@ -26,22 +26,13 @@ const Posts = ({ setCurrentId, handleLoadMore}) => {
     ) 
   }
 
-
-
- 
     return (
     
-    //  !posts?.length ?
-    //  <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'70vh'}}>
-    //  <CircularProgress size="5rem" />
-    //  </div>
-    //   :
-    //   (
       <Box display="flex" flexDirection="column" gap={2}>
       {
          posts?.map((post) =>(
         <div key={post._id}>
-         <Post setCurrentId={setCurrentId}  post={post} />
+         <Post setOpenEditForm={setOpenEditForm} setCurrentId={setCurrentId}  post={post} />
         </div>
         ))}
         { totalPost > posts?.length ? 
@@ -49,8 +40,6 @@ const Posts = ({ setCurrentId, handleLoadMore}) => {
         : ""}
       </Box>
     )
-    
-  // ) 
 
 }
 

@@ -13,7 +13,7 @@ import Comments from './Comments';
 import {  useNavigate } from 'react-router-dom';
 
 
-const Post = ({ post, setCurrentId}) => {
+const Post = ({ post, setOpenEditForm, setCurrentId}) => {
     const localUser = useSelector((state) => state.users.localUser)
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -47,6 +47,7 @@ const Post = ({ post, setCurrentId}) => {
       const handleEditUser = () => {
         setAnchorElUser(null);
         setCurrentId(post._id)
+        setOpenEditForm(true)
       };
     const handleDelete = () =>{
         setAnchorElUser(null);

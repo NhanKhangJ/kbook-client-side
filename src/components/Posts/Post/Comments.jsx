@@ -17,7 +17,6 @@ const Comments = ({ post }) => {
     const location = useLocation()
     let substring = '/user/';
     let reg = new RegExp("^"+substring);
-    console.log(reg.test(location.pathname))
 
     const handleLoadComments = () => {
       let newComments = loadComments +  2
