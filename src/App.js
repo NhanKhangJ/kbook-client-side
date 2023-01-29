@@ -26,6 +26,12 @@ function App() {
   const darkTheme= createTheme({
       palette:{
           mode: mode
+      },
+      typography:{
+        fontFamily:[
+          'Montserrat',
+          'sans-serif'
+        ].join(','),
       }
   })
 
