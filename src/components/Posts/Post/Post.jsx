@@ -91,7 +91,7 @@ const Post = ({ post, setOpenEditForm, setCurrentId}) => {
         
         avatar={
           <Link style={{cursor:'pointer'}} onClick={()=>{navigate(`/user/${post.creator}`)}}  underline="none">
-           <Avatar  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}>{post?.name?.split(" ")[0].substring(0,1)}{post?.name?.split(" ")[1].substring(0,1)}</Avatar>
+           <Avatar  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}>{post?.name?.split(" ")[0].substring(0,1).toUpperCase()}{post?.name?.split(" ")[1].substring(0,1)}</Avatar>
            </Link>
         }
         action={

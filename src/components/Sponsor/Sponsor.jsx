@@ -27,7 +27,7 @@ const Sponsor = () => {
                     sx={{ height: 200 }}
              image={item.image}
               />
-            <CardContent >
+            <CardContent style={{borderTop:"0.5px solid #ddd"}} >
                 <Typography>{item.description}</Typography>
             </CardContent>
           </Card>

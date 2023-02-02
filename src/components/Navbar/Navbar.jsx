@@ -84,7 +84,7 @@ const Navbar = ({mode, setMode}) => {
             <MaterialUISwitch onChange={() =>setMode(mode === "light" ? "dark" : "light" ) } />
               <Tooltip title="Open menu">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser?.avatar}  sx={{width:'3rem', height:'3rem'}}>{localUser?.name?.split(" ")[0].substring(0,1)}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
+                  <Avatar alt={userLogin ? userLogin.result.name : ""} src={localUser?.avatar}  sx={{width:'3rem', height:'3rem'}}>{localUser?.name?.split(" ")[0].substring(0,1).toUpperCase()}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
                 </IconButton>
               </Tooltip>
               <Menu

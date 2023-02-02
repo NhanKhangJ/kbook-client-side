@@ -1,11 +1,10 @@
 import React,{useState,useEffect } from 'react';
 import { Avatar, Box, Button, Paper, TextField, Typography ,Link, Tooltip, Fab} from '@mui/material';
 import { Dialog, DialogContent, DialogActions, DialogTitle } from "@mui/material";
-import { Add, ImageSearch } from '@mui/icons-material';
+import { Add, Clear, ImageSearch } from '@mui/icons-material';
 import { useDispatch, useSelector} from 'react-redux';
 import {MuiChipsInput} from 'mui-chips-input';
 import {createPost, updatePost} from '../../action/posts';
-import FileBase from 'react-file-base64'
 import { getLocalUser } from '../../action/users';
 
 
@@ -21,10 +20,12 @@ const post = useSelector((state) => (currentId ? state.posts.posts.find((post) =
 const localUser = useSelector((state) => state.users.localUser)
 const dispatch = useDispatch();
 const [showImage, setShowImage] = useState(false)
+const [render, reRender] = useState(true)
 
 useEffect(() =>{
   setShowImage(true)
 },[postData.selectedFile])
+
 
 useEffect(()=>{
  if(post){
@@ -44,6 +45,28 @@ const handleSubmit = async (e) =>{
       await dispatch(getLocalUser(post.creator))
     }
 }
+
+
+
+const handleChangeFile = (e) =>{
+  
+  const reader = new FileReader();
+
+  reader.readAsDataURL(e.target.files[0]);
+  reader.onload = (e) => {
+    setPostData({ ...postData, selectedFile: e.target.result });
+  };
+  
+}
+
+const handleClear = () =>{
+    setTimeout(()=>{reRender(true)},50)
+    reRender(false)
+    setPostData({...postData, selectedFile: ""})
+    setShowImage(false)
+
+}
+
 
 const handleAddChip = (tag) => {
     setPostData({ ...postData, tags: [...postData.tags, tag] });
@@ -65,6 +88,8 @@ setOpenEditForm(true)
 
 };
 
+
+
 const handleClose = () => {
   setOpenEditForm(false)
   setCurrentId(0);
@@ -80,7 +105,7 @@ const handleClose = () => {
      </Tooltip> 
        <Box display="flex" justifyContent="center" sx={{p:2, display:{xs:'none', sm:'none' ,md:'flex', lg:'flex', xl:'flex'}}}>
       
-          <Avatar component={Link} href={`/user/${localUser?._id}`} underline="none" sx={{width:'3.5rem', height:'3.5rem', marginRight:'1rem'}}  src={localUser?.avatar}>{localUser?.name?.split(" ")[0].substring(0,1)}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
+          <Avatar component={Link} href={`/user/${localUser?._id}`} underline="none" sx={{width:'3.5rem', height:'3.5rem', marginRight:'1rem'}}  src={localUser?.avatar}>{localUser?.name?.split(" ")[0].substring(0,1).toUpperCase()}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
 
         <Button fullWidth onClick={handleClickOpen} variant="outlined" style={{borderRadius:'35px', display:'flex', justifyContent:'start', color:'GrayText'}}>
             Start a post
@@ -93,10 +118,10 @@ const handleClose = () => {
         <DialogContent>
           <Box display="flex" >
           <div className='avatar'>
-            <Avatar sx={{width:'4rem', height:'4rem'}} src={localUser?.avatar ? localUser?.avatar : "/static/images/avatar/2.jpg" } />
+            <Avatar sx={{width:'4rem', height:'4rem'}} src={localUser?.avatar ? localUser?.avatar : "/static/images/avatar/2.jpg" }>{localUser?.name?.split(" ")[0].substring(0,1).toUpperCase()}{localUser?.name?.split(" ")[1].substring(0,1)}</Avatar>
            </div>
            <div>
-            <Typography variant='h6'>{localUser?.name}</Typography>
+            <Typography variant='h6'>{localUser?.name?.replace(/\b[a-z]/g, c => c.toUpperCase())}</Typography>
            </div>
           </Box>
           <TextField
@@ -111,7 +136,12 @@ const handleClose = () => {
             rows={6}
             onChange={(e)=>{ setPostData({ ...postData, content: e.target.value })}}
           />
-            {showImage ?( <img width="100%" style={{objectFit:'cover'}} src={postData.selectedFile} alt=''/>) :null }
+            {showImage ?( 
+              <div style={{position:'relative'}}> 
+              {postData.selectedFile !== "" ? <Button style={{position:'absolute', right:'0', top:'0'}} color="inherit" onClick={handleClear}><Clear /></Button>: ""}
+              <img width="100%" style={{objectFit:'cover'}} src={postData.selectedFile} alt=''/>
+              </div>
+              ) :null }
           <MuiChipsInput 
               name="tags"
             label="Tags"
@@ -121,12 +151,14 @@ const handleClose = () => {
             onAddChip={(chip) => handleAddChip(chip)}
             onDeleteChip={(chip) => handleDeleteChip(chip)}
           />
+          {render ? 
           <Button component="label" variant='contained' color='primary'>
            <div style={{display:'none'}}>
-            <FileBase type='file' mutiple={false} onDone={({base64}) =>setPostData({...postData, selectedFile: base64 })}/>
+             <input type="file" onChange={handleChangeFile}/>
            </div>
            <ImageSearch />
            </Button>
+           : ""}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
