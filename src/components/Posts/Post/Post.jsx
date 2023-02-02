@@ -237,8 +237,8 @@ const Post = ({ post, setOpenEditForm, setCurrentId}) => {
       <CardHeader 
         
         avatar={
-          <Link to={`/user/${post.creator}`}>
-           <Avatar alt={post?.name}  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}/>
+          <Link to={`/user/${post.creator}`} underline="none">
+           <Avatar alt={post?.name}  src={post?.creatorAvatar}  sx={{width:'3.5rem', height:'3.5rem'}}>{post?.name?.split(" ")[0].substring(0,1).toUpperCase()}{post?.name?.split(" ")[1].substring(0,1)}</Avatar>
            </Link>
         }
         action={
